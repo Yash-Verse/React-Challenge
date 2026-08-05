@@ -13,6 +13,7 @@ interface TaskAppProps {
   linkToTaskDetail?: boolean
 }
 
-export default function TaskApp(_props: TaskAppProps) {
+export default function TaskApp(_props: TaskAppProps) 
+{
   return null
 }
