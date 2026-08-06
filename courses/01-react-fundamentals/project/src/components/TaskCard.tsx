@@ -4,6 +4,7 @@ interface TaskCardProps {
   priority: string
   completed?: boolean
   onToggle?: (id: string | number) => void
+  onDelete?: (id: string | number) => void
   taskId?: string | number
 }
 
@@ -13,6 +14,7 @@ export default function TaskCard({
   priority,
   completed = false,
   onToggle,
+  onDelete,
   taskId,
 }: TaskCardProps) {
   return (
@@ -31,7 +33,7 @@ export default function TaskCard({
         <input
           type="checkbox"
           checked={completed}
-          onChange={() => onToggle(taskId!)}
+          onChange={() => onToggle(taskId ?? '')}
         />
       )}
 
@@ -52,6 +54,19 @@ export default function TaskCard({
       </p>
 
       <p>{priority}</p>
+
+      {onDelete && (
+        <button
+          type="button"
+          onClick={() => {
+            if (window.confirm('Are you sure?')) {
+              onDelete(taskId ?? '')
+            }
+          }}
+        >
+          Delete
+        </button>
+      )}
     </article>
   )
 }

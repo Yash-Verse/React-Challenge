@@ -58,7 +58,8 @@ export default function TaskApp({
   setTasks,
   showForm,
 }: TaskAppProps) {
-  const [localTasks, setLocalTasks] = useState<Task[]>(DEFAULT_TASKS)
+  const [localTasks, setLocalTasks] =
+    useState<Task[]>(DEFAULT_TASKS)
 
   const taskList = tasks ?? localTasks
 
@@ -79,7 +80,10 @@ export default function TaskApp({
       setTasks((prev) =>
         prev.map((task) =>
           task.id === id
-            ? { ...task, completed: !task.completed }
+            ? {
+                ...task,
+                completed: !task.completed,
+              }
             : task
         )
       )
@@ -87,21 +91,39 @@ export default function TaskApp({
       setLocalTasks((prev) =>
         prev.map((task) =>
           task.id === id
-            ? { ...task, completed: !task.completed }
+            ? {
+                ...task,
+                completed: !task.completed,
+              }
             : task
         )
       )
     }
   }
 
+  function handleDelete(id: string | number) {
+    if (setTasks) {
+      setTasks((prev) =>
+        prev.filter((task) => task.id !== id)
+      )
+    } else {
+      setLocalTasks((prev) =>
+        prev.filter((task) => task.id !== id)
+      )
+    }
+  }
+
   return (
     <>
-      {showForm && <TaskForm onAddTask={handleAddTask} />}
+      {showForm && (
+        <TaskForm onAddTask={handleAddTask} />
+      )}
 
       <TaskList
         tasks={taskList}
         countText={`${completedCount} of ${taskList.length} completed`}
         onToggle={handleToggle}
+        onDelete={handleDelete}
       />
     </>
   )
