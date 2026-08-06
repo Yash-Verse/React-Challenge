@@ -45,12 +45,17 @@ const HARDCODED_TASKS: Task[] = [
 
 export default function TaskList({
   tasks,
+  countText,
   onToggle,
 }: TaskListProps) {
   const list = tasks ?? HARDCODED_TASKS
 
   return (
     <section id="task-list">
+      {countText && (
+        <div id="task-count">{countText}</div>
+      )}
+
       {list.map((task) => (
         <TaskCard
           key={task.id}

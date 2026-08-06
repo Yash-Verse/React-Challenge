@@ -55,22 +55,54 @@ const DEFAULT_TASKS: Task[] = [
 
 export default function TaskApp({
   tasks,
+  setTasks,
   showForm,
 }: TaskAppProps) {
   const [localTasks, setLocalTasks] = useState<Task[]>(DEFAULT_TASKS)
-  const taskList = tasks && tasks.length > 0 ? tasks : localTasks
+
+  const taskList = tasks ?? localTasks
+
+  const completedCount = taskList.filter(
+    (task) => task.completed
+  ).length
 
   function handleAddTask(task: Task) {
-    setLocalTasks((prev) => [...prev, task])
+    if (setTasks) {
+      setTasks((prev) => [...prev, task])
+    } else {
+      setLocalTasks((prev) => [...prev, task])
+    }
+  }
+
+  function handleToggle(id: string | number) {
+    if (setTasks) {
+      setTasks((prev) =>
+        prev.map((task) =>
+          task.id === id
+            ? { ...task, completed: !task.completed }
+            : task
+        )
+      )
+    } else {
+      setLocalTasks((prev) =>
+        prev.map((task) =>
+          task.id === id
+            ? { ...task, completed: !task.completed }
+            : task
+        )
+      )
+    }
   }
 
   return (
     <>
-      <div id="task-count">{taskList.length} Tasks</div>
-
       {showForm && <TaskForm onAddTask={handleAddTask} />}
 
-      <TaskList tasks={taskList} />
+      <TaskList
+        tasks={taskList}
+        countText={`${completedCount} of ${taskList.length} completed`}
+        onToggle={handleToggle}
+      />
     </>
   )
 }
