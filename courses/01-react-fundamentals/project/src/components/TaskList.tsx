@@ -59,6 +59,12 @@ export default function TaskList({
         </div>
       )}
 
+      {list.length === 0 && (
+        <div id="filter-empty-message">
+          No tasks match this filter
+        </div>
+      )}
+
       {list.map((task) => (
         <TaskCard
           key={task.id}

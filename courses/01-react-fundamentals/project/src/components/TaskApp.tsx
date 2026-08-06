@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
+import FilterBar from './FilterBar'
 import TaskForm from './TaskForm'
 import TaskList, { type Task } from './TaskList'
 
@@ -57,11 +58,23 @@ export default function TaskApp({
   tasks,
   setTasks,
   showForm,
+  showFilterBar,
 }: TaskAppProps) {
   const [localTasks, setLocalTasks] =
     useState<Task[]>(DEFAULT_TASKS)
 
+  const [filter, setFilter] = useState<
+    'all' | 'active' | 'completed'
+  >('all')
+
   const taskList = tasks ?? localTasks
+
+  const filteredTasks =
+    filter === 'active'
+      ? taskList.filter((task) => !task.completed)
+      : filter === 'completed'
+        ? taskList.filter((task) => task.completed)
+        : taskList
 
   const completedCount = taskList.filter(
     (task) => task.completed
@@ -119,9 +132,16 @@ export default function TaskApp({
         <TaskForm onAddTask={handleAddTask} />
       )}
 
+      {showFilterBar && (
+        <FilterBar
+          filter={filter}
+          onFilterChange={setFilter}
+        />
+      )}
+
       <TaskList
-        tasks={taskList}
-        countText={`${completedCount} of ${taskList.length} completed`}
+        tasks={filteredTasks}
+        countText={`Showing ${filteredTasks.length} of ${taskList.length} tasks`}
         onToggle={handleToggle}
         onDelete={handleDelete}
       />
