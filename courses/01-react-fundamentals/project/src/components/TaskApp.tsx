@@ -1,4 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
+import { useState } from 'react'
+import TaskForm from './TaskForm'
 import TaskList, { type Task } from './TaskList'
 
 interface TaskAppProps {
@@ -53,12 +55,20 @@ const DEFAULT_TASKS: Task[] = [
 
 export default function TaskApp({
   tasks,
+  showForm,
 }: TaskAppProps) {
-  const taskList = tasks && tasks.length > 0 ? tasks : DEFAULT_TASKS
+  const [localTasks, setLocalTasks] = useState<Task[]>(DEFAULT_TASKS)
+  const taskList = tasks && tasks.length > 0 ? tasks : localTasks
+
+  function handleAddTask(task: Task) {
+    setLocalTasks((prev) => [...prev, task])
+  }
 
   return (
     <>
       <div id="task-count">{taskList.length} Tasks</div>
+
+      {showForm && <TaskForm onAddTask={handleAddTask} />}
 
       <TaskList tasks={taskList} />
     </>
