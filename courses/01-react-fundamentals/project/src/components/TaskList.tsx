@@ -19,48 +19,47 @@ interface TaskListProps {
   linkToTaskDetail?: boolean
 }
 
-export default function TaskList({ tasks }: TaskListProps) {
-  const hardcodedTasks: Task[] = [
-    {
-      id: 1,
-      title: 'Task One',
-      description: 'First hardcoded task',
-      priority: 'Priority: High',
-      completed: false,
-    },
-    {
-      id: 2,
-      title: 'Task Two',
-      description: 'Second hardcoded task',
-      priority: 'Priority: Medium',
-      completed: false,
-    },
-    {
-      id: 3,
-      title: 'Task Three',
-      description: 'Third hardcoded task',
-      priority: 'Priority: Low',
-      completed: false,
-    },
-  ]
+const HARDCODED_TASKS: Task[] = [
+  {
+    id: 1,
+    title: 'Task One',
+    description: 'First hardcoded task',
+    priority: 'Priority: High',
+    completed: false,
+  },
+  {
+    id: 2,
+    title: 'Task Two',
+    description: 'Second hardcoded task',
+    priority: 'Priority: Medium',
+    completed: false,
+  },
+  {
+    id: 3,
+    title: 'Task Three',
+    description: 'Third hardcoded task',
+    priority: 'Priority: Low',
+    completed: false,
+  },
+]
 
-  const taskList = tasks && tasks.length > 0 ? tasks : hardcodedTasks
+export default function TaskList({
+  tasks,
+  onToggle,
+}: TaskListProps) {
+  const list = tasks ?? HARDCODED_TASKS
 
   return (
-    <section
-      id="task-list"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-      }}
-    >
-      {taskList.map((task) => (
+    <section id="task-list">
+      {list.map((task) => (
         <TaskCard
           key={task.id}
           title={task.title}
           description={task.description}
           priority={task.priority}
+          completed={task.completed}
+          onToggle={onToggle}
+          taskId={task.id}
         />
       ))}
     </section>
