@@ -54,11 +54,20 @@ const DEFAULT_TASKS: Task[] = [
   },
 ]
 
+const priorityOrder: Record<string, number> = {
+  High: 3,
+  Medium: 2,
+  Low: 1,
+}
+
+
+
 export default function TaskApp({
   tasks,
   setTasks,
   showForm,
   showFilterBar,
+  countFormat,
 }: TaskAppProps) {
   const [localTasks, setLocalTasks] =
     useState<Task[]>(DEFAULT_TASKS)
@@ -66,6 +75,10 @@ export default function TaskApp({
   const [filter, setFilter] = useState<
     'all' | 'active' | 'completed'
   >('all')
+
+  const [sort, setSort] = useState<
+    'recent' | 'high' | 'low' | 'alpha'
+  >('recent')
 
   const taskList = tasks ?? localTasks
 
@@ -76,9 +89,66 @@ export default function TaskApp({
         ? taskList.filter((task) => task.completed)
         : taskList
 
+  const sortedTasks = [...filteredTasks].sort(
+    (a, b) => {
+      switch (sort) {
+        case 'high':
+          return (
+            priorityOrder[
+              b.priority.replace(
+                'Priority: ',
+                ''
+              )
+            ] -
+            priorityOrder[
+              a.priority.replace(
+                'Priority: ',
+                ''
+              )
+            ]
+          )
+
+        case 'low':
+          return (
+            priorityOrder[
+              a.priority.replace(
+                'Priority: ',
+                ''
+              )
+            ] -
+            priorityOrder[
+              b.priority.replace(
+                'Priority: ',
+                ''
+              )
+            ]
+          )
+
+        case 'alpha':
+          return a.title.localeCompare(
+            b.title,
+            undefined,
+            {
+              sensitivity: 'base',
+            }
+          )
+
+        case 'recent':
+        default:
+          return Number(a.id) - Number(b.id)
+      }
+    }
+  )
+
   const completedCount = taskList.filter(
     (task) => task.completed
   ).length
+
+  const countText = showFilterBar
+    ? `Showing ${sortedTasks.length} of ${taskList.length} tasks`
+    : countFormat === 'completed'
+      ? `${completedCount} of ${taskList.length} completed`
+      : `${taskList.length} tasks`
 
   function handleAddTask(task: Task) {
     if (setTasks) {
@@ -126,7 +196,7 @@ export default function TaskApp({
     }
   }
 
-  return (
+    return (
     <>
       {showForm && (
         <TaskForm onAddTask={handleAddTask} />
@@ -136,12 +206,14 @@ export default function TaskApp({
         <FilterBar
           filter={filter}
           onFilterChange={setFilter}
+          sort={sort}
+          onSortChange={setSort}
         />
       )}
 
       <TaskList
-        tasks={filteredTasks}
-        countText={`Showing ${filteredTasks.length} of ${taskList.length} tasks`}
+        tasks={sortedTasks}
+        countText={countText}
         onToggle={handleToggle}
         onDelete={handleDelete}
       />
