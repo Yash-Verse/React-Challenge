@@ -205,5 +205,28 @@
       "maintainability": 80,
       "overall": "The code is well-structured and maintainable, but could benefit from some refactoring and additional testing to make it more robust and scalable. With some improvements, it has the potential to be a high-quality and reliable application."
     }
+  },
+  {
+    "challengeId": "10-useeffect-local-storage",
+    "challengeName": "useEffect - Local Storage Persistence",
+    "aiReview": {
+      "challengeId": "10-useeffect-local-storage",
+      "timestamp": "2026-08-07T06:47:39.538Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and easy to follow, with clear separation of concerns between the AppContent component and the useEffect hooks.",
+        "The use of a STORAGE_KEY constant makes the code more readable and maintainable.",
+        "The code is well-documented with clear variable names and comments."
+      ],
+      "improvements": [
+        "The useEffect hook that loads tasks from local storage should be refactored to handle the case where the storage key is missing or the data is corrupted. Currently, it simply removes the storage key if parsing fails, which may not be the desired behavior.",
+        "The useEffect hook that saves tasks to local storage should be refactored to handle the case where the tasks array is empty. Currently, it will save an empty array to local storage, which may not be the desired behavior.",
+        "The code could benefit from the use of a more robust error handling mechanism, such as try-catch blocks, to handle potential errors that may occur when parsing or saving data to local storage."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-structured and maintainable, but could benefit from some improvements to handle edge cases and provide more robust error handling. Overall, the code is a good example of how to use useEffect hooks to persist data to local storage in a React application."
+    }
   }
 ]
