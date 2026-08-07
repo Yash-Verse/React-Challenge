@@ -12,6 +12,8 @@ interface FilterBarProps {
   search: string
   onSearchChange: (value: string) => void
   onClearSearch: () => void
+
+  searching: boolean
 }
 
 export default function FilterBar({
@@ -22,6 +24,7 @@ export default function FilterBar({
   search = '',
   onSearchChange = () => {},
   onClearSearch = () => {},
+  searching= false,
 }: FilterBarProps) {
   return (
     <div id="filter-bar">
@@ -95,6 +98,11 @@ export default function FilterBar({
           Clear search
         </button>
       )}
+      {searching && (
+       <div id="searching-indicator">
+        Searching...
+       </div>
+       )}
     </div>
   )
 }

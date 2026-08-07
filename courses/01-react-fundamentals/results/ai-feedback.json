@@ -228,5 +228,28 @@
       "maintainability": 90,
       "overall": "The code is well-written and maintainable, with a good separation of concerns and clear variable names. However, there are some areas for improvement, such as simplifying the `handleSubmit` function and making the `TaskForm` component more reusable."
     }
+  },
+  {
+    "challengeId": "11-useeffect-debounced-search",
+    "challengeName": "useEffect - Debounced Search",
+    "aiReview": {
+      "challengeId": "11-useeffect-debounced-search",
+      "timestamp": "2026-08-07T12:00:41.418Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and follows a consistent naming convention.",
+        "The use of TypeScript and functional components is a good practice.",
+        "The code is well-commented, making it easier to understand the functionality."
+      ],
+      "improvements": [
+        "The `useEffect` hook in `TaskApp` has a dependency on `search` which can cause unnecessary re-renders. Consider using `useCallback` or `useMemo` to memoize the effect.",
+        "The `debouncedSearch` state is not being used in the filtering logic. Consider removing it or using it to improve the filtering performance.",
+        "The `sortedTasks` array is being sorted multiple times in the `useEffect` hook. Consider using a more efficient sorting algorithm or memoizing the sorted array."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-structured and follows good practices, but there are some areas for improvement to make it more efficient and maintainable."
+    }
   }
 ]

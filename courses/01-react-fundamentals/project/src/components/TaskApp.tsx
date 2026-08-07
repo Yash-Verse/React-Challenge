@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FilterBar from './FilterBar'
 import TaskForm from './TaskForm'
 import TaskList, { type Task } from './TaskList'
@@ -81,6 +81,16 @@ export default function TaskApp({
   >('recent')
 
   const [search, setSearch] = useState('')
+  const [debouncedSearch, setDebouncedSearch] =
+  useState('')
+
+  useEffect(() => {
+  const timeout = setTimeout(() => {
+    setDebouncedSearch(search)
+  }, 300)
+
+  return () => clearTimeout(timeout)
+ }, [search])
 
   const [editingId, setEditingId] = useState<
   string | number | null
@@ -99,10 +109,14 @@ export default function TaskApp({
    (task) =>
     task.title
       .toLowerCase()
-      .includes(search.toLowerCase()) ||
+      .includes(
+        debouncedSearch.toLowerCase()
+      ) ||
     task.description
       .toLowerCase()
-      .includes(search.toLowerCase())
+      .includes(
+        debouncedSearch.toLowerCase()
+      )
   )
 
   const sortedTasks = [...searchedTasks].sort(
@@ -265,6 +279,7 @@ export default function TaskApp({
           search={search}
           onSearchChange={setSearch}
           onClearSearch={handleClearSearch}
+          searching={search !== debouncedSearch}
         />
       )}
 
