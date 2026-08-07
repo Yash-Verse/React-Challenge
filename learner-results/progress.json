@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-08-07T06:47:41.034Z",
+  "lastUpdated": "2026-08-07T07:41:13.017Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 28.9,
+    "overallScore": 28.7,
     "completionPercentage": 18.9,
     "badgeLevel": "none",
     "totalChallenges": 53,
@@ -13,7 +13,7 @@
     "01-react-fundamentals": {
       "courseId": "01-react-fundamentals",
       "courseName": "React Fundamentals",
-      "averageScore": 87.5,
+      "averageScore": 86.9,
       "completionPercentage": 43.5,
       "badgeLevel": "none",
       "totalChallenges": 23,
@@ -53,10 +53,10 @@
           "challengeId": "03-adding-new-tasks",
           "challengeName": "Adding New Tasks",
           "passed": true,
-          "score": 86.95,
-          "lastRun": "2026-08-06T05:34:38.962Z",
+          "score": 81.105,
+          "lastRun": "2026-08-07T07:34:01.253Z",
           "scores": {
-            "functionalTests": 100,
+            "functionalTests": 83.3,
             "codeQuality": 50,
             "architecture": 100,
             "bestPractices": 100,

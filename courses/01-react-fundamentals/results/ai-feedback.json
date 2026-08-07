@@ -46,29 +46,6 @@
     }
   },
   {
-    "challengeId": "03-adding-new-tasks",
-    "challengeName": "Adding New Tasks",
-    "aiReview": {
-      "challengeId": "03-adding-new-tasks",
-      "timestamp": "2026-08-06T05:35:12.563Z",
-      "score": 88,
-      "feedback": [],
-      "strengths": [
-        "The code is well-structured and easy to follow, with clear separation of concerns between components.",
-        "The use of TypeScript and functional components is a good practice.",
-        "The code is well-documented with clear and concise comments."
-      ],
-      "improvements": [
-        "The `TaskForm` component could benefit from a more robust validation system, such as using a library like `react-hook-form`.",
-        "The `TaskList` component could be improved by using a more efficient data structure, such as a `Map`, to store tasks.",
-        "The `App` component has a long list of routes, which could be improved by using a more modular approach, such as using a separate file for each route."
-      ],
-      "readability": 85,
-      "maintainability": 90,
-      "overall": "The code is well-structured and maintainable, with some areas for improvement. With some additional validation and data structure improvements, this code could be even more robust and efficient."
-    }
-  },
-  {
     "challengeId": "04-task-completion-toggle",
     "challengeName": "Task Completion Toggle",
     "aiReview": {
@@ -227,6 +204,29 @@
       "readability": 85,
       "maintainability": 90,
       "overall": "The code is well-structured and maintainable, but could benefit from some improvements to handle edge cases and provide more robust error handling. Overall, the code is a good example of how to use useEffect hooks to persist data to local storage in a React application."
+    }
+  },
+  {
+    "challengeId": "03-adding-new-tasks",
+    "challengeName": "Adding New Tasks",
+    "aiReview": {
+      "challengeId": "03-adding-new-tasks",
+      "timestamp": "2026-08-07T07:41:02.075Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-structured and easy to follow, with clear and concise variable names and function signatures.",
+        "The use of TypeScript and functional components makes the code more maintainable and scalable.",
+        "The code is well-organized, with each component having its own file and clear separation of concerns."
+      ],
+      "improvements": [
+        "The `handleSubmit` function in `TaskForm.tsx` can be simplified by using the `useState` hook's `update` function instead of manually updating the state.",
+        "The `TaskForm.tsx` component can be made more reusable by extracting the form validation logic into a separate function.",
+        "The `TaskList.tsx` component can be improved by using a more efficient data structure, such as a `Map`, to store the tasks instead of an array."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-written and maintainable, with a good separation of concerns and clear variable names. However, there are some areas for improvement, such as simplifying the `handleSubmit` function and making the `TaskForm` component more reusable."
     }
   }
 ]

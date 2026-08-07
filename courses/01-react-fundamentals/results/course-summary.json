@@ -1,10 +1,10 @@
 {
   "courseId": "01-react-fundamentals",
   "courseName": "React Fundamentals",
-  "lastUpdated": "2026-08-07T06:47:40.299Z",
+  "lastUpdated": "2026-08-07T07:41:03.681Z",
   "totalChallenges": 23,
   "completedChallenges": 10,
-  "averageScore": 87.5,
+  "averageScore": 86.9,
   "completionPercentage": 43.5,
   "badgeLevel": "none",
   "challengeResults": [
@@ -23,7 +23,7 @@
     {
       "challengeId": "03-adding-new-tasks",
       "challengeName": "Adding New Tasks",
-      "score": 86.95,
+      "score": 81.105,
       "passed": true
     },
     {
