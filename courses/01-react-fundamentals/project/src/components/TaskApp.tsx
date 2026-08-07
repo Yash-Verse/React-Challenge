@@ -80,6 +80,10 @@ export default function TaskApp({
     'recent' | 'high' | 'low' | 'alpha'
   >('recent')
 
+  const [editingId, setEditingId] = useState<
+  string | number | null
+  >(null)
+
   const taskList = tasks ?? localTasks
 
   const filteredTasks =
@@ -196,6 +200,39 @@ export default function TaskApp({
     }
   }
 
+  function handleUpdateTask(
+  id: string | number,
+  updates: {
+    title: string
+    description: string
+    priority: string
+  }
+ ) {
+  if (setTasks) {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id
+          ? {
+              ...task,
+              ...updates,
+            }
+          : task
+      )
+    )
+  } else {
+    setLocalTasks((prev) =>
+      prev.map((task) =>
+        task.id === id
+          ? {
+              ...task,
+              ...updates,
+            }
+          : task
+      )
+    )
+  }
+ }
+
     return (
     <>
       {showForm && (
@@ -216,6 +253,9 @@ export default function TaskApp({
         countText={countText}
         onToggle={handleToggle}
         onDelete={handleDelete}
+        onUpdateTask={handleUpdateTask}
+        editingId={editingId}
+        setEditingId={setEditingId}
       />
     </>
   )
