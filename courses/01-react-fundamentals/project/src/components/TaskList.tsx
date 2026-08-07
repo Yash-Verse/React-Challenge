@@ -78,7 +78,7 @@ export default function TaskList({
 
       {list.length === 0 && (
         <div id="filter-empty-message">
-          No tasks match this filter
+          No tasks found
         </div>
       )}
 

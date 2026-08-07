@@ -3,17 +3,25 @@ interface FilterBarProps {
   onFilterChange: (
     filter: 'all' | 'active' | 'completed'
   ) => void
+
   sort: 'recent' | 'high' | 'low' | 'alpha'
   onSortChange: (
     sort: 'recent' | 'high' | 'low' | 'alpha'
   ) => void
+
+  search: string
+  onSearchChange: (value: string) => void
+  onClearSearch: () => void
 }
 
 export default function FilterBar({
-  filter,
+  filter = 'all',
   onFilterChange,
-  sort,
+  sort = 'recent',
   onSortChange,
+  search = '',
+  onSearchChange = () => {},
+  onClearSearch = () => {},
 }: FilterBarProps) {
   return (
     <div id="filter-bar">
@@ -67,6 +75,26 @@ export default function FilterBar({
           Alphabetical
         </option>
       </select>
+
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Search tasks..."
+        value={search}
+        onChange={(e) =>
+          onSearchChange(e.target.value)
+        }
+      />
+
+      { search && search.trim() !== '' && (
+        <button
+          id="clear-search"
+          type="button"
+          onClick={onClearSearch}
+        >
+          Clear search
+        </button>
+      )}
     </div>
   )
 }

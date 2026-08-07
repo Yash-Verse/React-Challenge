@@ -80,6 +80,8 @@ export default function TaskApp({
     'recent' | 'high' | 'low' | 'alpha'
   >('recent')
 
+  const [search, setSearch] = useState('')
+
   const [editingId, setEditingId] = useState<
   string | number | null
   >(null)
@@ -92,8 +94,18 @@ export default function TaskApp({
       : filter === 'completed'
         ? taskList.filter((task) => task.completed)
         : taskList
+  
+  const searchedTasks = filteredTasks.filter(
+   (task) =>
+    task.title
+      .toLowerCase()
+      .includes(search.toLowerCase()) ||
+    task.description
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  )
 
-  const sortedTasks = [...filteredTasks].sort(
+  const sortedTasks = [...searchedTasks].sort(
     (a, b) => {
       switch (sort) {
         case 'high':
@@ -232,6 +244,11 @@ export default function TaskApp({
     )
   }
  }
+  
+ function handleClearSearch() {
+  setSearch('')
+ }
+  
 
     return (
     <>
@@ -245,6 +262,9 @@ export default function TaskApp({
           onFilterChange={setFilter}
           sort={sort}
           onSortChange={setSort}
+          search={search}
+          onSearchChange={setSearch}
+          onClearSearch={handleClearSearch}
         />
       )}
 
