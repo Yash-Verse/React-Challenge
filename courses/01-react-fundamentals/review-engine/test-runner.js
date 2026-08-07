@@ -19,24 +19,14 @@ export async function runTests(challengeId, projectDir) {
 
   try {
     // Run vitest for the specific test file
-    // const output = execSync(
-    //   `npm test -- ${testFile} --run --reporter=json`,
-    //   { 
-    //     cwd: projectDir,
-    //     encoding: 'utf-8',
-    //     stdio: ['pipe', 'pipe', 'pipe']
-    //   }
-    // );
-
-
-     const output = execSync(
-  `npx vitest run "${testFile}" --reporter=json`,
-  {
-    cwd: projectDir,
-    encoding: "utf-8",
-    stdio: ["pipe", "pipe", "pipe"]
-  }
-);
+    const output = execSync(
+      `npm test -- ${testFile} --run --reporter=json`,
+      { 
+        cwd: projectDir,
+        encoding: 'utf-8',
+        stdio: ['pipe', 'pipe', 'pipe']
+      }
+    );
 
     const raw = (output || '') + '';
     const jsonMatch = raw.match(/\{[\s\S]*"numTotalTests"[\s\S]*\}/);
