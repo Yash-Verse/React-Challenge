@@ -5,6 +5,11 @@ interface TaskCardProps {
   description: string
   priority: string
   completed?: boolean
+
+  // Challenge 12
+  category?: string
+  tags?: string[]
+
   onToggle?: (id: string | number) => void
   onDelete?: (id: string | number) => void
   taskId?: string | number
@@ -29,6 +34,8 @@ export default function TaskCard({
   description,
   priority,
   completed = false,
+  category = 'General',
+  tags = [],
   onToggle,
   onDelete,
   taskId,
@@ -37,32 +44,36 @@ export default function TaskCard({
   setEditingId,
 }: TaskCardProps) {
   const isEditing =
-  editingId !== null &&
-  editingId !== undefined &&
-  editingId === taskId
-  const [editTitle, setEditTitle] = useState(title)
-  const [editDescription, setEditDescription] =
-    useState(description)
+    editingId !== null &&
+    editingId !== undefined &&
+    taskId !== undefined &&
+    editingId === taskId
+
+  const [editTitle, setEditTitle] =
+    useState(title)
+  const [
+    editDescription,
+    setEditDescription,
+  ] = useState(description)
   const [editPriority, setEditPriority] =
     useState(priority)
 
   useEffect(() => {
-    if (isEditing) {
-      setEditTitle(title)
-      setEditDescription(description)
-      setEditPriority(priority)
-    }
-  }, [
-    isEditing,
-    title,
-    description,
-    priority,
-  ])
+    setEditTitle(title)
+    setEditDescription(description)
+    setEditPriority(priority)
+  }, [title, description, priority])
 
   function handleSave() {
-    if (!editTitle.trim()) return
+    if (
+      editTitle.trim() === '' ||
+      !onUpdateTask ||
+      taskId === undefined
+    ) {
+      return
+    }
 
-    onUpdateTask?.(taskId ?? '', {
+    onUpdateTask(taskId, {
       title: editTitle,
       description: editDescription,
       priority: editPriority,
@@ -108,7 +119,9 @@ export default function TaskCard({
             type="text"
             value={editTitle}
             onChange={(e) =>
-              setEditTitle(e.target.value)
+              setEditTitle(
+                e.target.value
+              )
             }
           />
 
@@ -129,14 +142,14 @@ export default function TaskCard({
               )
             }
           >
-            <option value="High">
-              High
+            <option value="Low">
+              Low
             </option>
             <option value="Medium">
               Medium
             </option>
-            <option value="Low">
-              Low
+            <option value="High">
+              High
             </option>
           </select>
 
@@ -176,20 +189,53 @@ export default function TaskCard({
             {description}
           </p>
 
-          <p>{priority}</p>
+          <p>
+            
+           {priority.startsWith('Priority:')
+           ? priority
+           : `Priority: ${priority}`}
 
-          {setEditingId && (
-            <button
-              type="button"
-              onClick={() =>
-                setEditingId(
-                  taskId ?? null
-                )
-              }
-            >
-              Edit
-            </button>
-          )}
+          </p>
+
+          <p id="task-category">
+            Category: {category}
+          </p>
+
+          <div id="task-tags">
+            {(tags ?? []).map((tag) => (
+              <span
+                key={tag}
+                data-tag
+                style={{
+                  display:
+                    'inline-block',
+                  marginRight: '6px',
+                  padding:
+                    '2px 8px',
+                  borderRadius:
+                    '12px',
+                  border:
+                    '1px solid #ccc',
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {onUpdateTask &&
+            setEditingId && (
+              <button
+                type="button"
+                onClick={() =>
+                  setEditingId(
+                    taskId ?? null
+                  )
+                }
+              >
+                Edit
+              </button>
+            )}
 
           {onDelete && (
             <button
@@ -200,7 +246,9 @@ export default function TaskCard({
                     'Are you sure?'
                   )
                 ) {
-                  onDelete(taskId ?? '')
+                  onDelete(
+                    taskId ?? ''
+                  )
                 }
               }}
             >

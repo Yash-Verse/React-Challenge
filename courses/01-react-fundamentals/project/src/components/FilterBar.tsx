@@ -13,18 +13,27 @@ interface FilterBarProps {
   onSearchChange: (value: string) => void
   onClearSearch: () => void
 
-  searching: boolean
+  searching?: boolean
+
+  category: string
+  categories: string[]
+  onCategoryChange: (
+    category: string
+  ) => void
 }
 
 export default function FilterBar({
   filter = 'all',
-  onFilterChange,
+  onFilterChange = () => {},
   sort = 'recent',
-  onSortChange,
+  onSortChange = () => {},
   search = '',
   onSearchChange = () => {},
   onClearSearch = () => {},
-  searching= false,
+  searching = false,
+  category = 'All',
+  categories = [],
+  onCategoryChange = () => {},
 }: FilterBarProps) {
   return (
     <div id="filter-bar">
@@ -51,6 +60,27 @@ export default function FilterBar({
       >
         Completed
       </button>
+
+      <select
+        id="category-filter"
+        value={category}
+        onChange={(e) =>
+          onCategoryChange(e.target.value)
+        }
+      >
+        <option value="All">
+          All Categories
+        </option>
+
+        {categories.map((cat) => (
+          <option
+            key={cat}
+            value={cat}
+          >
+            {cat}
+          </option>
+        ))}
+      </select>
 
       <select
         id="sort-order"
@@ -89,7 +119,7 @@ export default function FilterBar({
         }
       />
 
-      { search && search.trim() !== '' && (
+      {search.trim() !== '' && (
         <button
           id="clear-search"
           type="button"
@@ -98,11 +128,12 @@ export default function FilterBar({
           Clear search
         </button>
       )}
+
       {searching && (
-       <div id="searching-indicator">
-        Searching...
-       </div>
-       )}
+        <div id="searching-indicator">
+          Searching...
+        </div>
+      )}
     </div>
   )
 }
