@@ -1,6 +1,6 @@
-
+import StatsPanel from './StatsPanel'
 import type { Dispatch, SetStateAction } from 'react'
-import { useEffect, useState } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import FilterBar from './FilterBar'
 import TaskForm from './TaskForm'
 import TaskList, { type Task } from './TaskList'
@@ -90,10 +90,13 @@ export default function TaskApp({
   setTasks,
   showForm,
   showFilterBar,
+  showStatsPanel,
   countFormat,
 }: TaskAppProps) {
   const [localTasks, setLocalTasks] =
     useState<Task[]>(DEFAULT_TASKS)
+
+  const taskList = tasks ?? localTasks
 
   const [filter, setFilter] = useState<
     'all' | 'active' | 'completed'
@@ -118,7 +121,8 @@ export default function TaskApp({
     useState<
       string | number | null
     >(null)
-
+  
+    
   /*
    * Challenge 11:
    * Debounced search
@@ -133,8 +137,7 @@ export default function TaskApp({
     }
   }, [search])
 
-  const taskList =
-    tasks ?? localTasks
+  
 
   /*
    * Category list for FilterBar
@@ -294,7 +297,53 @@ export default function TaskApp({
       : countFormat === 'completed'
       ? `${completedCount} of ${taskList.length} completed`
       : `${taskList.length} tasks`
+  
+  const stats = useMemo(() => {
+  const total = taskList.length
 
+  const completed = taskList.filter(
+    (task) => task.completed
+  ).length
+
+  const active = taskList.filter(
+    (task) => !task.completed
+  ).length
+
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const overdue = taskList.filter(
+    (task) => {
+      if (
+        task.completed ||
+        !task.dueDate
+      ) {
+        return false
+      }
+
+      const dueDate = new Date(
+        `${task.dueDate}T00:00:00`
+      )
+
+      return dueDate < today
+    }
+  ).length
+
+  const percentage =
+    total === 0
+      ? 0
+      : Math.round(
+          (completed / total) * 100
+        )
+
+  return {
+    total,
+    completed,
+    percentage,
+    active,
+    overdue,
+  }
+}, [taskList])    
   /*
    * Add Task
    */
@@ -448,6 +497,14 @@ export default function TaskApp({
           }
         />
       )}
+      
+      {showStatsPanel && (
+         <StatsPanel  total={stats.total}
+         completed={stats.completed}
+         active={stats.active}
+         overdue={stats.overdue}
+          completedPercentage={stats.percentage}/>
+        )}
 
       <TaskList
         tasks={sortedTasks}
