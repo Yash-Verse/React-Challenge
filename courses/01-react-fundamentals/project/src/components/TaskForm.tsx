@@ -1,5 +1,6 @@
-
 import { useState } from 'react'
+import FormInput from './FormInput'
+import Button from './Button'
 
 interface Task {
   id: string | number
@@ -83,20 +84,16 @@ export default function TaskForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="task-title">
-          Title
-        </label>
-
-        <input
-          id="task-title"
-          type="text"
-          value={title}
-          onChange={(e) =>
-            setTitle(e.target.value)
-          }
-        />
-      </div>
+      <FormInput
+        id="task-title"
+        label="Title"
+        type="text"
+        value={title}
+        onChange={(e) =>
+          setTitle(e.target.value)
+        }
+        error={error}
+      />
 
       <div>
         <label htmlFor="task-description">
@@ -155,47 +152,33 @@ export default function TaskForm({
         </select>
       </div>
 
-      <div>
-        <label htmlFor="task-tags">
-          Tags
-        </label>
+      <FormInput
+        id="task-tags"
+        label="Tags"
+        type="text"
+        placeholder="react, frontend, work"
+        value={tagsInput}
+        onChange={(e) =>
+          setTagsInput(e.target.value)
+        }
+      />
 
-        <input
-          id="task-tags"
-          type="text"
-          placeholder="react, frontend, work"
-          value={tagsInput}
-          onChange={(e) =>
-            setTagsInput(e.target.value)
-          }
-        />
-      </div>
+      <FormInput
+        id="task-due-date"
+        label="Due Date"
+        type="date"
+        value={dueDate}
+        onChange={(e) =>
+          setDueDate(e.target.value)
+        }
+      />
 
-      <div>
-        <label htmlFor="task-due-date">
-          Due Date
-        </label>
-
-        <input
-          id="task-due-date"
-          type="date"
-          value={dueDate}
-          onChange={(e) =>
-            setDueDate(e.target.value)
-          }
-        />
-      </div>
-
-      {error && (
-        <p id="task-form-error">
-          {error}
-        </p>
-      )}
-
-      <button type="submit">
+      <Button
+        type="submit"
+        variant="primary"
+      >
         Add Task
-      </button>
+      </Button>
     </form>
   )
 }
-

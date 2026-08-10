@@ -1,11 +1,11 @@
 {
   "courseId": "01-react-fundamentals",
   "courseName": "React Fundamentals",
-  "lastUpdated": "2026-08-10T07:06:07.470Z",
+  "lastUpdated": "2026-08-10T11:22:42.218Z",
   "totalChallenges": 23,
-  "completedChallenges": 14,
-  "averageScore": 87.9,
-  "completionPercentage": 60.9,
+  "completedChallenges": 15,
+  "averageScore": 88,
+  "completionPercentage": 65.2,
   "badgeLevel": "bronze",
   "challengeResults": [
     {
@@ -91,6 +91,12 @@
       "challengeName": "Task Statistics Dashboard",
       "score": 89.95,
       "passed": true
+    },
+    {
+      "challengeId": "15-component-organization",
+      "challengeName": "Component Organization with Props",
+      "score": 90.7,
+      "passed": true
     }
   ],
   "skillStrengths": [
@@ -107,7 +113,8 @@
     "useEffect - Debounced Search",
     "Categories and Tags",
     "Due Dates and Sorting",
-    "Task Statistics Dashboard"
+    "Task Statistics Dashboard",
+    "Component Organization with Props"
   ],
   "improvementAreas": []
 }

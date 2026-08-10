@@ -1,6 +1,9 @@
+import Button from './Button'
+import FormInput from './FormInput'
 
 interface FilterBarProps {
   filter: 'all' | 'active' | 'completed'
+
   onFilterChange: (
     filter: 'all' | 'active' | 'completed'
   ) => void
@@ -46,51 +49,41 @@ export default function FilterBar({
   onCategoryChange,
 }: FilterBarProps) {
   return (
-    <div id="filter-bar">
+    <div>
+      {/* Status filters */}
       <div>
-        <button
+        <Button
           type="button"
-          data-active={
-            filter === 'all'
-              ? 'true'
-              : 'false'
-          }
+          variant="secondary"
           onClick={() =>
             onFilterChange('all')
           }
         >
           All
-        </button>
+        </Button>
 
-        <button
+        <Button
           type="button"
-          data-active={
-            filter === 'active'
-              ? 'true'
-              : 'false'
-          }
+          variant="secondary"
           onClick={() =>
             onFilterChange('active')
           }
         >
           Active
-        </button>
+        </Button>
 
-        <button
+        <Button
           type="button"
-          data-active={
-            filter === 'completed'
-              ? 'true'
-              : 'false'
-          }
+          variant="secondary"
           onClick={() =>
             onFilterChange('completed')
           }
         >
           Completed
-        </button>
+        </Button>
       </div>
 
+      {/* Sort */}
       <div>
         <label htmlFor="sort-order">
           Sort
@@ -132,6 +125,7 @@ export default function FilterBar({
         </select>
       </div>
 
+      {/* Category */}
       <div>
         <label htmlFor="category-filter">
           Category
@@ -150,26 +144,22 @@ export default function FilterBar({
             All categories
           </option>
 
-          {categories.map(
-            (item) => (
-              <option
-                key={item}
-                value={item}
-              >
-                {item}
-              </option>
-            )
-          )}
+          {categories.map((item) => (
+            <option
+              key={item}
+              value={item}
+            >
+              {item}
+            </option>
+          ))}
         </select>
       </div>
 
+      {/* Search */}
       <div>
-        <label htmlFor="search-input">
-          Search
-        </label>
-
-        <input
+        <FormInput
           id="search-input"
+          label="Search"
           type="text"
           placeholder="Search tasks..."
           value={search}
@@ -181,13 +171,14 @@ export default function FilterBar({
         />
 
         {search.trim() !== '' && (
-          <button
+          <Button
             id="clear-search"
             type="button"
+            variant="secondary"
             onClick={onClearSearch}
           >
             Clear search
-          </button>
+          </Button>
         )}
 
         {searching && (
@@ -199,4 +190,3 @@ export default function FilterBar({
     </div>
   )
 }
-

@@ -2,6 +2,18 @@ interface StatusIndicatorProps {
   status?: string
 }
 
-export default function StatusIndicator(_props: StatusIndicatorProps) {
-  return null
+export default function StatusIndicator({
+  status = '',
+}: StatusIndicatorProps) {
+  if (!status) {
+    return null
+  }
+
+  return (
+    <span
+      data-status={status}
+    >
+      {status}
+    </span>
+  )
 }

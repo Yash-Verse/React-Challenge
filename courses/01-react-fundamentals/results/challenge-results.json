@@ -5227,5 +5227,217 @@
       "maintainability": 80,
       "overall": "The code is well-structured and readable, with a good use of React hooks and type annotations. However, there are some areas for improvement, such as handling the `completedPercentage` calculation and adding more comments to explain the logic behind certain parts of the code."
     }
+  },
+  {
+    "challengeId": "15-component-organization",
+    "challengeName": "Component Organization with Props",
+    "timestamp": "2026-08-10T11:21:23.544Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 88
+    },
+    "totalScore": 90.7,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 15: Component Organization with Props"
+              ],
+              "fullName": " Challenge 15: Component Organization with Props TaskCard should accept and render props",
+              "status": "passed",
+              "title": "TaskCard should accept and render props",
+              "duration": 58,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 15: Component Organization with Props"
+              ],
+              "fullName": " Challenge 15: Component Organization with Props TaskList should render TaskCards with props",
+              "status": "passed",
+              "title": "TaskList should render TaskCards with props",
+              "duration": 12,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1786360928325,
+          "endTime": 1786360928395,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/01-react-fundamentals/project/tests/challenge-15.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 100,
+      "passed": true,
+      "patternsFound": [
+        "functionalComponent",
+        "props"
+      ],
+      "patternsMissing": [],
+      "details": [
+        {
+          "file": "src/components/Button.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "props"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/components/Badge.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "props"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/components/StatusIndicator.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "props"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/components/FormInput.tsx",
+          "patternsFound": [
+            "functionalComponent",
+            "props"
+          ],
+          "patternsMissing": []
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-15.spec.ts",
+          "file": "challenge-15.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 15: Component Organization - E2E",
+              "file": "challenge-15.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should display task list",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 3777,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-10T11:22:36.638Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "a220d5623351847681d1-e80f7889496da537a60a",
+                  "file": "challenge-15.spec.ts",
+                  "line": 8,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "15-component-organization",
+      "timestamp": "2026-08-10T11:22:41.097Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-organized and follows a consistent naming convention.",
+        "The use of TypeScript interfaces for each component is a good practice.",
+        "The components are reusable and can be easily imported and used in other parts of the application."
+      ],
+      "improvements": [
+        "Some of the component props could be made optional with a default value instead of using the optional parameter syntax. For example, in `Button.tsx`, `disabled` could be made optional with a default value of `false`.",
+        "In `FormInput.tsx`, the `error` prop could be made optional with a default value of an empty string instead of using the optional parameter syntax.",
+        "Consider adding JSDoc comments to explain the purpose and behavior of each component, especially for complex components like `FormInput`."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-organized, maintainable, and follows good practices. However, there are a few minor improvements that can be made to make the code even better."
+    },
+    "aiResults": {
+      "challengeId": "15-component-organization",
+      "timestamp": "2026-08-10T11:22:41.097Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "The code is well-organized and follows a consistent naming convention.",
+        "The use of TypeScript interfaces for each component is a good practice.",
+        "The components are reusable and can be easily imported and used in other parts of the application."
+      ],
+      "improvements": [
+        "Some of the component props could be made optional with a default value instead of using the optional parameter syntax. For example, in `Button.tsx`, `disabled` could be made optional with a default value of `false`.",
+        "In `FormInput.tsx`, the `error` prop could be made optional with a default value of an empty string instead of using the optional parameter syntax.",
+        "Consider adding JSDoc comments to explain the purpose and behavior of each component, especially for complex components like `FormInput`."
+      ],
+      "readability": 85,
+      "maintainability": 90,
+      "overall": "The code is well-organized, maintainable, and follows good practices. However, there are a few minor improvements that can be made to make the code even better."
+    }
   }
 ]

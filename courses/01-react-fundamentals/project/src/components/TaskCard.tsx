@@ -1,5 +1,7 @@
-
 import { useEffect, useState } from 'react'
+import Button from './Button'
+import Badge from './Badge'
+import StatusIndicator from './StatusIndicator'
 
 interface TaskCardProps {
   title: string
@@ -49,6 +51,7 @@ function getDueDateStatus(
   }
 
   const today = getDateOnly(new Date())
+
   const due = getDateOnly(
     new Date(`${dueDate}T00:00:00`)
   )
@@ -91,14 +94,16 @@ export default function TaskCard({
   setEditingId,
 }: TaskCardProps) {
   const isEditing =
-  taskId !== undefined &&
-  editingId === taskId
+    taskId !== undefined &&
+    editingId === taskId
 
   const [editTitle, setEditTitle] =
     useState(title)
 
-  const [editDescription, setEditDescription] =
-    useState(description)
+  const [
+    editDescription,
+    setEditDescription,
+  ] = useState(description)
 
   const [editPriority, setEditPriority] =
     useState(priority)
@@ -214,9 +219,11 @@ export default function TaskCard({
             <option value="Low">
               Low
             </option>
+
             <option value="Medium">
               Medium
             </option>
+
             <option value="High">
               High
             </option>
@@ -233,19 +240,21 @@ export default function TaskCard({
             }
           />
 
-          <button
+          <Button
             type="button"
+            variant="primary"
             onClick={handleSave}
           >
             Save
-          </button>
+          </Button>
 
-          <button
+          <Button
             type="button"
+            variant="secondary"
             onClick={handleCancel}
           >
             Cancel
-          </button>
+          </Button>
         </>
       ) : (
         <>
@@ -269,35 +278,24 @@ export default function TaskCard({
             {description}
           </p>
 
-          <p>
-            {priority.startsWith(
-              'Priority:'
-            )
+          <Badge variant="priority">
+            {priority.startsWith('Priority:')
               ? priority
               : `Priority: ${priority}`}
-          </p>
+          </Badge>
 
-          <p id="task-category">
+          <Badge variant="category">
             Category: {category}
-          </p>
+          </Badge>
 
           <div id="task-tags">
             {tags.map((tag) => (
-              <span
+              <Badge
                 key={tag}
-                data-tag={tag}
-                style={{
-                  display:
-                    'inline-block',
-                  marginRight: '6px',
-                  padding: '2px 8px',
-                  borderRadius: '12px',
-                  border:
-                    '1px solid #ccc',
-                }}
+                variant="tag"
               >
                 {tag}
-              </span>
+              </Badge>
             ))}
           </div>
 
@@ -326,18 +324,24 @@ export default function TaskCard({
               ).toLocaleDateString()}
 
               {dueStatus && (
-                <span>
-                  {' '}
-                  — {dueStatus}
-                </span>
+                <StatusIndicator
+                  status={dueStatus}
+                />
               )}
             </div>
           )}
 
+          {completed && (
+            <StatusIndicator
+              status="Completed"
+            />
+          )}
+
           {onUpdateTask &&
             setEditingId && (
-              <button
+              <Button
                 type="button"
+                variant="secondary"
                 onClick={() =>
                   setEditingId(
                     taskId ?? null
@@ -345,12 +349,13 @@ export default function TaskCard({
                 }
               >
                 Edit
-              </button>
+              </Button>
             )}
 
           {onDelete && (
-            <button
+            <Button
               type="button"
+              variant="danger"
               onClick={() => {
                 if (
                   window.confirm(
@@ -364,11 +369,10 @@ export default function TaskCard({
               }}
             >
               Delete
-            </button>
+            </Button>
           )}
         </>
       )}
     </article>
   )
 }
-
