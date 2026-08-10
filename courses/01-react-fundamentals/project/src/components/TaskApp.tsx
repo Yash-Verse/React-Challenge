@@ -4,6 +4,7 @@ import { useMemo, useEffect, useState } from 'react'
 import FilterBar from './FilterBar'
 import TaskForm from './TaskForm'
 import TaskList, { type Task } from './TaskList'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface TaskAppProps {
   tasks?: Task[]
@@ -122,6 +123,7 @@ export default function TaskApp({
       string | number | null
     >(null)
   
+  const { theme, toggleTheme } = useTheme()  
     
   /*
    * Challenge 11:
@@ -468,8 +470,18 @@ export default function TaskApp({
     setSearch('')
   }
 
+  
+
   return (
     <>
+      <button
+  id="theme-toggle"
+  type="button"
+  onClick={toggleTheme}
+>
+  {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+</button>
+
       {showForm && (
         <TaskForm
           onAddTask={handleAddTask}
