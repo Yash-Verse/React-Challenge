@@ -1,3 +1,4 @@
+
 import TaskCard from './TaskCard'
 
 export interface Task {
@@ -8,17 +9,25 @@ export interface Task {
   completed: boolean
 
   // Challenge 12
-  category?: string
-  tags?: string[]
+  category: string
+  tags: string[]
 
-  dueDate?: string | number
+  // Challenge 13
+  dueDate?: string
 }
 
 interface TaskListProps {
   tasks?: Task[]
   countText?: string
-  onToggle?: (id: string | number) => void
-  onDelete?: (id: string | number) => void
+
+  onToggle?: (
+    id: string | number
+  ) => void
+
+  onDelete?: (
+    id: string | number
+  ) => void
+
   linkToTaskDetail?: boolean
 
   onUpdateTask?: (
@@ -27,10 +36,12 @@ interface TaskListProps {
       title: string
       description: string
       priority: string
+      dueDate?: string
     }
   ) => void
 
   editingId?: string | number | null
+
   setEditingId?: (
     id: string | number | null
   ) => void
@@ -99,8 +110,11 @@ export default function TaskList({
           description={task.description}
           priority={task.priority}
           completed={task.completed}
-          category={task.category ?? 'General'}
+          category={
+            task.category ?? 'General'
+          }
           tags={task.tags ?? []}
+          dueDate={task.dueDate}
           onToggle={onToggle}
           onDelete={onDelete}
           onUpdateTask={onUpdateTask}
@@ -111,3 +125,4 @@ export default function TaskList({
     </section>
   )
 }
+

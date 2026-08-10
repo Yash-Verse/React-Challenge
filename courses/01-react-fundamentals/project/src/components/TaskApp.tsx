@@ -1,3 +1,4 @@
+
 import type { Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import FilterBar from './FilterBar'
@@ -7,15 +8,23 @@ import TaskList, { type Task } from './TaskList'
 interface TaskAppProps {
   tasks?: Task[]
   setTasks?: Dispatch<SetStateAction<Task[]>>
-  dispatch?: (action: {
-    type: string
-    payload?: unknown
-  }) => void
+
+  dispatch?: (
+    action: {
+      type: string
+      payload?: unknown
+    }
+  ) => void
+
   showForm?: boolean
   countFormat?: string
   showFilterBar?: boolean
   showStatsPanel?: boolean
-  onDelete?: (id: string | number) => void
+
+  onDelete?: (
+    id: string | number
+  ) => void
+
   linkToTaskDetail?: boolean
 }
 
@@ -24,7 +33,7 @@ const DEFAULT_TASKS: Task[] = [
     id: 1,
     title: 'First Task',
     description: 'This is the first task.',
-    priority: 'Priority: High',
+    priority: 'High',
     completed: false,
     category: 'General',
     tags: [],
@@ -33,7 +42,7 @@ const DEFAULT_TASKS: Task[] = [
     id: 2,
     title: 'Second Task',
     description: 'This is the second task.',
-    priority: 'Priority: Medium',
+    priority: 'Medium',
     completed: false,
     category: 'General',
     tags: [],
@@ -42,7 +51,7 @@ const DEFAULT_TASKS: Task[] = [
     id: 3,
     title: 'Third Task',
     description: 'This is the third task.',
-    priority: 'Priority: Low',
+    priority: 'Low',
     completed: false,
     category: 'General',
     tags: [],
@@ -51,7 +60,7 @@ const DEFAULT_TASKS: Task[] = [
     id: 4,
     title: 'Fourth Task',
     description: 'This is the fourth task.',
-    priority: 'Priority: High',
+    priority: 'High',
     completed: false,
     category: 'General',
     tags: [],
@@ -60,7 +69,7 @@ const DEFAULT_TASKS: Task[] = [
     id: 5,
     title: 'Fifth Task',
     description: 'This is the fifth task.',
-    priority: 'Priority: Medium',
+    priority: 'Medium',
     completed: false,
     category: 'General',
     tags: [],
@@ -84,17 +93,15 @@ export default function TaskApp({
   countFormat,
 }: TaskAppProps) {
   const [localTasks, setLocalTasks] =
-    useState(DEFAULT_TASKS)
+    useState<Task[]>(DEFAULT_TASKS)
 
-  const [filter, setFilter] =
-    useState<
-      'all' | 'active' | 'completed'
-    >('all')
+  const [filter, setFilter] = useState<
+    'all' | 'active' | 'completed'
+  >('all')
 
-  const [sort, setSort] =
-    useState<
-      'recent' | 'high' | 'low' | 'alpha'
-    >('recent')
+  const [sort, setSort] = useState<
+    'recent' | 'high' | 'low' | 'alpha' | 'due'
+  >('recent')
 
   const [category, setCategory] =
     useState('All')
@@ -112,27 +119,41 @@ export default function TaskApp({
       string | number | null
     >(null)
 
+  /*
+   * Challenge 11:
+   * Debounced search
+   */
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedSearch(search)
     }, 300)
 
-    return () => clearTimeout(timeout)
+    return () => {
+      clearTimeout(timeout)
+    }
   }, [search])
 
   const taskList =
     tasks ?? localTasks
 
+  /*
+   * Category list for FilterBar
+   */
   const categories = [
     ...new Set(
-      taskList.map(
-        (task) =>
-          task.category ??
-          'General'
-      )
+      taskList
+        .map(
+          (task) =>
+            task.category || 'General'
+        )
+        .filter(Boolean)
     ),
   ]
 
+  /*
+   * Challenge 06:
+   * Status filtering
+   */
   const filteredTasks =
     filter === 'active'
       ? taskList.filter(
@@ -144,65 +165,84 @@ export default function TaskApp({
         )
       : taskList
 
+  /*
+   * Challenge 12:
+   * Category filtering
+   */
   const categoryFilteredTasks =
     category === 'All'
       ? filteredTasks
       : filteredTasks.filter(
           (task) =>
-            (task.category ??
-              'General') ===
-            category
+            (task.category ||
+              'General') === category
         )
 
+  /*
+   * Challenge 09 + 11:
+   * Search after status/category filtering
+   */
   const searchedTasks =
     categoryFilteredTasks.filter(
-      (task) =>
-        task.title
-          .toLowerCase()
-          .includes(
-            debouncedSearch.toLowerCase()
-          ) ||
-        task.description
-          .toLowerCase()
-          .includes(
-            debouncedSearch.toLowerCase()
-          )
+      (task) => {
+        const searchTerm =
+          debouncedSearch
+            .trim()
+            .toLowerCase()
+
+        if (!searchTerm) {
+          return true
+        }
+
+        return (
+          task.title
+            .toLowerCase()
+            .includes(searchTerm) ||
+          task.description
+            .toLowerCase()
+            .includes(searchTerm)
+        )
+      }
     )
 
+  /*
+   * Challenge 07 + 13:
+   * Sorting happens AFTER filtering and searching.
+   */
   const sortedTasks = [
     ...searchedTasks,
   ].sort((a, b) => {
     switch (sort) {
       case 'high':
         return (
-          priorityOrder[
+          (priorityOrder[
             b.priority.replace(
               'Priority: ',
               ''
             )
-          ] -
-          priorityOrder[
+          ] ?? 0) -
+          (priorityOrder[
             a.priority.replace(
               'Priority: ',
               ''
             )
-          ]
+          ] ?? 0)
         )
 
       case 'low':
         return (
-          priorityOrder[
+          (priorityOrder[
             a.priority.replace(
               'Priority: ',
               ''
             )
-          ] -
-          priorityOrder[
+          ] ?? 0) -
+          (priorityOrder[
             b.priority.replace(
               'Priority: ',
               ''
             )
-          ]
+          ] ?? 0)
         )
 
       case 'alpha':
@@ -214,11 +254,32 @@ export default function TaskApp({
           }
         )
 
+      /*
+       * Challenge 13:
+       * Due Date - Soonest First
+       *
+       * Tasks with a due date come first.
+       * Tasks without a due date go last.
+       */
+      case 'due': {
+        const aDate = a.dueDate
+          ? new Date(a.dueDate).getTime()
+          : Infinity
+
+        const bDate = b.dueDate
+          ? new Date(b.dueDate).getTime()
+          : Infinity
+
+        return aDate - bDate
+      }
+
+      /*
+       * Recently Added:
+       * Preserve original order.
+       */
+      case 'recent':
       default:
-        return (
-          Number(a.id) -
-          Number(b.id)
-        )
+        return 0
     }
   })
 
@@ -230,21 +291,41 @@ export default function TaskApp({
   const countText =
     showFilterBar
       ? `Showing ${sortedTasks.length} of ${taskList.length} tasks`
-      : countFormat ===
-        'completed'
+      : countFormat === 'completed'
       ? `${completedCount} of ${taskList.length} completed`
       : `${taskList.length} tasks`
-  function handleAddTask(task: Task) {
+
+  /*
+   * Add Task
+   */
+  function handleAddTask(
+    task: Task
+  ) {
+    const newTask: Task = {
+      ...task,
+      category:
+        task.category || 'General',
+      tags: task.tags ?? [],
+      dueDate:
+        task.dueDate || undefined,
+    }
+
     if (setTasks) {
-      setTasks((prev) => [...prev, task])
+      setTasks((prev) => [
+        ...prev,
+        newTask,
+      ])
     } else {
       setLocalTasks((prev) => [
         ...prev,
-        task,
+        newTask,
       ])
     }
   }
 
+  /*
+   * Toggle completed
+   */
   function handleToggle(
     id: string | number
   ) {
@@ -275,6 +356,9 @@ export default function TaskApp({
     }
   }
 
+  /*
+   * Delete
+   */
   function handleDelete(
     id: string | number
   ) {
@@ -293,12 +377,17 @@ export default function TaskApp({
     }
   }
 
+  /*
+   * Challenge 08 + 13:
+   * Update task, including dueDate
+   */
   function handleUpdateTask(
     id: string | number,
     updates: {
       title: string
       description: string
       priority: string
+      dueDate?: string
     }
   ) {
     if (setTasks) {
@@ -334,32 +423,23 @@ export default function TaskApp({
     <>
       {showForm && (
         <TaskForm
-          onAddTask={
-            handleAddTask
-          }
+          onAddTask={handleAddTask}
         />
       )}
 
       {showFilterBar && (
         <FilterBar
           filter={filter}
-          onFilterChange={
-            setFilter
-          }
+          onFilterChange={setFilter}
           sort={sort}
-          onSortChange={
-            setSort
-          }
+          onSortChange={setSort}
           search={search}
-          onSearchChange={
-            setSearch
-          }
+          onSearchChange={setSearch}
           onClearSearch={
             handleClearSearch
           }
           searching={
-            search !==
-            debouncedSearch
+            search !== debouncedSearch
           }
           category={category}
           categories={categories}
@@ -372,22 +452,17 @@ export default function TaskApp({
       <TaskList
         tasks={sortedTasks}
         countText={countText}
-        onToggle={
-          handleToggle
-        }
-        onDelete={
-          handleDelete
-        }
+        onToggle={handleToggle}
+        onDelete={handleDelete}
         onUpdateTask={
           handleUpdateTask
         }
-        editingId={
-          editingId
-        }
+        editingId={editingId}
         setEditingId={
           setEditingId
         }
       />
     </>
   )
-}      
+}
+

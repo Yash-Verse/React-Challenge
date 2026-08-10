@@ -1,24 +1,43 @@
+
 import { useState } from 'react'
-import type { Task } from './TaskList'
+
+interface Task {
+  id: string | number
+  title: string
+  description: string
+  priority: string
+  completed: boolean
+  category: string
+  tags: string[]
+  dueDate?: string
+}
 
 interface TaskFormProps {
   onAddTask?: (task: Task) => void
+  categories?: string[]
 }
+
+const DEFAULT_CATEGORIES = [
+  'General',
+  'Work',
+  'Personal',
+]
 
 export default function TaskForm({
   onAddTask,
+  categories = DEFAULT_CATEGORIES,
 }: TaskFormProps) {
   const [title, setTitle] = useState('')
   const [description, setDescription] =
     useState('')
   const [priority, setPriority] =
     useState('Low')
-
-  // Challenge 12
   const [category, setCategory] =
     useState('General')
-  const [tags, setTags] = useState('')
-
+  const [tagsInput, setTagsInput] =
+    useState('')
+  const [dueDate, setDueDate] =
+    useState('')
   const [error, setError] = useState('')
 
   function handleSubmit(
@@ -33,24 +52,33 @@ export default function TaskForm({
 
     setError('')
 
-    onAddTask?.({
+    const tags = tagsInput
+      .split(',')
+      .map((tag) => tag.trim())
+      .filter((tag) => tag !== '')
+
+    const newTask: Task = {
       id: Date.now(),
-      title,
+      title: title.trim(),
       description,
       priority,
       completed: false,
-      category,
-      tags: tags
-        .split(',')
-        .map((tag) => tag.trim())
-        .filter(Boolean),
-    })
+      category: category || 'General',
+      tags,
+    }
+
+    if (dueDate) {
+      newTask.dueDate = dueDate
+    }
+
+    onAddTask?.(newTask)
 
     setTitle('')
     setDescription('')
     setPriority('Low')
     setCategory('General')
-    setTags('')
+    setTagsInput('')
+    setDueDate('')
   }
 
   return (
@@ -79,9 +107,7 @@ export default function TaskForm({
           id="task-description"
           value={description}
           onChange={(e) =>
-            setDescription(
-              e.target.value
-            )
+            setDescription(e.target.value)
           }
         />
       </div>
@@ -98,15 +124,11 @@ export default function TaskForm({
             setPriority(e.target.value)
           }
         >
-          <option value="Low">
-            Low
-          </option>
+          <option value="Low">Low</option>
           <option value="Medium">
             Medium
           </option>
-          <option value="High">
-            High
-          </option>
+          <option value="High">High</option>
         </select>
       </div>
 
@@ -122,15 +144,14 @@ export default function TaskForm({
             setCategory(e.target.value)
           }
         >
-          <option value="General">
-            General
-          </option>
-          <option value="Work">
-            Work
-          </option>
-          <option value="Personal">
-            Personal
-          </option>
+          {categories.map((item) => (
+            <option
+              key={item}
+              value={item}
+            >
+              {item}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -142,10 +163,25 @@ export default function TaskForm({
         <input
           id="task-tags"
           type="text"
-          placeholder="react, study, home"
-          value={tags}
+          placeholder="react, frontend, work"
+          value={tagsInput}
           onChange={(e) =>
-            setTags(e.target.value)
+            setTagsInput(e.target.value)
+          }
+        />
+      </div>
+
+      <div>
+        <label htmlFor="task-due-date">
+          Due Date
+        </label>
+
+        <input
+          id="task-due-date"
+          type="date"
+          value={dueDate}
+          onChange={(e) =>
+            setDueDate(e.target.value)
           }
         />
       </div>
@@ -162,3 +198,4 @@ export default function TaskForm({
     </form>
   )
 }
+
