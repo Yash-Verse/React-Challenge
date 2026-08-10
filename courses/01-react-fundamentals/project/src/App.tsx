@@ -8,6 +8,7 @@ import TaskDetailPage from './components/TaskDetailPage'
 import FetchDemoView from './components/FetchDemoView'
 import { ThemeProvider } from './contexts/ThemeContext'
 import type { Task } from './components/TaskList'
+import useLocalStorage from './hooks/useLocalStorage'
 
 const INITIAL_TASKS: Task[] = [
   { id: 1, title: 'First Task', description: 'Description one', priority: 'High', completed: false, category: 'General',
@@ -25,7 +26,11 @@ tags: [],},
 const STORAGE_KEY = 'task-app-tasks'
 
 function AppContent() {
-  const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS)
+  const [tasks, setTasks] =
+  useLocalStorage<Task[]>(
+    'task-app-tasks',
+    INITIAL_TASKS
+  )
   
   useEffect(() => {
   const savedTasks = localStorage.getItem(
