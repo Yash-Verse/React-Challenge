@@ -1,21 +1,14 @@
 import StatsPanel from './StatsPanel'
-import type { Dispatch, SetStateAction } from 'react'
 import { useMemo, useEffect, useState } from 'react'
 import FilterBar from './FilterBar'
 import TaskForm from './TaskForm'
 import TaskList, { type Task } from './TaskList'
 import { useTheme } from '../contexts/ThemeContext'
+import type { TaskAction } from '../reducers/taskReducer'
 
 interface TaskAppProps {
   tasks?: Task[]
-  setTasks?: Dispatch<SetStateAction<Task[]>>
-
-  dispatch?: (
-    action: {
-      type: string
-      payload?: unknown
-    }
-  ) => void
+  dispatch?: (action: TaskAction) => void
 
   showForm?: boolean
   countFormat?: string
@@ -77,10 +70,7 @@ const DEFAULT_TASKS: Task[] = [
   },
 ]
 
-const priorityOrder: Record<
-  string,
-  number
-> = {
+const priorityOrder: Record<string, number> = {
   High: 3,
   Medium: 2,
   Low: 1,
@@ -88,11 +78,12 @@ const priorityOrder: Record<
 
 export default function TaskApp({
   tasks,
-  setTasks,
+  dispatch,
   showForm,
   showFilterBar,
   showStatsPanel,
   countFormat,
+  onDelete,
 }: TaskAppProps) {
   const [localTasks, setLocalTasks] =
     useState<Task[]>(DEFAULT_TASKS)
@@ -119,12 +110,10 @@ export default function TaskApp({
   ] = useState('')
 
   const [editingId, setEditingId] =
-    useState<
-      string | number | null
-    >(null)
-  
-  const { theme, toggleTheme } = useTheme()  
-    
+    useState<string | number | null>(null)
+
+  const { theme, toggleTheme } = useTheme()
+
   /*
    * Challenge 11:
    * Debounced search
@@ -138,8 +127,6 @@ export default function TaskApp({
       clearTimeout(timeout)
     }
   }, [search])
-
-  
 
   /*
    * Category list for FilterBar
@@ -179,13 +166,13 @@ export default function TaskApp({
       ? filteredTasks
       : filteredTasks.filter(
           (task) =>
-            (task.category ||
-              'General') === category
+            (task.category || 'General') ===
+            category
         )
 
   /*
    * Challenge 09 + 11:
-   * Search after status/category filtering
+   * Search
    */
   const searchedTasks =
     categoryFilteredTasks.filter(
@@ -212,7 +199,7 @@ export default function TaskApp({
 
   /*
    * Challenge 07 + 13:
-   * Sorting happens AFTER filtering and searching.
+   * Sorting
    */
   const sortedTasks = [
     ...searchedTasks,
@@ -259,13 +246,6 @@ export default function TaskApp({
           }
         )
 
-      /*
-       * Challenge 13:
-       * Due Date - Soonest First
-       *
-       * Tasks with a due date come first.
-       * Tasks without a due date go last.
-       */
       case 'due': {
         const aDate = a.dueDate
           ? new Date(a.dueDate).getTime()
@@ -278,80 +258,87 @@ export default function TaskApp({
         return aDate - bDate
       }
 
-      /*
-       * Recently Added:
-       * Preserve original order.
-       */
       case 'recent':
       default:
         return 0
     }
   })
 
+  /*
+   * Completed count
+   */
   const completedCount =
     taskList.filter(
       (task) => task.completed
     ).length
 
+  /*
+   * Count text
+   */
   const countText =
     showFilterBar
       ? `Showing ${sortedTasks.length} of ${taskList.length} tasks`
       : countFormat === 'completed'
       ? `${completedCount} of ${taskList.length} completed`
       : `${taskList.length} tasks`
-  
+
+  /*
+   * Challenge 14:
+   * Statistics
+   */
   const stats = useMemo(() => {
-  const total = taskList.length
+    const total = taskList.length
 
-  const completed = taskList.filter(
-    (task) => task.completed
-  ).length
+    const completed = taskList.filter(
+      (task) => task.completed
+    ).length
 
-  const active = taskList.filter(
-    (task) => !task.completed
-  ).length
+    const active = taskList.filter(
+      (task) => !task.completed
+    ).length
 
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
+    const today = new Date()
 
-  const overdue = taskList.filter(
-    (task) => {
-      if (
-        task.completed ||
-        !task.dueDate
-      ) {
-        return false
-      }
+    today.setHours(0, 0, 0, 0)
 
-      const dueDate = new Date(
-        `${task.dueDate}T00:00:00`
-      )
+    const overdue = taskList.filter(
+      (task) => {
+        if (
+          task.completed ||
+          !task.dueDate
+        ) {
+          return false
+        }
 
-      return dueDate < today
-    }
-  ).length
-
-  const percentage =
-    total === 0
-      ? 0
-      : Math.round(
-          (completed / total) * 100
+        const dueDate = new Date(
+          `${task.dueDate}T00:00:00`
         )
 
-  return {
-    total,
-    completed,
-    percentage,
-    active,
-    overdue,
-  }
-}, [taskList])    
+        return dueDate < today
+      }
+    ).length
+
+    const percentage =
+      total === 0
+        ? 0
+        : Math.round(
+            (completed / total) * 100
+          )
+
+    return {
+      total,
+      completed,
+      percentage,
+      active,
+      overdue,
+    }
+  }, [taskList])
+
   /*
-   * Add Task
+   * Challenge 18:
+   * ADD_TASK
    */
-  function handleAddTask(
-    task: Task
-  ) {
+  function handleAddTask(task: Task) {
     const newTask: Task = {
       ...task,
       category:
@@ -361,11 +348,11 @@ export default function TaskApp({
         task.dueDate || undefined,
     }
 
-    if (setTasks) {
-      setTasks((prev) => [
-        ...prev,
-        newTask,
-      ])
+    if (dispatch) {
+      dispatch({
+        type: 'ADD_TASK',
+        payload: newTask,
+      })
     } else {
       setLocalTasks((prev) => [
         ...prev,
@@ -375,23 +362,17 @@ export default function TaskApp({
   }
 
   /*
-   * Toggle completed
+   * Challenge 18:
+   * TOGGLE_TASK
    */
   function handleToggle(
     id: string | number
   ) {
-    if (setTasks) {
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === id
-            ? {
-                ...task,
-                completed:
-                  !task.completed,
-              }
-            : task
-        )
-      )
+    if (dispatch) {
+      dispatch({
+        type: 'TOGGLE_TASK',
+        payload: id,
+      })
     } else {
       setLocalTasks((prev) =>
         prev.map((task) =>
@@ -408,17 +389,22 @@ export default function TaskApp({
   }
 
   /*
-   * Delete
+   * Challenge 18:
+   * DELETE_TASK
    */
   function handleDelete(
     id: string | number
   ) {
-    if (setTasks) {
-      setTasks((prev) =>
-        prev.filter(
-          (task) => task.id !== id
-        )
-      )
+    if (onDelete) {
+      onDelete(id)
+      return
+    }
+
+    if (dispatch) {
+      dispatch({
+        type: 'DELETE_TASK',
+        payload: id,
+      })
     } else {
       setLocalTasks((prev) =>
         prev.filter(
@@ -429,8 +415,8 @@ export default function TaskApp({
   }
 
   /*
-   * Challenge 08 + 13:
-   * Update task, including dueDate
+   * Challenge 18:
+   * UPDATE_TASK
    */
   function handleUpdateTask(
     id: string | number,
@@ -441,17 +427,14 @@ export default function TaskApp({
       dueDate?: string
     }
   ) {
-    if (setTasks) {
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === id
-            ? {
-                ...task,
-                ...updates,
-              }
-            : task
-        )
-      )
+    if (dispatch) {
+      dispatch({
+        type: 'UPDATE_TASK',
+        payload: {
+          id,
+          ...updates,
+        },
+      })
     } else {
       setLocalTasks((prev) =>
         prev.map((task) =>
@@ -466,28 +449,34 @@ export default function TaskApp({
     }
   }
 
+  /*
+   * Clear search
+   */
   function handleClearSearch() {
     setSearch('')
   }
 
-  
-
   return (
     <>
+      {/* Challenge 16: Theme toggle */}
       <button
-  id="theme-toggle"
-  type="button"
-  onClick={toggleTheme}
->
-  {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
-</button>
+        id="theme-toggle"
+        type="button"
+        onClick={toggleTheme}
+      >
+        {theme === 'light'
+          ? 'Dark Mode'
+          : 'Light Mode'}
+      </button>
 
+      {/* Challenge 03+ */}
       {showForm && (
         <TaskForm
           onAddTask={handleAddTask}
         />
       )}
 
+      {/* Challenge 06+ */}
       {showFilterBar && (
         <FilterBar
           filter={filter}
@@ -509,15 +498,21 @@ export default function TaskApp({
           }
         />
       )}
-      
-      {showStatsPanel && (
-         <StatsPanel  total={stats.total}
-         completed={stats.completed}
-         active={stats.active}
-         overdue={stats.overdue}
-          completedPercentage={stats.percentage}/>
-        )}
 
+      {/* Challenge 14 */}
+      {showStatsPanel && (
+        <StatsPanel
+          total={stats.total}
+          completed={stats.completed}
+          active={stats.active}
+          overdue={stats.overdue}
+          completedPercentage={
+            stats.percentage
+          }
+        />
+      )}
+
+      {/* Task list */}
       <TaskList
         tasks={sortedTasks}
         countText={countText}
@@ -534,4 +529,3 @@ export default function TaskApp({
     </>
   )
 }
-
