@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react'
+import React, {
+  useEffect,
+  useState,
+} from 'react'
+
 import Button from './Button'
 import Badge from './Badge'
 import StatusIndicator from './StatusIndicator'
@@ -12,8 +16,13 @@ interface TaskCardProps {
   tags?: string[]
   dueDate?: string
 
-  onToggle?: (id: string | number) => void
-  onDelete?: (id: string | number) => void
+  onToggle?: (
+    id: string | number
+  ) => void
+
+  onDelete?: (
+    id: string | number
+  ) => void
 
   taskId?: string | number
 
@@ -50,14 +59,19 @@ function getDueDateStatus(
     return null
   }
 
-  const today = getDateOnly(new Date())
+  const today = getDateOnly(
+    new Date()
+  )
 
   const due = getDateOnly(
-    new Date(`${dueDate}T00:00:00`)
+    new Date(
+      `${dueDate}T00:00:00`
+    )
   )
 
   const difference =
-    due.getTime() - today.getTime()
+    due.getTime() -
+    today.getTime()
 
   const daysUntil =
     difference /
@@ -78,7 +92,7 @@ function getDueDateStatus(
   return null
 }
 
-export default function TaskCard({
+function TaskCard({
   title,
   description,
   priority,
@@ -97,25 +111,41 @@ export default function TaskCard({
     taskId !== undefined &&
     editingId === taskId
 
-  const [editTitle, setEditTitle] =
-    useState(title)
+  const [
+    editTitle,
+    setEditTitle,
+  ] = useState(title)
 
   const [
     editDescription,
     setEditDescription,
   ] = useState(description)
 
-  const [editPriority, setEditPriority] =
-    useState(priority)
+  const [
+    editPriority,
+    setEditPriority,
+  ] = useState(priority)
 
-  const [editDueDate, setEditDueDate] =
-    useState(dueDate ?? '')
+  const [
+    editDueDate,
+    setEditDueDate,
+  ] = useState(
+    dueDate ?? ''
+  )
 
+  /*
+   * Keep editing fields synchronized
+   * when task props change.
+   */
   useEffect(() => {
     setEditTitle(title)
-    setEditDescription(description)
+    setEditDescription(
+      description
+    )
     setEditPriority(priority)
-    setEditDueDate(dueDate ?? '')
+    setEditDueDate(
+      dueDate ?? ''
+    )
   }, [
     title,
     description,
@@ -123,10 +153,11 @@ export default function TaskCard({
     dueDate,
   ])
 
-  const dueStatus = getDueDateStatus(
-    dueDate,
-    completed
-  )
+  const dueStatus =
+    getDueDateStatus(
+      dueDate,
+      completed
+    )
 
   function handleSave() {
     if (
@@ -139,7 +170,8 @@ export default function TaskCard({
 
     onUpdateTask(taskId, {
       title: editTitle.trim(),
-      description: editDescription,
+      description:
+        editDescription,
       priority: editPriority,
       dueDate:
         editDueDate.trim() === ''
@@ -152,9 +184,17 @@ export default function TaskCard({
 
   function handleCancel() {
     setEditTitle(title)
-    setEditDescription(description)
+
+    setEditDescription(
+      description
+    )
+
     setEditPriority(priority)
-    setEditDueDate(dueDate ?? '')
+
+    setEditDueDate(
+      dueDate ?? ''
+    )
+
     setEditingId?.(null)
   }
 
@@ -168,15 +208,18 @@ export default function TaskCard({
           : 'false'
       }
       style={{
-        border: '1px solid #ccc',
+        border:
+          '1px solid #ccc',
         borderRadius: '8px',
         padding: '16px',
         marginBottom: '16px',
-        backgroundColor: completed
-          ? '#e6ffe6'
-          : dueStatus === 'Overdue'
-          ? '#ffe6e6'
-          : '#fff',
+        backgroundColor:
+          completed
+            ? '#e6ffe6'
+            : dueStatus ===
+              'Overdue'
+            ? '#ffe6e6'
+            : '#fff',
       }}
     >
       {onToggle && (
@@ -184,7 +227,9 @@ export default function TaskCard({
           type="checkbox"
           checked={completed}
           onChange={() =>
-            onToggle(taskId ?? '')
+            onToggle(
+              taskId ?? ''
+            )
           }
         />
       )}
@@ -195,12 +240,16 @@ export default function TaskCard({
             type="text"
             value={editTitle}
             onChange={(e) =>
-              setEditTitle(e.target.value)
+              setEditTitle(
+                e.target.value
+              )
             }
           />
 
           <textarea
-            value={editDescription}
+            value={
+              editDescription
+            }
             onChange={(e) =>
               setEditDescription(
                 e.target.value
@@ -251,7 +300,9 @@ export default function TaskCard({
           <Button
             type="button"
             variant="secondary"
-            onClick={handleCancel}
+            onClick={
+              handleCancel
+            }
           >
             Cancel
           </Button>
@@ -260,9 +311,10 @@ export default function TaskCard({
         <>
           <h2
             style={{
-              textDecoration: completed
-                ? 'line-through'
-                : 'none',
+              textDecoration:
+                completed
+                  ? 'line-through'
+                  : 'none',
             }}
           >
             {title}
@@ -270,16 +322,19 @@ export default function TaskCard({
 
           <p
             style={{
-              textDecoration: completed
-                ? 'line-through'
-                : 'none',
+              textDecoration:
+                completed
+                  ? 'line-through'
+                  : 'none',
             }}
           >
             {description}
           </p>
 
           <Badge variant="priority">
-            {priority.startsWith('Priority:')
+            {priority.startsWith(
+              'Priority:'
+            )
               ? priority
               : `Priority: ${priority}`}
           </Badge>
@@ -289,27 +344,31 @@ export default function TaskCard({
           </Badge>
 
           <div id="task-tags">
-            {tags.map((tag) => (
-              <Badge
-                key={tag}
-                variant="tag"
-              >
-                {tag}
-              </Badge>
-            ))}
+            {tags.map(
+              (tag) => (
+                <Badge
+                  key={tag}
+                  variant="tag"
+                >
+                  {tag}
+                </Badge>
+              )
+            )}
           </div>
 
           {dueDate && (
             <div
               id="task-due-date"
               data-overdue={
-                dueStatus === 'Overdue'
+                dueStatus ===
+                'Overdue'
                   ? 'true'
                   : 'false'
               }
               style={{
                 color:
-                  dueStatus === 'Overdue'
+                  dueStatus ===
+                  'Overdue'
                     ? 'red'
                     : 'inherit',
                 fontWeight:
@@ -319,13 +378,16 @@ export default function TaskCard({
               }}
             >
               Due Date:{' '}
+
               {new Date(
                 `${dueDate}T00:00:00`
               ).toLocaleDateString()}
 
               {dueStatus && (
                 <StatusIndicator
-                  status={dueStatus}
+                  status={
+                    dueStatus
+                  }
                 />
               )}
             </div>
@@ -376,3 +438,13 @@ export default function TaskCard({
     </article>
   )
 }
+
+/*
+ * Challenge 19:
+ * React.memo prevents unnecessary
+ * re-renders when TaskCard props
+ * have not changed.
+ */
+export default React.memo(
+  TaskCard
+)

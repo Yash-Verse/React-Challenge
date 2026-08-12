@@ -1,23 +1,23 @@
 {
-  "lastUpdated": "2026-08-11T07:03:01.371Z",
+  "lastUpdated": "2026-08-12T04:52:08.713Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
     "overallScore": 29.2,
-    "completionPercentage": 34,
+    "completionPercentage": 35.8,
     "badgeLevel": "none",
     "totalChallenges": 53,
-    "completedChallenges": 18
+    "completedChallenges": 19
   },
   "courses": {
     "01-react-fundamentals": {
       "courseId": "01-react-fundamentals",
       "courseName": "React Fundamentals",
-      "averageScore": 88.4,
-      "completionPercentage": 78.3,
+      "averageScore": 88.5,
+      "completionPercentage": 82.6,
       "badgeLevel": "silver",
       "totalChallenges": 23,
-      "completedChallenges": 18,
+      "completedChallenges": 19,
       "challenges": {
         "01-static-task-display": {
           "challengeId": "01-static-task-display",
@@ -280,6 +280,21 @@
           "passed": true,
           "score": 89.95,
           "lastRun": "2026-08-11T07:01:39.792Z",
+          "scores": {
+            "functionalTests": 100,
+            "codeQuality": 50,
+            "architecture": 100,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 83
+          }
+        },
+        "19-performance-optimization": {
+          "challengeId": "19-performance-optimization",
+          "challengeName": "Performance Optimization",
+          "passed": true,
+          "score": 89.95,
+          "lastRun": "2026-08-12T04:50:43.416Z",
           "scores": {
             "functionalTests": 100,
             "codeQuality": 50,

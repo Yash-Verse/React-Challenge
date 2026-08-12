@@ -1,5 +1,10 @@
 import StatsPanel from './StatsPanel'
-import { useMemo, useEffect, useState } from 'react'
+import {
+  useMemo,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react'
 import FilterBar from './FilterBar'
 import TaskForm from './TaskForm'
 import TaskList, { type Task } from './TaskList'
@@ -129,63 +134,64 @@ export default function TaskApp({
   }, [search])
 
   /*
-   * Category list for FilterBar
-   */
-  const categories = [
-    ...new Set(
-      taskList
-        .map(
-          (task) =>
-            task.category || 'General'
-        )
-        .filter(Boolean)
-    ),
-  ]
-
-  /*
-   * Challenge 06:
-   * Status filtering
-   */
-  const filteredTasks =
-    filter === 'active'
-      ? taskList.filter(
-          (task) => !task.completed
-        )
-      : filter === 'completed'
-      ? taskList.filter(
-          (task) => task.completed
-        )
-      : taskList
-
-  /*
    * Challenge 12:
-   * Category filtering
+   * Category list
    */
-  const categoryFilteredTasks =
-    category === 'All'
-      ? filteredTasks
-      : filteredTasks.filter(
-          (task) =>
-            (task.category || 'General') ===
-            category
-        )
+  const categories = useMemo(() => {
+    return [
+      ...new Set(
+        taskList
+          .map(
+            (task) =>
+              task.category || 'General'
+          )
+          .filter(Boolean)
+      ),
+    ]
+  }, [taskList])
 
   /*
-   * Challenge 09 + 11:
-   * Search
+   * Challenge 19:
+   * Filter, category filter, search and sort
+   * are memoized so they only recalculate
+   * when their dependencies change.
    */
-  const searchedTasks =
-    categoryFilteredTasks.filter(
-      (task) => {
-        const searchTerm =
-          debouncedSearch
-            .trim()
-            .toLowerCase()
+  const sortedTasks = useMemo(() => {
+    /*
+     * Status filtering
+     */
+    let result =
+      filter === 'active'
+        ? taskList.filter(
+            (task) => !task.completed
+          )
+        : filter === 'completed'
+        ? taskList.filter(
+            (task) => task.completed
+          )
+        : taskList
 
-        if (!searchTerm) {
-          return true
-        }
+    /*
+     * Category filtering
+     */
+    if (category !== 'All') {
+      result = result.filter(
+        (task) =>
+          (task.category || 'General') ===
+          category
+      )
+    }
 
+    /*
+     * Search
+     */
+    const searchTerm =
+      debouncedSearch
+        .trim()
+        .toLowerCase()
+
+    if (searchTerm) {
+      result = result.filter((task) => {
         return (
           task.title
             .toLowerCase()
@@ -194,83 +200,92 @@ export default function TaskApp({
             .toLowerCase()
             .includes(searchTerm)
         )
-      }
-    )
-
-  /*
-   * Challenge 07 + 13:
-   * Sorting
-   */
-  const sortedTasks = [
-    ...searchedTasks,
-  ].sort((a, b) => {
-    switch (sort) {
-      case 'high':
-        return (
-          (priorityOrder[
-            b.priority.replace(
-              'Priority: ',
-              ''
-            )
-          ] ?? 0) -
-          (priorityOrder[
-            a.priority.replace(
-              'Priority: ',
-              ''
-            )
-          ] ?? 0)
-        )
-
-      case 'low':
-        return (
-          (priorityOrder[
-            a.priority.replace(
-              'Priority: ',
-              ''
-            )
-          ] ?? 0) -
-          (priorityOrder[
-            b.priority.replace(
-              'Priority: ',
-              ''
-            )
-          ] ?? 0)
-        )
-
-      case 'alpha':
-        return a.title.localeCompare(
-          b.title,
-          undefined,
-          {
-            sensitivity: 'base',
-          }
-        )
-
-      case 'due': {
-        const aDate = a.dueDate
-          ? new Date(a.dueDate).getTime()
-          : Infinity
-
-        const bDate = b.dueDate
-          ? new Date(b.dueDate).getTime()
-          : Infinity
-
-        return aDate - bDate
-      }
-
-      case 'recent':
-      default:
-        return 0
+      })
     }
-  })
+
+    /*
+     * Sorting
+     */
+    return [...result].sort((a, b) => {
+      switch (sort) {
+        case 'high':
+          return (
+            (priorityOrder[
+              b.priority.replace(
+                'Priority: ',
+                ''
+              )
+            ] ?? 0) -
+            (priorityOrder[
+              a.priority.replace(
+                'Priority: ',
+                ''
+              )
+            ] ?? 0)
+          )
+
+        case 'low':
+          return (
+            (priorityOrder[
+              a.priority.replace(
+                'Priority: ',
+                ''
+              )
+            ] ?? 0) -
+            (priorityOrder[
+              b.priority.replace(
+                'Priority: ',
+                ''
+              )
+            ] ?? 0)
+          )
+
+        case 'alpha':
+          return a.title.localeCompare(
+            b.title,
+            undefined,
+            {
+              sensitivity: 'base',
+            }
+          )
+
+        case 'due': {
+          const aDate = a.dueDate
+            ? new Date(
+                a.dueDate
+              ).getTime()
+            : Infinity
+
+          const bDate = b.dueDate
+            ? new Date(
+                b.dueDate
+              ).getTime()
+            : Infinity
+
+          return aDate - bDate
+        }
+
+        case 'recent':
+        default:
+          return 0
+      }
+    })
+  }, [
+    taskList,
+    filter,
+    category,
+    debouncedSearch,
+    sort,
+  ])
 
   /*
    * Completed count
    */
-  const completedCount =
-    taskList.filter(
+  const completedCount = useMemo(() => {
+    return taskList.filter(
       (task) => task.completed
     ).length
+  }, [taskList])
 
   /*
    * Count text
@@ -335,126 +350,134 @@ export default function TaskApp({
   }, [taskList])
 
   /*
-   * Challenge 18:
+   * Challenge 18 + 19:
    * ADD_TASK
    */
-  function handleAddTask(task: Task) {
-    const newTask: Task = {
-      ...task,
-      category:
-        task.category || 'General',
-      tags: task.tags ?? [],
-      dueDate:
-        task.dueDate || undefined,
-    }
+  const handleAddTask = useCallback(
+    (task: Task) => {
+      const newTask: Task = {
+        ...task,
+        category:
+          task.category || 'General',
+        tags: task.tags ?? [],
+        dueDate:
+          task.dueDate || undefined,
+      }
 
-    if (dispatch) {
-      dispatch({
-        type: 'ADD_TASK',
-        payload: newTask,
-      })
-    } else {
-      setLocalTasks((prev) => [
-        ...prev,
-        newTask,
-      ])
-    }
-  }
+      if (dispatch) {
+        dispatch({
+          type: 'ADD_TASK',
+          payload: newTask,
+        })
+      } else {
+        setLocalTasks((prev) => [
+          ...prev,
+          newTask,
+        ])
+      }
+    },
+    [dispatch]
+  )
 
   /*
-   * Challenge 18:
+   * Challenge 18 + 19:
    * TOGGLE_TASK
    */
-  function handleToggle(
-    id: string | number
-  ) {
-    if (dispatch) {
-      dispatch({
-        type: 'TOGGLE_TASK',
-        payload: id,
-      })
-    } else {
-      setLocalTasks((prev) =>
-        prev.map((task) =>
-          task.id === id
-            ? {
-                ...task,
-                completed:
-                  !task.completed,
-              }
-            : task
+  const handleToggle = useCallback(
+    (id: string | number) => {
+      if (dispatch) {
+        dispatch({
+          type: 'TOGGLE_TASK',
+          payload: id,
+        })
+      } else {
+        setLocalTasks((prev) =>
+          prev.map((task) =>
+            task.id === id
+              ? {
+                  ...task,
+                  completed:
+                    !task.completed,
+                }
+              : task
+          )
         )
-      )
-    }
-  }
+      }
+    },
+    [dispatch]
+  )
 
   /*
-   * Challenge 18:
+   * Challenge 18 + 19:
    * DELETE_TASK
    */
-  function handleDelete(
-    id: string | number
-  ) {
-    if (onDelete) {
-      onDelete(id)
-      return
-    }
+  const handleDelete = useCallback(
+    (id: string | number) => {
+      if (onDelete) {
+        onDelete(id)
+        return
+      }
 
-    if (dispatch) {
-      dispatch({
-        type: 'DELETE_TASK',
-        payload: id,
-      })
-    } else {
-      setLocalTasks((prev) =>
-        prev.filter(
-          (task) => task.id !== id
+      if (dispatch) {
+        dispatch({
+          type: 'DELETE_TASK',
+          payload: id,
+        })
+      } else {
+        setLocalTasks((prev) =>
+          prev.filter(
+            (task) => task.id !== id
+          )
         )
-      )
-    }
-  }
+      }
+    },
+    [dispatch, onDelete]
+  )
 
   /*
-   * Challenge 18:
+   * Challenge 18 + 19:
    * UPDATE_TASK
    */
-  function handleUpdateTask(
-    id: string | number,
-    updates: {
-      title: string
-      description: string
-      priority: string
-      dueDate?: string
-    }
-  ) {
-    if (dispatch) {
-      dispatch({
-        type: 'UPDATE_TASK',
-        payload: {
-          id,
-          ...updates,
-        },
-      })
-    } else {
-      setLocalTasks((prev) =>
-        prev.map((task) =>
-          task.id === id
-            ? {
-                ...task,
-                ...updates,
-              }
-            : task
+  const handleUpdateTask = useCallback(
+    (
+      id: string | number,
+      updates: {
+        title: string
+        description: string
+        priority: string
+        dueDate?: string
+      }
+    ) => {
+      if (dispatch) {
+        dispatch({
+          type: 'UPDATE_TASK',
+          payload: {
+            id,
+            ...updates,
+          },
+        })
+      } else {
+        setLocalTasks((prev) =>
+          prev.map((task) =>
+            task.id === id
+              ? {
+                  ...task,
+                  ...updates,
+                }
+              : task
+          )
         )
-      )
-    }
-  }
+      }
+    },
+    [dispatch]
+  )
 
   /*
    * Clear search
    */
-  function handleClearSearch() {
+  const handleClearSearch = useCallback(() => {
     setSearch('')
-  }
+  }, [])
 
   return (
     <>
