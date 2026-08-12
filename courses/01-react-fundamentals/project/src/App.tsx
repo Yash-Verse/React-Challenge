@@ -109,7 +109,7 @@ function AppContent() {
   return (
     <BrowserRouter>
       <div className="App">
-        <main>
+        
           <Routes>
 
             <Route
@@ -396,7 +396,7 @@ function AppContent() {
             />
 
           </Routes>
-        </main>
+        
       </div>
     </BrowserRouter>
   )

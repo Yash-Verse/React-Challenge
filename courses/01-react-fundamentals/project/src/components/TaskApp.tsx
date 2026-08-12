@@ -10,6 +10,7 @@ import TaskForm from './TaskForm'
 import TaskList, { type Task } from './TaskList'
 import { useTheme } from '../contexts/ThemeContext'
 import type { TaskAction } from '../reducers/taskReducer'
+import ErrorBoundary from './ErrorBoundary'
 
 interface TaskAppProps {
   tasks?: Task[]
@@ -536,6 +537,7 @@ export default function TaskApp({
       )}
 
       {/* Task list */}
+    <ErrorBoundary>
       <TaskList
         tasks={sortedTasks}
         countText={countText}
@@ -549,6 +551,7 @@ export default function TaskApp({
           setEditingId
         }
       />
+    </ErrorBoundary>
     </>
   )
 }
