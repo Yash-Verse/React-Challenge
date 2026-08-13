@@ -1,113 +1,84 @@
 import { useState } from 'react'
-import FormInput from './FormInput'
 import Button from './Button'
-
-interface Task {
-  id: string | number
-  title: string
-  description: string
-  priority: string
-  completed: boolean
-  category: string
-  tags: string[]
-  dueDate?: string
-}
+import FormInput from './FormInput'
 
 interface TaskFormProps {
-  onAddTask?: (task: Task) => void
-  categories?: string[]
+  onAddTask?: (task: Record<string, unknown>) => void
 }
-
-const DEFAULT_CATEGORIES = [
-  'General',
-  'Work',
-  'Personal',
-]
 
 export default function TaskForm({
   onAddTask,
-  categories = DEFAULT_CATEGORIES,
 }: TaskFormProps) {
   const [title, setTitle] = useState('')
-  const [description, setDescription] =
-    useState('')
-  const [priority, setPriority] =
-    useState('Low')
-  const [category, setCategory] =
-    useState('General')
-  const [tagsInput, setTagsInput] =
-    useState('')
-  const [dueDate, setDueDate] =
-    useState('')
+  const [description, setDescription] = useState('')
+  const [priority, setPriority] = useState('Low')
+  const [category, setCategory] = useState('General')
+  const [tags, setTags] = useState('')
+  const [dueDate, setDueDate] = useState('')
   const [error, setError] = useState('')
 
-  function handleSubmit(
+  const handleSubmit = (
     e: React.FormEvent
-  ) {
+  ) => {
     e.preventDefault()
 
-    if (title.trim() === '') {
+    if (!title.trim()) {
       setError('Title is required')
       return
     }
 
     setError('')
 
-    const tags = tagsInput
+    const parsedTags = tags
       .split(',')
       .map((tag) => tag.trim())
-      .filter((tag) => tag !== '')
+      .filter(Boolean)
 
-    const newTask: Task = {
+    onAddTask?.({
       id: Date.now(),
       title: title.trim(),
       description,
       priority,
       completed: false,
-      category: category || 'General',
-      tags,
-    }
-
-    if (dueDate) {
-      newTask.dueDate = dueDate
-    }
-
-    onAddTask?.(newTask)
+      category,
+      tags: parsedTags,
+      ...(dueDate ? { dueDate } : {}),
+    })
 
     setTitle('')
     setDescription('')
     setPriority('Low')
     setCategory('General')
-    setTagsInput('')
+    setTags('')
     setDueDate('')
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      {error && (
+        <p id="task-form-error">
+          {error}
+        </p>
+      )}
+
       <FormInput
-        id="task-title"
         label="Title"
-        type="text"
+        id="task-title"
         value={title}
         onChange={(e) =>
           setTitle(e.target.value)
         }
-        error={error}
       />
 
-      <div>
-        <label htmlFor="task-description">
-          Description
-        </label>
-
-        <textarea
-          id="task-description"
-          value={description}
-          onChange={(e) =>
-            setDescription(e.target.value)
-          }
-        />
-      </div>
+      <FormInput
+        label="Description"
+        id="task-description"
+        value={description}
+        onChange={(e) =>
+          setDescription(e.target.value)
+        }
+        multiline
+      />
 
       <div>
         <label htmlFor="task-priority">
@@ -122,9 +93,7 @@ export default function TaskForm({
           }
         >
           <option value="Low">Low</option>
-          <option value="Medium">
-            Medium
-          </option>
+          <option value="Medium">Medium</option>
           <option value="High">High</option>
         </select>
       </div>
@@ -141,31 +110,29 @@ export default function TaskForm({
             setCategory(e.target.value)
           }
         >
-          {categories.map((item) => (
-            <option
-              key={item}
-              value={item}
-            >
-              {item}
-            </option>
-          ))}
+          <option value="General">
+            General
+          </option>
+          <option value="Work">Work</option>
+          <option value="Personal">
+            Personal
+          </option>
         </select>
       </div>
 
       <FormInput
-        id="task-tags"
         label="Tags"
-        type="text"
-        placeholder="react, frontend, work"
-        value={tagsInput}
+        id="task-tags-input"
+        value={tags}
         onChange={(e) =>
-          setTagsInput(e.target.value)
+          setTags(e.target.value)
         }
+        placeholder="react, frontend, urgent"
       />
 
       <FormInput
-        id="task-due-date"
         label="Due Date"
+        id="task-due-date-input"
         type="date"
         value={dueDate}
         onChange={(e) =>
@@ -173,10 +140,7 @@ export default function TaskForm({
         }
       />
 
-      <Button
-        type="submit"
-        variant="primary"
-      >
+      <Button type="submit" variant="primary">
         Add Task
       </Button>
     </form>

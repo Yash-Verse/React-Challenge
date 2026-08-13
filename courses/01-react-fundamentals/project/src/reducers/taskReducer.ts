@@ -1,4 +1,13 @@
-import type { Task } from '../components/TaskList'
+export interface Task {
+  id: string | number
+  title: string
+  description: string
+  priority: string
+  completed: boolean
+  category: string
+  tags: string[]
+  dueDate?: string | number
+}
 
 export const ADD_TASK = 'ADD_TASK'
 export const UPDATE_TASK = 'UPDATE_TASK'
@@ -18,7 +27,7 @@ export type TaskAction =
         title?: string
         description?: string
         priority?: string
-        dueDate?: string
+        dueDate?: string | number
         category?: string
         tags?: string[]
       }

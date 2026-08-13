@@ -1,34 +1,15 @@
-
 import TaskCard from './TaskCard'
+import type { Task } from '../reducers/taskReducer'
 
-export interface Task {
-  id: string | number
-  title: string
-  description: string
-  priority: string
-  completed: boolean
-
-  // Challenge 12
-  category: string
-  tags: string[]
-
-  // Challenge 13
-  dueDate?: string
-}
+export type { Task }
 
 interface TaskListProps {
   tasks?: Task[]
   countText?: string
 
-  onToggle?: (
-    id: string | number
-  ) => void
+  onToggle?: (id: string | number) => void
 
-  onDelete?: (
-    id: string | number
-  ) => void
-
-  linkToTaskDetail?: boolean
+  onDelete?: (id: string | number) => void
 
   onUpdateTask?: (
     id: string | number,
@@ -36,7 +17,9 @@ interface TaskListProps {
       title: string
       description: string
       priority: string
-      dueDate?: string
+      category: string
+      tags: string[]
+      dueDate?: string | number
     }
   ) => void
 
@@ -45,6 +28,8 @@ interface TaskListProps {
   setEditingId?: (
     id: string | number | null
   ) => void
+
+  linkToTaskDetail?: boolean
 }
 
 const HARDCODED_TASKS: Task[] = [
@@ -63,7 +48,7 @@ const HARDCODED_TASKS: Task[] = [
     description: 'Second hardcoded task',
     priority: 'Medium',
     completed: false,
-    category: 'General',
+    category: 'Work',
     tags: [],
   },
   {
@@ -72,7 +57,7 @@ const HARDCODED_TASKS: Task[] = [
     description: 'Third hardcoded task',
     priority: 'Low',
     completed: false,
-    category: 'General',
+    category: 'Personal',
     tags: [],
   },
 ]
@@ -85,44 +70,39 @@ export default function TaskList({
   onUpdateTask,
   editingId,
   setEditingId,
+  linkToTaskDetail = false,
 }: TaskListProps) {
-  const list = tasks ?? HARDCODED_TASKS
+  const taskList = tasks ?? HARDCODED_TASKS
 
   return (
-    <section id="task-list">
+    <>
       {countText && (
         <div id="task-count">
           {countText}
         </div>
       )}
 
-      {list.length === 0 && (
-        <div id="filter-empty-message">
-          No tasks found
-        </div>
-      )}
-
-      {list.map((task) => (
-        <TaskCard
-          key={task.id}
-          taskId={task.id}
-          title={task.title}
-          description={task.description}
-          priority={task.priority}
-          completed={task.completed}
-          category={
-            task.category ?? 'General'
-          }
-          tags={task.tags ?? []}
-          dueDate={task.dueDate}
-          onToggle={onToggle}
-          onDelete={onDelete}
-          onUpdateTask={onUpdateTask}
-          editingId={editingId}
-          setEditingId={setEditingId}
-        />
-      ))}
-    </section>
+      <section id="task-list">
+        {taskList.map((task) => (
+          <TaskCard
+            key={task.id}
+            taskId={task.id}
+            title={task.title}
+            description={task.description}
+            priority={task.priority}
+            completed={task.completed}
+            category={task.category || 'General'}
+            tags={task.tags || []}
+            dueDate={task.dueDate}
+            onToggle={onToggle}
+            onDelete={onDelete}
+            onUpdateTask={onUpdateTask}
+            editingId={editingId}
+            setEditingId={setEditingId}
+            linkToTaskDetail={linkToTaskDetail}
+          />
+        ))}
+      </section>
+    </>
   )
 }
-

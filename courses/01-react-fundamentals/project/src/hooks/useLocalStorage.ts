@@ -1,53 +1,74 @@
 import {
+  useCallback,
   useEffect,
   useState,
-  type Dispatch,
-  type SetStateAction,
 } from 'react'
 
-
-
-export default function useLocalStorage<T>(
+export function useLocalStorage<T>(
   key: string,
   initialValue: T
-): [T, (value: T | ((prev: T) => T)) => void] {
+): [
+  T,
+  (value: T | ((previous: T) => T)) => void
+] {
   const [value, setValue] = useState<T>(() => {
     try {
-      const storedValue = localStorage.getItem(key)
+      const storedValue =
+        window.localStorage.getItem(key)
 
       if (storedValue === null) {
         return initialValue
       }
 
-      return JSON.parse(storedValue) as T
+      try {
+        return JSON.parse(storedValue) as T
+      } catch {
+        return initialValue
+      }
     } catch {
       return initialValue
     }
   })
 
-  const updateValue = (
-    newValue: T | ((prev: T) => T)
-  ) => {
-    setValue((previousValue) => {
-      const nextValue =
-        typeof newValue === 'function'
-          ? (newValue as (prev: T) => T)(
-              previousValue
-            )
-          : newValue
+  const updateValue = useCallback(
+    (newValue: T | ((previous: T) => T)) => {
+      setValue((previous) => {
+        const nextValue =
+          typeof newValue === 'function'
+            ? (
+                newValue as (
+                  previous: T
+                ) => T
+              )(previous)
+            : newValue
 
-      try {
-        localStorage.setItem(
-          key,
-          JSON.stringify(nextValue)
-        )
-      } catch {
-        // Ignore localStorage write errors.
-      }
+        try {
+          window.localStorage.setItem(
+            key,
+            JSON.stringify(nextValue)
+          )
+        } catch {
+          // Storage failures should not crash the app.
+        }
 
-      return nextValue
-    })
-  }
+        return nextValue
+      })
+    },
+    [key]
+  )
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(
+        key,
+        JSON.stringify(value)
+      )
+    } catch {
+      // Storage failures are safely ignored.
+    }
+  }, [key, value])
 
   return [value, updateValue]
 }
+
+export default useLocalStorage

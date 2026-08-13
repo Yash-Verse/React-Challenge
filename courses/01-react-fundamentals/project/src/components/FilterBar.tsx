@@ -1,192 +1,176 @@
+import {
+  useEffect,
+  useRef,
+  type RefObject,
+} from 'react'
+
 import Button from './Button'
 import FormInput from './FormInput'
 
-interface FilterBarProps {
-  filter: 'all' | 'active' | 'completed'
+export type FilterType =
+  | 'all'
+  | 'active'
+  | 'completed'
 
+export type SortType =
+  | 'recent'
+  | 'high-low'
+  | 'low-high'
+  | 'alphabetical'
+  | 'due-date'
+
+interface FilterBarProps {
+  filter: FilterType
   onFilterChange: (
-    filter: 'all' | 'active' | 'completed'
+    filter: FilterType
   ) => void
 
-  sort:
-    | 'recent'
-    | 'high'
-    | 'low'
-    | 'alpha'
-    | 'due'
-
+  sortOrder: SortType
   onSortChange: (
-    sort:
-      | 'recent'
-      | 'high'
-      | 'low'
-      | 'alpha'
-      | 'due'
+    sort: SortType
   ) => void
 
   search: string
-  onSearchChange: (value: string) => void
+  onSearchChange: (
+    search: string
+  ) => void
+
   onClearSearch: () => void
 
-  searching: boolean
+  searchInputRef?: RefObject<HTMLInputElement>
 
-  category: string
-  categories: string[]
-  onCategoryChange: (category: string) => void
+  categories?: string[]
+  category?: string
+  onCategoryChange?: (
+    category: string
+  ) => void
 }
 
 export default function FilterBar({
-  filter = 'all',
+  filter,
   onFilterChange,
-  sort = 'recent',
+  sortOrder,
   onSortChange,
-  search = '',
+  search,
   onSearchChange,
   onClearSearch,
-  searching,
-  category = 'All',
   categories = [],
+  category = 'all',
   onCategoryChange,
 }: FilterBarProps) {
+  // Challenge 23:
+  // Create a ref for the search input.
+  const searchInputRef =
+    useRef<HTMLInputElement>(null)
+
+  // Focus the search input when FilterBar mounts.
+  useEffect(() => {
+    searchInputRef.current?.focus()
+  }, [])
+
   return (
-    <div>
-      {/* Status filters */}
-      <div>
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={() =>
-            onFilterChange('all')
-          }
-        >
-          All
-        </Button>
+    <div >
+      <button
+        data-active={filter === 'all'}
+        onClick={() =>
+          onFilterChange('all')
+        }
+      >
+        All
+      </button>
 
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={() =>
-            onFilterChange('active')
-          }
-        >
-          Active
-        </Button>
+      <button
+        data-active={filter === 'active'}
+        onClick={() =>
+          onFilterChange('active')
+        }
+      >
+        Active
+      </button>
 
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={() =>
-            onFilterChange('completed')
-          }
-        >
-          Completed
-        </Button>
-      </div>
+      <button
+        data-active={filter === 'completed'}
+        onClick={() =>
+          onFilterChange('completed')
+        }
+      >
+        Completed
+      </button>
 
-      {/* Sort */}
-      <div>
-        <label htmlFor="sort-order">
-          Sort
-        </label>
+      <select
+        id="category-filter"
+        value={category}
+        onChange={(e) =>
+          onCategoryChange?.(
+            e.target.value
+          )
+        }
+      >
+        <option value="all">
+          All categories
+        </option>
 
-        <select
-          id="sort-order"
-          value={sort}
-          onChange={(e) =>
-            onSortChange(
-              e.target.value as
-                | 'recent'
-                | 'high'
-                | 'low'
-                | 'alpha'
-                | 'due'
-            )
-          }
-        >
-          <option value="recent">
-            Recently Added
-          </option>
-
-          <option value="high">
-            Priority: High to Low
-          </option>
-
-          <option value="low">
-            Priority: Low to High
-          </option>
-
-          <option value="alpha">
-            Alphabetical
-          </option>
-
-          <option value="due">
-            Due Date (Soonest First)
-          </option>
-        </select>
-      </div>
-
-      {/* Category */}
-      <div>
-        <label htmlFor="category-filter">
-          Category
-        </label>
-
-        <select
-          id="category-filter"
-          value={category}
-          onChange={(e) =>
-            onCategoryChange(
-              e.target.value
-            )
-          }
-        >
-          <option value="All">
-            All categories
-          </option>
-
-          {categories.map((item) => (
-            <option
-              key={item}
-              value={item}
-            >
-              {item}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Search */}
-      <div>
-        <FormInput
-          id="search-input"
-          label="Search"
-          type="text"
-          placeholder="Search tasks..."
-          value={search}
-          onChange={(e) =>
-            onSearchChange(
-              e.target.value
-            )
-          }
-        />
-
-        {search.trim() !== '' && (
-          <Button
-            id="clear-search"
-            type="button"
-            variant="secondary"
-            onClick={onClearSearch}
+        {categories.map((item) => (
+          <option
+            key={item}
+            value={item}
           >
-            Clear search
-          </Button>
-        )}
+            {item}
+          </option>
+        ))}
+      </select>
 
-        {searching && (
-          <span id="searching-indicator">
-            Searching...
-          </span>
-        )}
-      </div>
+      <select
+        id="sort-order"
+        value={sortOrder}
+        onChange={(e) =>
+          onSortChange(
+            e.target.value as SortType
+          )
+        }
+      >
+        <option value="recent">
+          Recently Added
+        </option>
+
+        <option value="high-low">
+          Priority: High to Low
+        </option>
+
+        <option value="low-high">
+          Priority: Low to High
+        </option>
+
+        <option value="alphabetical">
+          Alphabetical
+        </option>
+
+        <option value="due-date">
+          Due Date (Soonest First)
+        </option>
+      </select>
+
+      <FormInput
+  label=""
+  id="search-input"
+  type="text"
+  ref={searchInputRef}
+  value={search}
+  onChange={(e) =>
+    onSearchChange(e.target.value)
+  }
+  placeholder="Search tasks"
+/>
+
+      {search && (
+        <Button
+          id="clear-search"
+          variant="secondary"
+          onClick={onClearSearch}
+        >
+          Clear search
+        </Button>
+      )}
     </div>
   )
 }

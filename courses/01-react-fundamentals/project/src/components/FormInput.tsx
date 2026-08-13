@@ -1,43 +1,71 @@
+import {
+  forwardRef,
+  type ChangeEvent,
+} from 'react'
+
 interface FormInputProps {
   id?: string
   value?: string
   onChange?: (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void
   label?: string
   type?: string
   placeholder?: string
   error?: string
+  multiline?: boolean
 }
 
-export default function FormInput({
-  id,
-  value = '',
-  onChange,
-  label,
-  type = 'text',
-  placeholder = '',
-  error,
-}: FormInputProps) {
-  return (
-    <div>
-      {label && (
-        <label htmlFor={id}>
-          {label}
-        </label>
-      )}
+const FormInput = forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  FormInputProps
+>(
+  (
+    {
+      id,
+      value = '',
+      onChange,
+      label,
+      type = 'text',
+      placeholder = '',
+      error,
+      multiline = false,
+    },
+    ref
+  ) => {
+    return (
+      <div>
+        {label && (
+          <label htmlFor={id}>
+            {label}
+          </label>
+        )}
 
-      <input
-        id={id}
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-      />
+        {multiline ? (
+          <textarea
+            id={id}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            ref={ref as React.Ref<HTMLTextAreaElement>}
+          />
+        ) : (
+          <input
+            id={id}
+            type={type}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            ref={ref as React.Ref<HTMLInputElement>}
+          />
+        )}
 
-      {error && (
-        <p>{error}</p>
-      )}
-    </div>
-  )
-}
+        {error && <p>{error}</p>}
+      </div>
+    )
+  }
+)
+
+FormInput.displayName = 'FormInput'
+
+export default FormInput
