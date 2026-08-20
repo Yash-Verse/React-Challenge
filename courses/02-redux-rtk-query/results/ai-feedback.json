@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "challengeId": "01-store-setup",
+    "challengeName": "Store Setup with configureStore",
+    "aiReview": {
+      "challengeId": "01-store-setup",
+      "timestamp": "2026-08-20T05:23:44.948Z",
+      "score": 84,
+      "feedback": [],
+      "strengths": [
+        "Store is created with `configureStore` and exported with proper `RootState` and `AppDispatch` types.",
+        "The app is correctly wrapped with `<Provider store={store}>` in `src/main.tsx`.",
+        "TypeScript is used consistently across the files, and the code follows a clear, modular structure."
+      ],
+      "improvements": [
+        "File: src/store/hooks.ts – `useDispatch.withTypes<AppDispatch>()` and `useSelector.withTypes<RootState>()` are not valid React‑Redux APIs. Replace with the recommended typed hooks: `export const useAppDispatch = () => useDispatch<AppDispatch>();` and `export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;`.",
+        "File: src/store/store.ts – The `middleware` option is redundant (`getDefaultMiddleware()` is already the default). Remove it or add a comment explaining why it is kept.",
+        "File: src/store/store.ts – Consider adding `devTools: true` for easier debugging during development.",
+        "File: src/main.tsx – Import `ReactDOM` from `'react-dom/client'` is fine, but ensure the root element (`<div id=\"root\"></div>`) exists in `index.html` to avoid runtime errors.",
+        "File: src/App.tsx – The `CHALLENGE_SLUGS` mapping is hard‑coded; if the list grows, extract it to a separate constants file for easier maintenance.",
+        "General – Add JSDoc comments or brief inline comments explaining the purpose of each file and key exports for future developers."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation satisfies the core functional requirements: the store is configured, exported with the correct types, and the app is wrapped in a Provider. The code is clean and well‑structured, but the typed hooks in `hooks.ts` are incorrectly implemented, which would break TypeScript compilation. Fixing this and a few minor clean‑ups will bring the solution to full compliance and improve maintainability.",
+      "requirementCompliance": 85
+    }
+  }
+]
