@@ -78,5 +78,33 @@
       "overall": "The implementation satisfies the core functional requirements: typed hooks are provided, `CounterView` correctly reads and updates state, and the necessary data‑testids are present. The main missing piece is the route configuration that actually mounts the component. The code is clean, well‑structured, and follows best practices for typed Redux hooks, making it easy to maintain and extend.",
       "requirementCompliance": 80
     }
+  },
+  {
+    "challengeId": "04-multiple-slices",
+    "challengeName": "Multiple Slices in the Store",
+    "aiReview": {
+      "challengeId": "04-multiple-slices",
+      "timestamp": "2026-08-20T06:37:05.952Z",
+      "score": 86,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: `counterSlice` and `uiSlice` are in dedicated files.",
+        "Proper use of `createSlice` and `configureStore` to set up multiple reducers.",
+        "TypeScript types (`RootState`, `AppDispatch`) are defined and exported for future use."
+      ],
+      "improvements": [
+        "File: src/store/hooks.ts – `useDispatch.withTypes` is not a valid API. Replace with `const useAppDispatch = () => useDispatch<AppDispatch>();` and similarly for `useAppSelector`.",
+        "File: src/store/store.ts – The `middleware` option is redundant (`getDefaultMiddleware()` is already the default). Remove the wrapper or add custom middleware if needed.",
+        "File: src/store/slices/counterSlice.ts – Add an explicit type for the state (`number`) in the `createSlice` call to satisfy strict TS settings: `createSlice<number>({ ... })`.",
+        "File: src/store/slices/uiSlice.ts – Add an interface for the UI state (`interface UIState { sidebarOpen: boolean; }`) and use it in `createSlice<UIState>` for clarity.",
+        "File: src/store/store.ts – Consider exporting the slice reducers individually (e.g., `export { counterReducer, uiReducer };`) for easier testing and potential re‑use.",
+        "Add a README or comment block in `store.ts` explaining why multiple slices are used and how to add new ones.",
+        "If the project uses React components, create a small demo component that dispatches `toggleSidebar` and reads `state.ui.sidebarOpen` to confirm integration."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation correctly creates two slices and registers them in the store, satisfying the core requirement. The code is clean and type‑safe, but the custom hooks file contains an incorrect typing pattern that will break at runtime. Fixing the hooks and adding a few type annotations will make the code production‑ready.",
+      "requirementCompliance": 90
+    }
   }
 ]
