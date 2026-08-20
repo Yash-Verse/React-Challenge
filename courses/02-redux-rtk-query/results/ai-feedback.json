@@ -106,5 +106,33 @@
       "overall": "The implementation correctly creates two slices and registers them in the store, satisfying the core requirement. The code is clean and type‑safe, but the custom hooks file contains an incorrect typing pattern that will break at runtime. Fixing the hooks and adding a few type annotations will make the code production‑ready.",
       "requirementCompliance": 90
     }
+  },
+  {
+    "challengeId": "05-async-thunks",
+    "challengeName": "Async Logic with createAsyncThunk",
+    "aiReview": {
+      "challengeId": "05-async-thunks",
+      "timestamp": "2026-08-20T06:51:03.679Z",
+      "score": 91,
+      "feedback": [],
+      "strengths": [
+        "Correct implementation of `createAsyncThunk` and `extraReducers` in `usersSlice.ts` to handle async states.",
+        "Clear separation of concerns: each slice (counter, ui, users) is isolated in its own file.",
+        "Consistent TypeScript usage with interfaces and type imports, ensuring type safety across the store."
+      ],
+      "improvements": [
+        "Add explicit type parameters to `createAsyncThunk` to document the payload and reject value: `createAsyncThunk<User[], void, { rejectValue: string }>`.",
+        "Export the thunk (`fetchUsers`) and the slice name for potential future use (e.g., `export const usersSlice = usersSlice;`).",
+        "Consider adding a `loading` enum or status string instead of a boolean for more granular UI control.",
+        "Add comments or JSDoc to explain the purpose of each slice and the thunk, improving onboarding for new developers.",
+        "If the project grows, replace the simple array in `UsersState` with `createEntityAdapter` for normalized data handling.",
+        "The `hooks.ts` file uses `.withTypes`, which is fine, but you could expose typed hooks as functions for clarity: `export const useAppDispatch = () => useDispatch<AppDispatch>();`.",
+        "The RTK Query section in the review is not applicable here; the challenge explicitly requires `createAsyncThunk`, so no RTK Query code is needed."
+      ],
+      "readability": 90,
+      "maintainability": 85,
+      "overall": "The implementation satisfies all functional requirements: it correctly uses `createAsyncThunk` and `extraReducers`, integrates the users reducer into the store, and follows TypeScript best practices. While the code is clean and maintainable, adding explicit thunk typing and a few comments would further improve clarity and future extensibility.",
+      "requirementCompliance": 95
+    }
   }
 ]

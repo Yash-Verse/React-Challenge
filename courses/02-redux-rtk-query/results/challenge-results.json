@@ -1028,5 +1028,260 @@
       "overall": "The implementation correctly creates two slices and registers them in the store, satisfying the core requirement. The code is clean and type‑safe, but the custom hooks file contains an incorrect typing pattern that will break at runtime. Fixing the hooks and adding a few type annotations will make the code production‑ready.",
       "requirementCompliance": 90
     }
+  },
+  {
+    "challengeId": "05-async-thunks",
+    "challengeName": "Async Logic with createAsyncThunk",
+    "timestamp": "2026-08-20T06:50:51.512Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 75,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 91
+    },
+    "totalScore": 88.65,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 05: Async Logic with createAsyncThunk"
+              ],
+              "fullName": " Challenge 05: Async Logic with createAsyncThunk usersSlice uses createAsyncThunk",
+              "status": "passed",
+              "title": "usersSlice uses createAsyncThunk",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 05: Async Logic with createAsyncThunk"
+              ],
+              "fullName": " Challenge 05: Async Logic with createAsyncThunk usersSlice uses extraReducers",
+              "status": "passed",
+              "title": "usersSlice uses extraReducers",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 05: Async Logic with createAsyncThunk"
+              ],
+              "fullName": " Challenge 05: Async Logic with createAsyncThunk store includes users reducer",
+              "status": "passed",
+              "title": "store includes users reducer",
+              "duration": 0,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787208656111,
+          "endTime": 1787208656113,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/02-redux-rtk-query/project/tests/challenge-05.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 75,
+      "passed": false,
+      "patternsFound": [
+        "reducer",
+        "reducer",
+        "middleware"
+      ],
+      "patternsMissing": [
+        "middleware"
+      ],
+      "details": [
+        {
+          "file": "src/store/slices/usersSlice.ts",
+          "patternsFound": [
+            "reducer"
+          ],
+          "patternsMissing": [
+            "middleware"
+          ]
+        },
+        {
+          "file": "src/store/store.ts",
+          "patternsFound": [
+            "reducer",
+            "middleware"
+          ],
+          "patternsMissing": []
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-05.spec.ts",
+          "file": "challenge-05.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 05: Async Thunks - E2E",
+              "file": "challenge-05.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load challenge 05 page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 421,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-20T06:51:02.416Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "ec25b63e8ac6a5e53e87-a0356a2890abe11abcb0",
+                  "file": "challenge-05.spec.ts",
+                  "line": 8,
+                  "column": 3
+                },
+                {
+                  "title": "should have challenge content",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 211,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-20T06:51:03.119Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "ec25b63e8ac6a5e53e87-35d9e52e621ddedf3eac",
+                  "file": "challenge-05.spec.ts",
+                  "line": 13,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "05-async-thunks",
+      "timestamp": "2026-08-20T06:51:03.679Z",
+      "score": 91,
+      "feedback": [],
+      "strengths": [
+        "Correct implementation of `createAsyncThunk` and `extraReducers` in `usersSlice.ts` to handle async states.",
+        "Clear separation of concerns: each slice (counter, ui, users) is isolated in its own file.",
+        "Consistent TypeScript usage with interfaces and type imports, ensuring type safety across the store."
+      ],
+      "improvements": [
+        "Add explicit type parameters to `createAsyncThunk` to document the payload and reject value: `createAsyncThunk<User[], void, { rejectValue: string }>`.",
+        "Export the thunk (`fetchUsers`) and the slice name for potential future use (e.g., `export const usersSlice = usersSlice;`).",
+        "Consider adding a `loading` enum or status string instead of a boolean for more granular UI control.",
+        "Add comments or JSDoc to explain the purpose of each slice and the thunk, improving onboarding for new developers.",
+        "If the project grows, replace the simple array in `UsersState` with `createEntityAdapter` for normalized data handling.",
+        "The `hooks.ts` file uses `.withTypes`, which is fine, but you could expose typed hooks as functions for clarity: `export const useAppDispatch = () => useDispatch<AppDispatch>();`.",
+        "The RTK Query section in the review is not applicable here; the challenge explicitly requires `createAsyncThunk`, so no RTK Query code is needed."
+      ],
+      "readability": 90,
+      "maintainability": 85,
+      "overall": "The implementation satisfies all functional requirements: it correctly uses `createAsyncThunk` and `extraReducers`, integrates the users reducer into the store, and follows TypeScript best practices. While the code is clean and maintainable, adding explicit thunk typing and a few comments would further improve clarity and future extensibility.",
+      "requirementCompliance": 95
+    },
+    "aiResults": {
+      "challengeId": "05-async-thunks",
+      "timestamp": "2026-08-20T06:51:03.679Z",
+      "score": 91,
+      "feedback": [],
+      "strengths": [
+        "Correct implementation of `createAsyncThunk` and `extraReducers` in `usersSlice.ts` to handle async states.",
+        "Clear separation of concerns: each slice (counter, ui, users) is isolated in its own file.",
+        "Consistent TypeScript usage with interfaces and type imports, ensuring type safety across the store."
+      ],
+      "improvements": [
+        "Add explicit type parameters to `createAsyncThunk` to document the payload and reject value: `createAsyncThunk<User[], void, { rejectValue: string }>`.",
+        "Export the thunk (`fetchUsers`) and the slice name for potential future use (e.g., `export const usersSlice = usersSlice;`).",
+        "Consider adding a `loading` enum or status string instead of a boolean for more granular UI control.",
+        "Add comments or JSDoc to explain the purpose of each slice and the thunk, improving onboarding for new developers.",
+        "If the project grows, replace the simple array in `UsersState` with `createEntityAdapter` for normalized data handling.",
+        "The `hooks.ts` file uses `.withTypes`, which is fine, but you could expose typed hooks as functions for clarity: `export const useAppDispatch = () => useDispatch<AppDispatch>();`.",
+        "The RTK Query section in the review is not applicable here; the challenge explicitly requires `createAsyncThunk`, so no RTK Query code is needed."
+      ],
+      "readability": 90,
+      "maintainability": 85,
+      "overall": "The implementation satisfies all functional requirements: it correctly uses `createAsyncThunk` and `extraReducers`, integrates the users reducer into the store, and follows TypeScript best practices. While the code is clean and maintainable, adding explicit thunk typing and a few comments would further improve clarity and future extensibility.",
+      "requirementCompliance": 95
+    }
   }
 ]
