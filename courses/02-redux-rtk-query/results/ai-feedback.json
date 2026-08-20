@@ -51,5 +51,32 @@
       "overall": "The implementation satisfies the core requirements: a counter slice with increment/decrement actions and a store that includes the reducer. The code is clean and type‑safe, but the custom hook definitions use non‑existent API methods, which could break the application. Fixing the hooks and minor refactoring will bring the solution to full compliance and improve maintainability.",
       "requirementCompliance": 95
     }
+  },
+  {
+    "challengeId": "03-reading-dispatching",
+    "challengeName": "Reading and Dispatching in Components",
+    "aiReview": {
+      "challengeId": "03-reading-dispatching",
+      "timestamp": "2026-08-20T06:07:08.187Z",
+      "score": 86,
+      "feedback": [],
+      "strengths": [
+        "Typed hooks (`useAppDispatch`, `useAppSelector`) are exported from `src/store/hooks.ts` and used consistently in `CounterView`.",
+        "Component follows a clear, minimal structure – state is read via `useAppSelector` and actions dispatched via `useAppDispatch`.",
+        "All required `data-testid` attributes (`counter-value`, `increment-btn`, `decrement-btn`) are present and correctly named."
+      ],
+      "improvements": [
+        "Add the route `/challenge/03-reading-dispatching` to the app’s router (e.g., in `src/App.tsx` or a dedicated routes file) so that `CounterView` is actually rendered.",
+        "The `useDispatch.withTypes<AppDispatch>()` and `useSelector.withTypes<RootState>()` syntax is non‑standard in most RTK setups. Replace them with the more common pattern:\n```ts\nexport const useAppDispatch = () => useDispatch<AppDispatch>();\nexport const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;\n```",
+        "Ensure that `counterSlice` exports the correct reducer and action creators (`increment`, `decrement`). If the slice is defined in `src/store/slices/counterSlice.ts`, verify that the import path in `CounterView` matches.",
+        "Remove the unused `data-testid=\"counter-view\"` wrapper if not required by tests – it adds noise.",
+        "Add a small comment in `hooks.ts` explaining why typed hooks are used to aid future developers.",
+        "Consider adding a simple unit test for `CounterView` to assert that clicking the buttons updates the counter value."
+      ],
+      "readability": 90,
+      "maintainability": 90,
+      "overall": "The implementation satisfies the core functional requirements: typed hooks are provided, `CounterView` correctly reads and updates state, and the necessary data‑testids are present. The main missing piece is the route configuration that actually mounts the component. The code is clean, well‑structured, and follows best practices for typed Redux hooks, making it easy to maintain and extend.",
+      "requirementCompliance": 80
+    }
   }
 ]

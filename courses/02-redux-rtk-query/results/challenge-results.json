@@ -496,5 +496,285 @@
       "overall": "The implementation satisfies the core requirements: a counter slice with increment/decrement actions and a store that includes the reducer. The code is clean and type‑safe, but the custom hook definitions use non‑existent API methods, which could break the application. Fixing the hooks and minor refactoring will bring the solution to full compliance and improve maintainability.",
       "requirementCompliance": 95
     }
+  },
+  {
+    "challengeId": "03-reading-dispatching",
+    "challengeName": "Reading and Dispatching in Components",
+    "timestamp": "2026-08-20T06:06:30.046Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 86
+    },
+    "totalScore": 90.4,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 03: Reading and Dispatching"
+              ],
+              "fullName": " Challenge 03: Reading and Dispatching hooks.ts exports useAppSelector and useAppDispatch",
+              "status": "passed",
+              "title": "hooks.ts exports useAppSelector and useAppDispatch",
+              "duration": 2,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 03: Reading and Dispatching"
+              ],
+              "fullName": " Challenge 03: Reading and Dispatching CounterView uses useSelector or useAppSelector",
+              "status": "passed",
+              "title": "CounterView uses useSelector or useAppSelector",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 03: Reading and Dispatching"
+              ],
+              "fullName": " Challenge 03: Reading and Dispatching CounterView has required data-testids",
+              "status": "passed",
+              "title": "CounterView has required data-testids",
+              "duration": 0,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787206008502,
+          "endTime": 1787206008505,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/02-redux-rtk-query/project/tests/challenge-03.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 100,
+      "passed": true,
+      "patternsFound": [
+        "reducer",
+        "middleware"
+      ],
+      "patternsMissing": [],
+      "details": [
+        {
+          "file": "src/store/hooks.ts",
+          "patternsFound": [
+            "reducer",
+            "middleware"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/components/CounterView.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-03.spec.ts",
+          "file": "challenge-03.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 03: Reading and Dispatching - E2E",
+              "file": "challenge-03.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load challenge 03 page with CounterView",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 3578,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-20T06:07:00.505Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "abe74fb7538c55bf8146-a9e2bcc4dcd9ae6d41c6",
+                  "file": "challenge-03.spec.ts",
+                  "line": 8,
+                  "column": 3
+                },
+                {
+                  "title": "should have increment and decrement buttons",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 837,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-20T06:07:05.365Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "abe74fb7538c55bf8146-91f3cfc4cae7e88835d8",
+                  "file": "challenge-03.spec.ts",
+                  "line": 13,
+                  "column": 3
+                },
+                {
+                  "title": "should show counter value",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 864,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-20T06:07:06.249Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "abe74fb7538c55bf8146-8ff95ebba2f8c85e1bcd",
+                  "file": "challenge-03.spec.ts",
+                  "line": 18,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "03-reading-dispatching",
+      "timestamp": "2026-08-20T06:07:08.187Z",
+      "score": 86,
+      "feedback": [],
+      "strengths": [
+        "Typed hooks (`useAppDispatch`, `useAppSelector`) are exported from `src/store/hooks.ts` and used consistently in `CounterView`.",
+        "Component follows a clear, minimal structure – state is read via `useAppSelector` and actions dispatched via `useAppDispatch`.",
+        "All required `data-testid` attributes (`counter-value`, `increment-btn`, `decrement-btn`) are present and correctly named."
+      ],
+      "improvements": [
+        "Add the route `/challenge/03-reading-dispatching` to the app’s router (e.g., in `src/App.tsx` or a dedicated routes file) so that `CounterView` is actually rendered.",
+        "The `useDispatch.withTypes<AppDispatch>()` and `useSelector.withTypes<RootState>()` syntax is non‑standard in most RTK setups. Replace them with the more common pattern:\n```ts\nexport const useAppDispatch = () => useDispatch<AppDispatch>();\nexport const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;\n```",
+        "Ensure that `counterSlice` exports the correct reducer and action creators (`increment`, `decrement`). If the slice is defined in `src/store/slices/counterSlice.ts`, verify that the import path in `CounterView` matches.",
+        "Remove the unused `data-testid=\"counter-view\"` wrapper if not required by tests – it adds noise.",
+        "Add a small comment in `hooks.ts` explaining why typed hooks are used to aid future developers.",
+        "Consider adding a simple unit test for `CounterView` to assert that clicking the buttons updates the counter value."
+      ],
+      "readability": 90,
+      "maintainability": 90,
+      "overall": "The implementation satisfies the core functional requirements: typed hooks are provided, `CounterView` correctly reads and updates state, and the necessary data‑testids are present. The main missing piece is the route configuration that actually mounts the component. The code is clean, well‑structured, and follows best practices for typed Redux hooks, making it easy to maintain and extend.",
+      "requirementCompliance": 80
+    },
+    "aiResults": {
+      "challengeId": "03-reading-dispatching",
+      "timestamp": "2026-08-20T06:07:08.187Z",
+      "score": 86,
+      "feedback": [],
+      "strengths": [
+        "Typed hooks (`useAppDispatch`, `useAppSelector`) are exported from `src/store/hooks.ts` and used consistently in `CounterView`.",
+        "Component follows a clear, minimal structure – state is read via `useAppSelector` and actions dispatched via `useAppDispatch`.",
+        "All required `data-testid` attributes (`counter-value`, `increment-btn`, `decrement-btn`) are present and correctly named."
+      ],
+      "improvements": [
+        "Add the route `/challenge/03-reading-dispatching` to the app’s router (e.g., in `src/App.tsx` or a dedicated routes file) so that `CounterView` is actually rendered.",
+        "The `useDispatch.withTypes<AppDispatch>()` and `useSelector.withTypes<RootState>()` syntax is non‑standard in most RTK setups. Replace them with the more common pattern:\n```ts\nexport const useAppDispatch = () => useDispatch<AppDispatch>();\nexport const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;\n```",
+        "Ensure that `counterSlice` exports the correct reducer and action creators (`increment`, `decrement`). If the slice is defined in `src/store/slices/counterSlice.ts`, verify that the import path in `CounterView` matches.",
+        "Remove the unused `data-testid=\"counter-view\"` wrapper if not required by tests – it adds noise.",
+        "Add a small comment in `hooks.ts` explaining why typed hooks are used to aid future developers.",
+        "Consider adding a simple unit test for `CounterView` to assert that clicking the buttons updates the counter value."
+      ],
+      "readability": 90,
+      "maintainability": 90,
+      "overall": "The implementation satisfies the core functional requirements: typed hooks are provided, `CounterView` correctly reads and updates state, and the necessary data‑testids are present. The main missing piece is the route configuration that actually mounts the component. The code is clean, well‑structured, and follows best practices for typed Redux hooks, making it easy to maintain and extend.",
+      "requirementCompliance": 80
+    }
   }
 ]
