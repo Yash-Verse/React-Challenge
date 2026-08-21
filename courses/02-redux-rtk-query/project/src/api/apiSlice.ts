@@ -8,7 +8,9 @@ export const apiSlice = createApi({
   tagTypes: ['User', 'Post'],
 
   endpoints: (builder) => ({
-    // Challenge 07
+    // =========================================================
+    // Challenge 07: Query Endpoint
+    // =========================================================
     getUsers: builder.query<User[], void>({
       queryFn: async () => {
         try {
@@ -39,7 +41,9 @@ export const apiSlice = createApi({
           : [{ type: 'User' as const, id: 'LIST' }],
     }),
 
-    // Challenge 08
+    // =========================================================
+    // Challenge 08: Caching and Cache Tags
+    // =========================================================
     getPosts: builder.query<Post[], void>({
       queryFn: async () => {
         try {
@@ -70,7 +74,38 @@ export const apiSlice = createApi({
           : [{ type: 'Post' as const, id: 'LIST' }],
     }),
 
-    // Challenge 09 + Challenge 10
+    // =========================================================
+    // Challenge 13: Query with Parameters
+    // =========================================================
+    getPostById: builder.query<Post, number>({
+      queryFn: async (id) => {
+        try {
+          const data = await mockApi.getPostById(id)
+          return { data }
+        } catch (error) {
+          return {
+            error: {
+              status: 'CUSTOM_ERROR',
+              error:
+                error instanceof Error
+                  ? error.message
+                  : 'Failed to fetch post',
+            },
+          }
+        }
+      },
+
+      providesTags: (result, error, id) => [
+        {
+          type: 'Post' as const,
+          id,
+        },
+      ],
+    }),
+
+    // =========================================================
+    // Challenge 09 + Challenge 10: Add Post Mutation
+    // =========================================================
     addPost: builder.mutation<Post, Omit<Post, 'id'>>({
       queryFn: async (post) => {
         try {
@@ -89,7 +124,7 @@ export const apiSlice = createApi({
         }
       },
 
-      // Challenge 10: Optimistic update
+      // Challenge 10: Optimistic Update
       async onQueryStarted(
         post,
         { dispatch, queryFulfilled }
@@ -114,15 +149,20 @@ export const apiSlice = createApi({
         }
       },
 
-      // Challenge 09
-      // Also keeps the cached list synchronized with the server.
+      // Challenge 09 + Challenge 08
+      // Refetches/invalidate the post list after mutation.
       invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
   }),
 })
 
+// =============================================================
+// Generated RTK Query Hooks
+// =============================================================
+
 export const {
   useGetUsersQuery,
   useGetPostsQuery,
+  useGetPostByIdQuery,
   useAddPostMutation,
 } = apiSlice

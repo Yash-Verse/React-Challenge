@@ -294,5 +294,29 @@
       "requirementCompliance": 90,
       "overall": "The implementation meets the core requirements by providing a functional ErrorDisplay component, using refetch for retry, and showing loading states. However, tightening type safety and reusing the error UI across components would enhance consistency and maintainability. Overall, the code demonstrates solid RTK Query usage but could benefit from minor refactoring for better type safety and UX polish."
     }
+  },
+  {
+    "challengeId": "13-query-parameters",
+    "challengeName": "Query with Parameters and Detail View",
+    "aiReview": {
+      "challengeId": "13-query-parameters",
+      "timestamp": "2026-08-21T08:26:38.900Z",
+      "score": 86,
+      "feedback": [],
+      "strengths": [
+        "Implemented a parameterized getPostById query with proper providesTags for cache invalidation.",
+        "Used skip option in useGetPostByIdQuery to avoid invalid requests when id is missing.",
+        "Handled loading, error, and data states with clear data-testid attributes for testing."
+      ],
+      "improvements": [
+        "Add more descriptive error messages in PostDetail (e.g., differentiate between network error and not found) – src/components/PostDetail.tsx.",
+        "Consider using optional chaining and a default value for id conversion to avoid casting undefined – src/components/PostDetail.tsx.",
+        "Ensure the route for /challenge/13-query-parameters passes a valid postId or renders a placeholder when missing – update routing configuration (not shown)."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "requirementCompliance": 90,
+      "overall": "The implementation meets the core requirements, correctly adding a parameterized query and using the generated hook with skip logic. While the code is readable and maintainable, refining error handling and routing would further strengthen the solution."
+    }
   }
 ]
