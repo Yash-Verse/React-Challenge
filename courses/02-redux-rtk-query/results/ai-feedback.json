@@ -250,5 +250,25 @@
       "requirementCompliance": 90,
       "overall": "The implementation meets the core requirement of optimistic updates and rollback, demonstrating solid use of RTK Query patterns. While the code is readable and maintainable, adding state access, error feedback, and a real base query would further strengthen the solution."
     }
+  },
+  {
+    "challengeId": "11-api-local-state",
+    "challengeName": "API and Local State Together",
+    "aiReview": {
+      "challengeId": "11-api-local-state",
+      "timestamp": "2026-08-21T08:07:57.797Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Proper integration of RTK Query with a local filters slice, allowing both server and client state to coexist in a single store.",
+        "Consistent TypeScript usage across slices, hooks, and components, improving type safety and developer experience.",
+        "Clear component separation and use of data-testid attributes, facilitating testing and future maintenance."
+      ],
+      "improvements": [],
+      "readability": 85,
+      "maintainability": 80,
+      "requirementCompliance": 0,
+      "overall": ""
+    }
   }
 ]

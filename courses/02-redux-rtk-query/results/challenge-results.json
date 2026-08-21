@@ -2400,5 +2400,249 @@
       "requirementCompliance": 90,
       "overall": "The implementation meets the core requirement of optimistic updates and rollback, demonstrating solid use of RTK Query patterns. While the code is readable and maintainable, adding state access, error feedback, and a real base query would further strengthen the solution."
     }
+  },
+  {
+    "challengeId": "11-api-local-state",
+    "challengeName": "API and Local State Together",
+    "timestamp": "2026-08-21T08:07:44.168Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 75,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 50
+    },
+    "totalScore": 82.5,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 11: API and Local State Together"
+              ],
+              "fullName": " Challenge 11: API and Local State Together filtersSlice exists and is in store",
+              "status": "passed",
+              "title": "filtersSlice exists and is in store",
+              "duration": 2,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 11: API and Local State Together"
+              ],
+              "fullName": " Challenge 11: API and Local State Together PostsWithFilters uses useSelector and useGetPostsQuery or query hook",
+              "status": "passed",
+              "title": "PostsWithFilters uses useSelector and useGetPostsQuery or query hook",
+              "duration": 0,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 11: API and Local State Together"
+              ],
+              "fullName": " Challenge 11: API and Local State Together PostsWithFilters has posts-with-filters and filter-controls data-testids",
+              "status": "passed",
+              "title": "PostsWithFilters has posts-with-filters and filter-controls data-testids",
+              "duration": 1,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787299668585,
+          "endTime": 1787299668588,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/02-redux-rtk-query/project/tests/challenge-11.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 75,
+      "passed": false,
+      "patternsFound": [
+        "reducer",
+        "middleware",
+        "reducer"
+      ],
+      "patternsMissing": [
+        "middleware"
+      ],
+      "details": [
+        {
+          "file": "src/store/store.ts",
+          "patternsFound": [
+            "reducer",
+            "middleware"
+          ],
+          "patternsMissing": []
+        },
+        {
+          "file": "src/store/slices/filtersSlice.ts",
+          "patternsFound": [
+            "reducer"
+          ],
+          "patternsMissing": [
+            "middleware"
+          ]
+        },
+        {
+          "file": "src/components/PostsWithFilters.tsx",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-11.spec.ts",
+          "file": "challenge-11.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 11: API and Local State - E2E",
+              "file": "challenge-11.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load challenge 11 page with PostsWithFilters",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 442,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-21T08:07:55.092Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1017095ef2170c8a8deb-fae6402d7bdc74a17551",
+                  "file": "challenge-11.spec.ts",
+                  "line": 8,
+                  "column": 3
+                },
+                {
+                  "title": "should have filter controls",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1129,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-21T08:07:55.720Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1017095ef2170c8a8deb-8d519fcb89ba7307e5f5",
+                  "file": "challenge-11.spec.ts",
+                  "line": 13,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "11-api-local-state",
+      "timestamp": "2026-08-21T08:07:57.797Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Proper integration of RTK Query with a local filters slice, allowing both server and client state to coexist in a single store.",
+        "Consistent TypeScript usage across slices, hooks, and components, improving type safety and developer experience.",
+        "Clear component separation and use of data-testid attributes, facilitating testing and future maintenance."
+      ],
+      "improvements": [],
+      "readability": 85,
+      "maintainability": 80,
+      "requirementCompliance": 0,
+      "overall": ""
+    },
+    "aiResults": {
+      "challengeId": "11-api-local-state",
+      "timestamp": "2026-08-21T08:07:57.797Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Proper integration of RTK Query with a local filters slice, allowing both server and client state to coexist in a single store.",
+        "Consistent TypeScript usage across slices, hooks, and components, improving type safety and developer experience.",
+        "Clear component separation and use of data-testid attributes, facilitating testing and future maintenance."
+      ],
+      "improvements": [],
+      "readability": 85,
+      "maintainability": 80,
+      "requirementCompliance": 0,
+      "overall": ""
+    }
   }
 ]
