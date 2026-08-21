@@ -1,18 +1,29 @@
 import { useGetUsersQuery } from '../api/apiSlice'
+import ErrorDisplay from './ErrorDisplay'
 
 export default function UsersList() {
-  // RTK Query useQueryHook: useGetUsersQuery
-  const { data, isLoading, isError } = useGetUsersQuery()
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetUsersQuery()
 
   if (isLoading) {
-    return <div data-testid="users-loading">Loading...</div>
+    return (
+      <div data-testid="users-loading">
+        Loading users...
+      </div>
+    )
   }
 
   if (isError) {
     return (
-      <div data-testid="users-error">
-        Failed to load users
-      </div>
+      <ErrorDisplay
+        error={error}
+        onRetry={refetch}
+      />
     )
   }
 
