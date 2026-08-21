@@ -202,5 +202,29 @@
       "requirementCompliance": 90,
       "overall": "The implementation meets the core requirements for tag-based cache invalidation and follows RTK Query patterns correctly. While the code is readable and maintainable, refactoring repeated error handling and expanding mutation coverage would further strengthen the solution."
     }
+  },
+  {
+    "challengeId": "09-mutations",
+    "challengeName": "Mutations with useMutation",
+    "aiReview": {
+      "challengeId": "09-mutations",
+      "timestamp": "2026-08-21T07:52:11.955Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Clear mutation endpoint with proper invalidatesTags in apiSlice.ts",
+        "AddPostForm correctly uses useAddPostMutation and handles loading, success, and error states",
+        "Mock server provides realistic async behavior and is well-structured in mockServer.ts"
+      ],
+      "improvements": [
+        "Add route configuration for /challenge/09-mutations in App.tsx to ensure the form is rendered",
+        "Replace fakeBaseQuery with createBaseQuery or a real baseQuery for production readiness",
+        "Add explicit TypeScript types for the mutation payload and response in apiSlice.ts to improve type safety and documentation"
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "requirementCompliance": 0,
+      "overall": ""
+    }
   }
 ]
