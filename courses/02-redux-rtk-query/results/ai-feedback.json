@@ -178,5 +178,29 @@
       "requirementCompliance": 0,
       "overall": ""
     }
+  },
+  {
+    "challengeId": "08-caching-refetch",
+    "challengeName": "Caching and Cache Tags",
+    "aiReview": {
+      "challengeId": "08-caching-refetch",
+      "timestamp": "2026-08-21T07:40:05.544Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Defined tagTypes and correctly used providesTags on getUsers and getPosts",
+        "Implemented invalidatesTags on addPost mutation to trigger refetch",
+        "Used TypeScript throughout and avoided console statements"
+      ],
+      "improvements": [
+        "Refactor duplicated error handling logic into a reusable helper function in src/api/apiSlice.ts",
+        "Add comments or JSDoc to clarify the purpose of each endpoint and tag usage in src/api/apiSlice.ts",
+        "Consider adding deletePost mutation with invalidatesTags to fully demonstrate cache invalidation in src/api/apiSlice.ts"
+      ],
+      "readability": 80,
+      "maintainability": 75,
+      "requirementCompliance": 90,
+      "overall": "The implementation meets the core requirements for tag-based cache invalidation and follows RTK Query patterns correctly. While the code is readable and maintainable, refactoring repeated error handling and expanding mutation coverage would further strengthen the solution."
+    }
   }
 ]

@@ -1753,5 +1753,223 @@
       "requirementCompliance": 0,
       "overall": ""
     }
+  },
+  {
+    "challengeId": "08-caching-refetch",
+    "challengeName": "Caching and Cache Tags",
+    "timestamp": "2026-08-21T07:39:50.075Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 83
+    },
+    "totalScore": 89.95,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 08: Caching and Cache Tags"
+              ],
+              "fullName": " Challenge 08: Caching and Cache Tags API slice has providesTags on query endpoint",
+              "status": "passed",
+              "title": "API slice has providesTags on query endpoint",
+              "duration": 2,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 08: Caching and Cache Tags"
+              ],
+              "fullName": " Challenge 08: Caching and Cache Tags API slice has invalidatesTags on mutation or tagTypes",
+              "status": "passed",
+              "title": "API slice has invalidatesTags on mutation or tagTypes",
+              "duration": 0,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787297995461,
+          "endTime": 1787297995463,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/02-redux-rtk-query/project/tests/challenge-08.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 100,
+      "passed": true,
+      "patternsFound": [],
+      "patternsMissing": [],
+      "details": [
+        {
+          "file": "src/api/apiSlice.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-08.spec.ts",
+          "file": "challenge-08.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 08: Caching and Cache Tags - E2E",
+              "file": "challenge-08.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load challenge 08 page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 882,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-21T07:40:02.152Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "cc4b1dfc0eb6cfe77aae-a520006593dc32b158d9",
+                  "file": "challenge-08.spec.ts",
+                  "line": 8,
+                  "column": 3
+                },
+                {
+                  "title": "should have posts list or content",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1103,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-21T07:40:03.496Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "cc4b1dfc0eb6cfe77aae-f2f94d63d4b9c539a5e4",
+                  "file": "challenge-08.spec.ts",
+                  "line": 13,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "08-caching-refetch",
+      "timestamp": "2026-08-21T07:40:05.544Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Defined tagTypes and correctly used providesTags on getUsers and getPosts",
+        "Implemented invalidatesTags on addPost mutation to trigger refetch",
+        "Used TypeScript throughout and avoided console statements"
+      ],
+      "improvements": [
+        "Refactor duplicated error handling logic into a reusable helper function in src/api/apiSlice.ts",
+        "Add comments or JSDoc to clarify the purpose of each endpoint and tag usage in src/api/apiSlice.ts",
+        "Consider adding deletePost mutation with invalidatesTags to fully demonstrate cache invalidation in src/api/apiSlice.ts"
+      ],
+      "readability": 80,
+      "maintainability": 75,
+      "requirementCompliance": 90,
+      "overall": "The implementation meets the core requirements for tag-based cache invalidation and follows RTK Query patterns correctly. While the code is readable and maintainable, refactoring repeated error handling and expanding mutation coverage would further strengthen the solution."
+    },
+    "aiResults": {
+      "challengeId": "08-caching-refetch",
+      "timestamp": "2026-08-21T07:40:05.544Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Defined tagTypes and correctly used providesTags on getUsers and getPosts",
+        "Implemented invalidatesTags on addPost mutation to trigger refetch",
+        "Used TypeScript throughout and avoided console statements"
+      ],
+      "improvements": [
+        "Refactor duplicated error handling logic into a reusable helper function in src/api/apiSlice.ts",
+        "Add comments or JSDoc to clarify the purpose of each endpoint and tag usage in src/api/apiSlice.ts",
+        "Consider adding deletePost mutation with invalidatesTags to fully demonstrate cache invalidation in src/api/apiSlice.ts"
+      ],
+      "readability": 80,
+      "maintainability": 75,
+      "requirementCompliance": 90,
+      "overall": "The implementation meets the core requirements for tag-based cache invalidation and follows RTK Query patterns correctly. While the code is readable and maintainable, refactoring repeated error handling and expanding mutation coverage would further strengthen the solution."
+    }
   }
 ]
