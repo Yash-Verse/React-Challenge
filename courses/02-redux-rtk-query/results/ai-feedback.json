@@ -226,5 +226,29 @@
       "requirementCompliance": 0,
       "overall": ""
     }
+  },
+  {
+    "challengeId": "10-optimistic-updates",
+    "challengeName": "Optimistic Updates",
+    "aiReview": {
+      "challengeId": "10-optimistic-updates",
+      "timestamp": "2026-08-21T07:58:02.148Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Implemented optimistic update with onQueryStarted and patchResult.undo for rollback",
+        "TypeScript types are used consistently across API slice and mock server",
+        "Clear separation of concerns between API slice and mock server logic"
+      ],
+      "improvements": [
+        "Add getState to onQueryStarted in src/api/apiSlice.ts to access current state if needed",
+        "Provide user-facing error handling or toast notifications in case of mutation failure",
+        "Replace fakeBaseQuery with fetchBaseQuery or a real base query for production readiness"
+      ],
+      "readability": 80,
+      "maintainability": 75,
+      "requirementCompliance": 90,
+      "overall": "The implementation meets the core requirement of optimistic updates and rollback, demonstrating solid use of RTK Query patterns. While the code is readable and maintainable, adding state access, error feedback, and a real base query would further strengthen the solution."
+    }
   }
 ]

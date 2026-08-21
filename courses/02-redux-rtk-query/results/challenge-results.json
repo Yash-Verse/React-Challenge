@@ -2205,5 +2205,200 @@
       "requirementCompliance": 0,
       "overall": ""
     }
+  },
+  {
+    "challengeId": "10-optimistic-updates",
+    "challengeName": "Optimistic Updates",
+    "timestamp": "2026-08-21T07:57:46.107Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 100,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 83
+    },
+    "totalScore": 89.95,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 10: Optimistic Updates"
+              ],
+              "fullName": " Challenge 10: Optimistic Updates API slice mutation has onQueryStarted",
+              "status": "passed",
+              "title": "API slice mutation has onQueryStarted",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 10: Optimistic Updates"
+              ],
+              "fullName": " Challenge 10: Optimistic Updates optimistic update uses queryFulfilled or updateQueryData",
+              "status": "passed",
+              "title": "optimistic update uses queryFulfilled or updateQueryData",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 10: Optimistic Updates"
+              ],
+              "fullName": " Challenge 10: Optimistic Updates has rollback or undo on error",
+              "status": "passed",
+              "title": "has rollback or undo on error",
+              "duration": 0,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787299072964,
+          "endTime": 1787299072966,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/02-redux-rtk-query/project/tests/challenge-10.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 100,
+      "passed": true,
+      "patternsFound": [],
+      "patternsMissing": [],
+      "details": [
+        {
+          "file": "src/api/apiSlice.ts",
+          "patternsFound": [],
+          "patternsMissing": []
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-10.spec.ts",
+          "file": "challenge-10.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 10: Optimistic Updates - E2E",
+              "file": "challenge-10.spec.ts",
+              "line": 3,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load challenge 10 page with content",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 874,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-21T07:58:00.317Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "2b6a150d93e258235d20-c73851f46778bc6eb125",
+                  "file": "challenge-10.spec.ts",
+                  "line": 8,
+                  "column": 3
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "10-optimistic-updates",
+      "timestamp": "2026-08-21T07:58:02.148Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Implemented optimistic update with onQueryStarted and patchResult.undo for rollback",
+        "TypeScript types are used consistently across API slice and mock server",
+        "Clear separation of concerns between API slice and mock server logic"
+      ],
+      "improvements": [
+        "Add getState to onQueryStarted in src/api/apiSlice.ts to access current state if needed",
+        "Provide user-facing error handling or toast notifications in case of mutation failure",
+        "Replace fakeBaseQuery with fetchBaseQuery or a real base query for production readiness"
+      ],
+      "readability": 80,
+      "maintainability": 75,
+      "requirementCompliance": 90,
+      "overall": "The implementation meets the core requirement of optimistic updates and rollback, demonstrating solid use of RTK Query patterns. While the code is readable and maintainable, adding state access, error feedback, and a real base query would further strengthen the solution."
+    },
+    "aiResults": {
+      "challengeId": "10-optimistic-updates",
+      "timestamp": "2026-08-21T07:58:02.148Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Implemented optimistic update with onQueryStarted and patchResult.undo for rollback",
+        "TypeScript types are used consistently across API slice and mock server",
+        "Clear separation of concerns between API slice and mock server logic"
+      ],
+      "improvements": [
+        "Add getState to onQueryStarted in src/api/apiSlice.ts to access current state if needed",
+        "Provide user-facing error handling or toast notifications in case of mutation failure",
+        "Replace fakeBaseQuery with fetchBaseQuery or a real base query for production readiness"
+      ],
+      "readability": 80,
+      "maintainability": 75,
+      "requirementCompliance": 90,
+      "overall": "The implementation meets the core requirement of optimistic updates and rollback, demonstrating solid use of RTK Query patterns. While the code is readable and maintainable, adding state access, error feedback, and a real base query would further strengthen the solution."
+    }
   }
 ]

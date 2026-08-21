@@ -70,10 +70,8 @@ export const apiSlice = createApi({
           : [{ type: 'Post' as const, id: 'LIST' }],
     }),
 
-    addPost: builder.mutation<
-      Post,
-      Omit<Post, 'id'>
-    >({
+    // Challenge 09 + Challenge 10
+    addPost: builder.mutation<Post, Omit<Post, 'id'>>({
       queryFn: async (post) => {
         try {
           const data = await mockApi.createPost(post)
@@ -91,6 +89,33 @@ export const apiSlice = createApi({
         }
       },
 
+      // Challenge 10: Optimistic update
+      async onQueryStarted(
+        post,
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData(
+            'getPosts',
+            undefined,
+            (draft) => {
+              draft.push({
+                ...post,
+                id: Date.now(),
+              })
+            }
+          )
+        )
+
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
+
+      // Challenge 09
+      // Also keeps the cached list synchronized with the server.
       invalidatesTags: [{ type: 'Post', id: 'LIST' }],
     }),
   }),
