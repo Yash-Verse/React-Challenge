@@ -158,5 +158,25 @@
       "requirementCompliance": 85,
       "overall": "The implementation satisfies the core requirements by setting up an API slice, integrating it into the store, and providing typed hooks. However, adopting fetchBaseQuery, simplifying the query definition, and expanding to mutations would align the code more closely with RTK Query best practices and improve maintainability."
     }
+  },
+  {
+    "challengeId": "07-queries",
+    "challengeName": "Query Endpoints and useQuery Hooks",
+    "aiReview": {
+      "challengeId": "07-queries",
+      "timestamp": "2026-08-21T07:29:54.043Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Correctly defines a getUsers query endpoint using RTK Query’s createApi and providesTags for caching",
+        "Uses the generated useGetUsersQuery hook in a component and handles loading and error states",
+        "TypeScript is used consistently and the code is well‑structured and easy to read"
+      ],
+      "improvements": [],
+      "readability": 85,
+      "maintainability": 80,
+      "requirementCompliance": 0,
+      "overall": ""
+    }
   }
 ]

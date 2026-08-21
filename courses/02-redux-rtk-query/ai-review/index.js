@@ -456,113 +456,75 @@ Be specific in your feedback. Reference specific files and code patterns. Focus 
 async function callGroqAPI(prompt) {
   const response = await fetch(GROQ_API_URL, {
     method: 'POST',
-
     headers: {
       Authorization: `Bearer ${GROQ_API_KEY}`,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-
     body: JSON.stringify({
       model: MODEL,
 
       messages: [
         {
-          role: 'system',
-          content:
-            'You are an expert RTK Query, Redux Toolkit, and TypeScript code reviewer. Return ONLY valid JSON matching the requested schema. Do not include Markdown or additional text.'
-        },
-        {
           role: 'user',
-          content: prompt
-        }
+          content: `Return ONLY valid JSON.
+
+Required JSON format:
+{
+  "readability": 80,
+  "maintainability": 80,
+  "strengths": ["strength"],
+  "improvements": ["improvement"],
+  "overall": "assessment",
+  "requirementCompliance": 80
+}
+
+All scores must be integers from 0 to 100.
+Do not use Markdown.
+Do not use code fences.
+Do not include any text outside the JSON object.
+
+Review this implementation:
+
+${prompt}`,
+        },
       ],
 
-      temperature: 0.3,
+      temperature: 0.2,
 
       max_tokens: 1500,
 
       response_format: {
-  type: 'json_schema',
-  json_schema: {
-    name: 'code_review',
-    strict: true,
-    schema: {
-      type: 'object',
-      properties: {
-        readability: {
-          type: 'integer',
-          minimum: 0,
-          maximum: 100
-        },
-        maintainability: {
-          type: 'integer',
-          minimum: 0,
-          maximum: 100
-        },
-        strengths: {
-          type: 'array',
-          items: {
-            type: 'string'
-          }
-        },
-        improvements: {
-          type: 'array',
-          items: {
-            type: 'string'
-          }
-        },
-        overall: {
-          type: 'string'
-        },
-        requirementCompliance: {
-          type: 'integer',
-          minimum: 0,
-          maximum: 100
-        }
+        type: 'json_object',
       },
-      required: [
-        'readability',
-        'maintainability',
-        'strengths',
-        'improvements',
-        'overall',
-        'requirementCompliance'
-      ],
-      additionalProperties: false
-    }
-  }
-}
-    })
-  });
 
-  const data = await response.json().catch(() => ({}));
+      reasoning_format: 'hidden',
+    }),
+  })
+
+  const rawResponse = await response.text()
 
   if (!response.ok) {
-    const msg =
-      data?.error?.message ||
-      data?.error ||
-      response.statusText;
-
     throw new Error(
-      `Groq API error (${response.status}): ${msg}`
-    );
+      `Groq API error (${response.status}): ${rawResponse}`
+    )
   }
 
-  const content =
-    data?.choices?.[0]?.message?.content;
+  let data
 
-  if (
-    content == null ||
-    typeof content !== 'string'
-  ) {
-    throw new Error(
-      'Groq API returned no content (check model/response shape)'
-    );
+  try {
+    data = JSON.parse(rawResponse)
+  } catch {
+    throw new Error('Groq returned an invalid API response.')
   }
 
-  return content;
+  const content = data?.choices?.[0]?.message?.content
+
+  if (typeof content !== 'string') {
+    throw new Error('Groq API returned no review content.')
+  }
+
+  return content
 }
-
 /**
  * Parse AI response.
  */
