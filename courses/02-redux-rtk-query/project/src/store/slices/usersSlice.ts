@@ -15,7 +15,9 @@ const initialState: UsersState = {
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
-  () => mockApi.getUsers(),
+  async () => {
+    return await mockApi.getUsers()
+  },
 )
 
 const usersSlice = createSlice({
@@ -38,5 +40,6 @@ const usersSlice = createSlice({
       })
   },
 })
+
 
 export default usersSlice.reducer

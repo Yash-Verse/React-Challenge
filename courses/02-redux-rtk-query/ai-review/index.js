@@ -2,14 +2,16 @@
 
 /**
  * AI Review Layer for RTK Query Course
- * 
- * Uses Groq API (Llama 3.1 8B) to provide qualitative code review
- * 
- * IMPORTANT: This review only runs if functional tests pass.
+ *
+ * Uses Groq API (GPT-OSS 20B) to provide qualitative code review.
+ *
+ * IMPORTANT:
+ * This review only runs if functional tests pass.
+ *
  * It receives:
- * - Challenge instructions and requirements (README.md - merged file)
+ * - Challenge instructions and requirements (README.md)
  * - All user-created code files
- * 
+ *
  * Provides sophisticated feedback based on actual implementation vs requirements.
  */
 
@@ -22,31 +24,57 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const repoRoot = join(__dirname, '..', '..', '..');
 const envPath = join(repoRoot, '.env');
+
 if (existsSync(envPath)) {
   const envContent = readFileSync(envPath, 'utf-8');
-  for (const line of envContent.split('\n')) {
+
+  for (const line of envContent.split(/\r?\n/)) {
     const match = line.match(/^\s*GROQ_API_KEY\s*=\s*(.+?)\s*$/);
+
     if (match) {
-      process.env.GROQ_API_KEY = match[1].trim().replace(/^["']|["']$/g, '');
+      process.env.GROQ_API_KEY = match[1]
+        .trim()
+        .replace(/^["']|["']$/g, '');
       break;
     }
   }
 }
 
 const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+const GROQ_API_URL =
+  'https://api.groq.com/openai/v1/chat/completions';
+
 const MODEL = 'openai/gpt-oss-20b';
 
 // File extensions to include in code review
 const CODE_EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx'];
 
 /**
- * Reviews code using AI for qualitative feedback
- * @param {string} challengeId - Challenge ID
- * @param {object} challengeMetadata - Challenge metadata (includes filesToCheck, patternsRequired, etc.)
- * @param {string} projectDir - Project directory path
+ * Clamp a score between 0 and 100.
  */
-export async function reviewCodeWithAI(challengeId, challengeMetadata, projectDir) {
+function clampScore(value) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) {
+    return 0;
+  }
+
+  return Math.max(0, Math.min(100, Math.round(number)));
+}
+
+/**
+ * Reviews code using AI for qualitative feedback.
+ *
+ * @param {string} challengeId
+ * @param {object} challengeMetadata
+ * @param {string} projectDir
+ */
+export async function reviewCodeWithAI(
+  challengeId,
+  challengeMetadata,
+  projectDir
+) {
   const results = {
     challengeId,
     timestamp: new Date().toISOString(),
@@ -56,56 +84,92 @@ export async function reviewCodeWithAI(challengeId, challengeMetadata, projectDi
     improvements: [],
     readability: 0,
     maintainability: 0,
+    requirementCompliance: 0,
     overall: ''
   };
 
   try {
-    // 1. Load challenge instructions and requirements from README.md (merged file)
-    const challengeDir = join(projectDir, 'challenges', challengeId);
+    // ------------------------------------------------------------
+    // 1. Load challenge instructions and requirements
+    // ------------------------------------------------------------
+
+    const challengeDir = join(
+      projectDir,
+      'challenges',
+      challengeId
+    );
+
     const readmePath = join(challengeDir, 'README.md');
-    
+
     let challengeInstructions = '';
     let challengeRequirements = '';
 
     if (existsSync(readmePath)) {
-      const readmeContent = readFileSync(readmePath, 'utf-8');
-      // Split README into instructions (before Technical Requirements) and requirements (after)
-      const requirementsMatch = readmeContent.match(/## Technical Requirements(?: \(What Will Be Reviewed\))?/);
-      if (requirementsMatch) {
+      const readmeContent = readFileSync(
+        readmePath,
+        'utf-8'
+      );
+
+      // Split README into instructions and technical requirements
+      const requirementsMatch = readmeContent.match(
+        /## Technical Requirements(?:\s*\(What Will Be Reviewed\))?/i
+      );
+
+      if (requirementsMatch && requirementsMatch.index !== undefined) {
         const splitIndex = requirementsMatch.index;
-        challengeInstructions = readmeContent.substring(0, splitIndex);
-        challengeRequirements = readmeContent.substring(splitIndex);
+
+        challengeInstructions =
+          readmeContent.substring(0, splitIndex);
+
+        challengeRequirements =
+          readmeContent.substring(splitIndex);
       } else {
-        // If no Technical Requirements section, use entire README as instructions
         challengeInstructions = readmeContent;
       }
     }
 
+    // ------------------------------------------------------------
     // 2. Read all user-created code files
+    // ------------------------------------------------------------
+
     const codeFiles = [];
     const missingFiles = [];
-    
+
     for (const filePath of challengeMetadata.filesToCheck || []) {
       const fullPath = join(projectDir, filePath);
+
       if (existsSync(fullPath)) {
-        const content = readFileSync(fullPath, 'utf-8');
-        // Only include if it's a code file and has meaningful content
-        if (CODE_EXTENSIONS.includes(extname(fullPath)) && content.trim().length > 0) {
-          codeFiles.push({
-            file: filePath,
-            content: content.substring(0, 8000) // Limit to 8KB per file
-          });
+        try {
+          const content = readFileSync(fullPath, 'utf-8');
+
+          if (
+            CODE_EXTENSIONS.includes(extname(fullPath)) &&
+            content.trim().length > 0
+          ) {
+            codeFiles.push({
+              file: filePath,
+              content: content.substring(0, 8000)
+            });
+          }
+        } catch {
+          // Ignore files that cannot be read
         }
       } else {
         missingFiles.push(filePath);
       }
     }
 
-    // 3. Discover additional files user might have created in relevant directories
-    const additionalFiles = discoverAdditionalFiles(challengeMetadata, projectDir);
+    // ------------------------------------------------------------
+    // 3. Discover additional code files
+    // ------------------------------------------------------------
+
+    const additionalFiles = discoverAdditionalFiles(
+      challengeMetadata,
+      projectDir
+    );
+
     for (const file of additionalFiles) {
-      // Avoid duplicates
-      if (!codeFiles.some(f => f.file === file.file)) {
+      if (!codeFiles.some((f) => f.file === file.file)) {
         codeFiles.push(file);
       }
     }
@@ -113,21 +177,29 @@ export async function reviewCodeWithAI(challengeId, challengeMetadata, projectDi
     if (codeFiles.length === 0) {
       return {
         ...results,
-        error: 'No code files found to review. User must create the required files first.',
+        error:
+          'No code files found to review. User must create the required files first.',
         score: 0
       };
     }
 
-    // 4. Check if API key is available
+    // ------------------------------------------------------------
+    // 4. Check API key
+    // ------------------------------------------------------------
+
     if (!GROQ_API_KEY) {
       return {
         ...results,
-        error: 'GROQ_API_KEY environment variable not set. AI review skipped.',
+        error:
+          'GROQ_API_KEY environment variable not set. AI review skipped.',
         score: 0
       };
     }
 
-    // 5. Build sophisticated prompt with all context
+    // ------------------------------------------------------------
+    // 5. Build review prompt
+    // ------------------------------------------------------------
+
     const prompt = buildReviewPrompt(
       challengeId,
       challengeMetadata,
@@ -137,10 +209,16 @@ export async function reviewCodeWithAI(challengeId, challengeMetadata, projectDi
       missingFiles
     );
 
+    // ------------------------------------------------------------
     // 6. Call Groq API
+    // ------------------------------------------------------------
+
     const aiResponse = await callGroqAPI(prompt);
 
+    // ------------------------------------------------------------
     // 7. Parse response
+    // ------------------------------------------------------------
+
     const parsedResponse = parseAIResponse(aiResponse);
 
     return {
@@ -148,56 +226,87 @@ export async function reviewCodeWithAI(challengeId, challengeMetadata, projectDi
       ...parsedResponse,
       score: calculateAIScore(parsedResponse)
     };
-
   } catch (error) {
     return {
       ...results,
-      error: error.message,
+      error:
+        error instanceof Error
+          ? error.message
+          : String(error),
       score: 0
     };
   }
 }
 
 /**
- * Discover additional files user might have created
+ * Discover additional files user might have created.
  */
-function discoverAdditionalFiles(challengeMetadata, projectDir) {
+function discoverAdditionalFiles(
+  challengeMetadata,
+  projectDir
+) {
   const additionalFiles = [];
   const checkedDirs = new Set();
 
-  // Check directories mentioned in filesToCheck
   for (const filePath of challengeMetadata.filesToCheck || []) {
     const dir = dirname(filePath);
-    if (!checkedDirs.has(dir)) {
-      checkedDirs.add(dir);
-      const fullDir = join(projectDir, dir);
-      if (existsSync(fullDir)) {
+
+    if (checkedDirs.has(dir)) {
+      continue;
+    }
+
+    checkedDirs.add(dir);
+
+    const fullDir = join(projectDir, dir);
+
+    if (!existsSync(fullDir)) {
+      continue;
+    }
+
+    try {
+      const files = readdirSync(fullDir);
+
+      for (const file of files) {
+        const fullPath = join(fullDir, file);
+
         try {
-          const files = readdirSync(fullDir);
-          for (const file of files) {
-            const fullPath = join(fullDir, file);
-            if (statSync(fullPath).isFile() && CODE_EXTENSIONS.includes(extname(file))) {
-              const relativePath = join(dir, file).replace(/\\/g, '/');
-              // Only include if not already in filesToCheck
-              if (!challengeMetadata.filesToCheck.includes(relativePath)) {
-                try {
-                  const content = readFileSync(fullPath, 'utf-8');
-                  if (content.trim().length > 0) {
-                    additionalFiles.push({
-                      file: relativePath,
-                      content: content.substring(0, 8000)
-                    });
-                  }
-                } catch (e) {
-                  // Skip files that can't be read
+          if (
+            statSync(fullPath).isFile() &&
+            CODE_EXTENSIONS.includes(extname(file))
+          ) {
+            const relativePath = join(dir, file).replace(
+              /\\/g,
+              '/'
+            );
+
+            if (
+              !(challengeMetadata.filesToCheck || []).includes(
+                relativePath
+              )
+            ) {
+              try {
+                const content = readFileSync(
+                  fullPath,
+                  'utf-8'
+                );
+
+                if (content.trim().length > 0) {
+                  additionalFiles.push({
+                    file: relativePath,
+                    content: content.substring(0, 8000)
+                  });
                 }
+              } catch {
+                // Skip unreadable files
               }
             }
           }
-        } catch (e) {
-          // Skip directories that can't be read
+        } catch {
+          // Skip files that cannot be inspected
         }
       }
+    } catch {
+      // Skip directories that cannot be read
     }
   }
 
@@ -205,175 +314,432 @@ function discoverAdditionalFiles(challengeMetadata, projectDir) {
 }
 
 /**
- * Build sophisticated review prompt with all context
+ * Build sophisticated review prompt with all context.
  */
-function buildReviewPrompt(challengeId, challengeMetadata, instructions, requirements, codeFiles, missingFiles) {
-  const challengeName = challengeMetadata.challengeName || challengeId;
+function buildReviewPrompt(
+  challengeId,
+  challengeMetadata,
+  instructions,
+  requirements,
+  codeFiles,
+  missingFiles
+) {
+  const challengeName =
+    challengeMetadata.challengeName || challengeId;
+
   const skills = challengeMetadata.skills || [];
-  const patternsRequired = challengeMetadata.patternsRequired || [];
 
-  // Build code context
-  const codeContext = codeFiles.map(f => 
-    `File: ${f.file}\n\`\`\`typescript\n${f.content}\n\`\`\``
-  ).join('\n\n---\n\n');
+  const patternsRequired =
+    challengeMetadata.patternsRequired || [];
 
-  // Build missing files note
-  const missingFilesNote = missingFiles.length > 0
-    ? `\n\n⚠️ NOTE: The following expected files are missing: ${missingFiles.join(', ')}. This may indicate incomplete implementation.`
-    : '';
+  const codeContext = codeFiles
+    .map(
+      (f) =>
+        `File: ${f.file}\n\`\`\`typescript\n${f.content}\n\`\`\``
+    )
+    .join('\n\n---\n\n');
 
-  // Build requirements summary
+  const missingFilesNote =
+    missingFiles.length > 0
+      ? `\n\nNOTE: The following expected files are missing: ${missingFiles.join(
+          ', '
+        )}. This may indicate incomplete implementation.`
+      : '';
+
   const requirementsSummary = requirements
-    ? `\n\n## Technical Requirements:\n${requirements.substring(0, 2000)}`
+    ? `\n\n## Technical Requirements:\n${requirements.substring(
+        0,
+        2000
+      )}`
     : '';
 
-  // Build instructions summary
   const instructionsSummary = instructions
-    ? `\n\n## Challenge Instructions:\n${instructions.substring(0, 3000)}`
+    ? `\n\n## Challenge Instructions:\n${instructions.substring(
+        0,
+        3000
+      )}`
     : '';
 
-  return `You are an expert RTK Query, Redux Toolkit, and TypeScript code reviewer. Review the following implementation for challenge "${challengeName}" (${challengeId}).
+  return `You are an expert RTK Query, Redux Toolkit, and TypeScript code reviewer.
+
+Review the following implementation for challenge "${challengeName}" (${challengeId}).
 
 ## Challenge Context:
-- **Challenge ID**: ${challengeId}
-- **Skills Focus**: ${skills.join(', ')}
-- **Required Patterns**: ${patternsRequired.join(', ')}${instructionsSummary}${requirementsSummary}
+
+- Challenge ID: ${challengeId}
+- Skills Focus: ${skills.join(', ') || 'Not specified'}
+- Required Patterns: ${
+    patternsRequired.join(', ') || 'Not specified'
+  }
+
+${instructionsSummary}
+${requirementsSummary}
 
 ## User's Implementation:
 
-The following code files were created/modified by the user for this challenge:
+The following code files were created/modified by the user:
 
-${codeContext}${missingFilesNote}
+${codeContext}
+
+${missingFilesNote}
 
 ## Review Task:
 
 Provide a comprehensive code review focusing on:
 
-1. **Requirement Compliance** (30%):
+1. Requirement Compliance (30%):
    - Does the code meet all functional requirements?
    - Are all required patterns implemented correctly?
    - Are missing files a concern?
 
-2. **Code Quality** (25%):
-   - Readability: Is the code clear and well-structured?
-   - TypeScript usage: Proper types and interfaces?
-   - Code organization: Logical structure and separation of concerns?
+2. Code Quality (25%):
+   - Readability
+   - TypeScript usage
+   - Code organization
+   - Separation of concerns
 
-3. **RTK Query Best Practices** (25%):
-   - Correct use of createApi, fetchBaseQuery, endpoints
-   - Proper hook usage (useGetUsersQuery, etc.)
-   - Store integration and reducer setup
+3. RTK Query Best Practices (25%):
+   - Correct use of createApi
+   - Correct use of fetchBaseQuery or appropriate base query
+   - Correct endpoint definitions
+   - Proper hook usage
+   - Store integration
+   - Reducer and middleware configuration
    - Error and loading state handling
 
-4. **Maintainability** (20%):
-   - Is the code maintainable and extensible?
-   - Are there any code smells or anti-patterns?
-   - Could the code be improved for future changes?
+4. Maintainability (20%):
+   - Maintainability
+   - Extensibility
+   - Code smells
+   - Anti-patterns
+   - Future changes
 
-## Output Format:
+IMPORTANT OUTPUT RULES:
 
-Provide your review as JSON:
+- Return ONLY one valid JSON object.
+- Do not use Markdown code fences.
+- Do not write any explanation before or after the JSON.
+- All JSON strings must use valid JSON escaping.
+- Do not include trailing commas.
+- requirementCompliance MUST be a number from 0 to 100.
+- readability MUST be a number from 0 to 100.
+- maintainability MUST be a number from 0 to 100.
+- strengths MUST be an array of strings.
+- improvements MUST be an array of strings.
+- overall MUST be a string containing 2-3 sentences.
+
+Return exactly this structure:
 
 {
-  "readability": <number 0-100>,
-  "maintainability": <number 0-100>,
-  "strengths": ["specific strength 1", "specific strength 2", "specific strength 3"],
-  "improvements": ["specific improvement 1 with file reference", "specific improvement 2 with file reference", "specific improvement 3 with file reference"],
-  "overall": "<2-3 sentence assessment focusing on requirement compliance and RTK Query best practices>",
-  "requirementCompliance": <number 0-100, how well requirements are met>
+  "readability": 0,
+  "maintainability": 0,
+  "strengths": [
+    "specific strength 1",
+    "specific strength 2",
+    "specific strength 3"
+  ],
+  "improvements": [
+    "specific improvement 1 with file reference",
+    "specific improvement 2 with file reference",
+    "specific improvement 3 with file reference"
+  ],
+  "overall": "2-3 sentence assessment focusing on requirement compliance and RTK Query best practices.",
+  "requirementCompliance": 0
 }
 
 Be specific in your feedback. Reference specific files and code patterns. Focus on actionable improvements.`;
 }
 
 /**
- * Call Groq API
+ * Call Groq API.
  */
 async function callGroqAPI(prompt) {
   const response = await fetch(GROQ_API_URL, {
     method: 'POST',
+
     headers: {
-      'Authorization': `Bearer ${GROQ_API_KEY}`,
+      Authorization: `Bearer ${GROQ_API_KEY}`,
       'Content-Type': 'application/json'
     },
+
     body: JSON.stringify({
       model: MODEL,
+
       messages: [
         {
           role: 'system',
-          content: 'You are an expert RTK Query, Redux Toolkit, and TypeScript code reviewer. Provide detailed, specific, actionable feedback. Reference specific files and code patterns in your feedback.'
+          content:
+            'You are an expert RTK Query, Redux Toolkit, and TypeScript code reviewer. Return ONLY valid JSON matching the requested schema. Do not include Markdown or additional text.'
         },
         {
           role: 'user',
           content: prompt
         }
       ],
+
       temperature: 0.3,
-      max_tokens: 1500 // Increased for more detailed feedback
+
+      max_tokens: 1500,
+
+      response_format: {
+  type: 'json_schema',
+  json_schema: {
+    name: 'code_review',
+    strict: true,
+    schema: {
+      type: 'object',
+      properties: {
+        readability: {
+          type: 'integer',
+          minimum: 0,
+          maximum: 100
+        },
+        maintainability: {
+          type: 'integer',
+          minimum: 0,
+          maximum: 100
+        },
+        strengths: {
+          type: 'array',
+          items: {
+            type: 'string'
+          }
+        },
+        improvements: {
+          type: 'array',
+          items: {
+            type: 'string'
+          }
+        },
+        overall: {
+          type: 'string'
+        },
+        requirementCompliance: {
+          type: 'integer',
+          minimum: 0,
+          maximum: 100
+        }
+      },
+      required: [
+        'readability',
+        'maintainability',
+        'strengths',
+        'improvements',
+        'overall',
+        'requirementCompliance'
+      ],
+      additionalProperties: false
+    }
+  }
+}
     })
   });
 
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    const msg = data?.error?.message || data?.error || response.statusText;
-    throw new Error(`Groq API error (${response.status}): ${msg}`);
+    const msg =
+      data?.error?.message ||
+      data?.error ||
+      response.statusText;
+
+    throw new Error(
+      `Groq API error (${response.status}): ${msg}`
+    );
   }
 
-  const content = data?.choices?.[0]?.message?.content;
-  if (content == null || typeof content !== 'string') {
-    throw new Error('Groq API returned no content (check model/response shape)');
+  const content =
+    data?.choices?.[0]?.message?.content;
+
+  if (
+    content == null ||
+    typeof content !== 'string'
+  ) {
+    throw new Error(
+      'Groq API returned no content (check model/response shape)'
+    );
   }
+
   return content;
 }
 
 /**
- * Parse AI response
+ * Parse AI response.
  */
 function parseAIResponse(response) {
-  try {
-    // Try to extract JSON from response
-    const jsonMatch = response.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
-      const parsed = JSON.parse(jsonMatch[0]);
-      return {
-        readability: parsed.readability || 0,
-        maintainability: parsed.maintainability || 0,
-        strengths: parsed.strengths || [],
-        improvements: parsed.improvements || [],
-        overall: parsed.overall || '',
-        requirementCompliance: parsed.requirementCompliance || 0
-      };
-    }
-  } catch (error) {
-    // Fallback parsing
+  if (!response || typeof response !== 'string') {
+    return createEmptyAIResponse();
   }
 
-  // Fallback: extract information manually
-  const readabilityMatch = response.match(/readability[:\s]+(\d+)/i);
-  const maintainabilityMatch = response.match(/maintainability[:\s]+(\d+)/i);
-  const complianceMatch = response.match(/requirementCompliance[:\s]+(\d+)/i);
+  // ------------------------------------------------------------
+  // 1. Try direct JSON parsing
+  // ------------------------------------------------------------
+
+  try {
+    const parsed = JSON.parse(response);
+
+    return normalizeAIResponse(parsed);
+  } catch {
+    // Continue to extraction
+  }
+
+  // ------------------------------------------------------------
+  // 2. Remove Markdown code fences and try again
+  // ------------------------------------------------------------
+
+  try {
+    const cleaned = response
+      .trim()
+      .replace(/^```json\s*/i, '')
+      .replace(/^```\s*/i, '')
+      .replace(/\s*```$/i, '')
+      .trim();
+
+    const parsed = JSON.parse(cleaned);
+
+    return normalizeAIResponse(parsed);
+  } catch {
+    // Continue to extraction
+  }
+
+  // ------------------------------------------------------------
+  // 3. Extract JSON object
+  // ------------------------------------------------------------
+
+  try {
+    const start = response.indexOf('{');
+    const end = response.lastIndexOf('}');
+
+    if (start !== -1 && end > start) {
+      const jsonText = response.substring(
+        start,
+        end + 1
+      );
+
+      const parsed = JSON.parse(jsonText);
+
+      return normalizeAIResponse(parsed);
+    }
+  } catch {
+    // Continue to fallback parsing
+  }
+
+  // ------------------------------------------------------------
+  // 4. Manual fallback
+  // ------------------------------------------------------------
+
+  const readabilityMatch = response.match(
+    /["']?readability["']?\s*[:=]\s*(\d+)/i
+  );
+
+  const maintainabilityMatch = response.match(
+    /["']?maintainability["']?\s*[:=]\s*(\d+)/i
+  );
+
+  const complianceMatch = response.match(
+    /["']?requirementCompliance["']?\s*[:=]\s*(\d+)/i
+  );
 
   return {
-    readability: readabilityMatch ? parseInt(readabilityMatch[1]) : 0,
-    maintainability: maintainabilityMatch ? parseInt(maintainabilityMatch[1]) : 0,
-    requirementCompliance: complianceMatch ? parseInt(complianceMatch[1]) : 0,
-    strengths: extractList(response, /strengths?/i),
-    improvements: extractList(response, /improvements?/i),
-    overall: response.substring(0, 500)
+    readability: readabilityMatch
+      ? clampScore(readabilityMatch[1])
+      : 0,
+
+    maintainability: maintainabilityMatch
+      ? clampScore(maintainabilityMatch[1])
+      : 0,
+
+    requirementCompliance: complianceMatch
+      ? clampScore(complianceMatch[1])
+      : 0,
+
+    strengths: extractList(
+      response,
+      /strengths?/i
+    ),
+
+    improvements: extractList(
+      response,
+      /improvements?/i
+    ),
+
+    overall: response
+      .substring(0, 500)
+      .trim()
   };
 }
 
 /**
- * Extract list items from text
+ * Normalize AI response and ensure valid values.
+ */
+function normalizeAIResponse(parsed) {
+  if (!parsed || typeof parsed !== 'object') {
+    return createEmptyAIResponse();
+  }
+
+  return {
+    readability: clampScore(parsed.readability),
+
+    maintainability: clampScore(
+      parsed.maintainability
+    ),
+
+    requirementCompliance: clampScore(
+      parsed.requirementCompliance
+    ),
+
+    strengths: Array.isArray(parsed.strengths)
+      ? parsed.strengths
+          .filter(
+            (item) => typeof item === 'string'
+          )
+          .slice(0, 5)
+      : [],
+
+    improvements: Array.isArray(
+      parsed.improvements
+    )
+      ? parsed.improvements
+          .filter(
+            (item) => typeof item === 'string'
+          )
+          .slice(0, 5)
+      : [],
+
+    overall:
+      typeof parsed.overall === 'string'
+        ? parsed.overall
+        : ''
+  };
+}
+
+/**
+ * Empty AI response fallback.
+ */
+function createEmptyAIResponse() {
+  return {
+    readability: 0,
+    maintainability: 0,
+    requirementCompliance: 0,
+    strengths: [],
+    improvements: [],
+    overall: ''
+  };
+}
+
+/**
+ * Extract list items from text.
  */
 function extractList(text, keyword) {
   const lines = text.split('\n');
   const list = [];
   let inList = false;
+
   const matchesKeyword = (line) =>
     typeof keyword === 'string'
-      ? line.toLowerCase().includes(keyword)
+      ? line
+          .toLowerCase()
+          .includes(keyword.toLowerCase())
       : keyword.test(line);
 
   for (const line of lines) {
@@ -381,36 +747,65 @@ function extractList(text, keyword) {
       inList = true;
       continue;
     }
-    if (inList && (line.trim().startsWith('-') || line.trim().match(/^\d+\./) || line.trim().startsWith('"'))) {
-      let item = line.trim().replace(/^[-•\d."]+\s*/, '').replace(/^["']|["']$/g, '');
+
+    if (
+      inList &&
+      (
+        line.trim().startsWith('-') ||
+        /^\d+\./.test(line.trim()) ||
+        line.trim().startsWith('"')
+      )
+    ) {
+      const item = line
+        .trim()
+        .replace(/^[-•\d."]+\s*/, '')
+        .replace(/^["']|["']$/g, '')
+        .trim();
+
       if (item) {
         list.push(item);
-        if (list.length >= 5) break; // Allow up to 5 items
+
+        if (list.length >= 5) {
+          break;
+        }
       }
     }
-    if (inList && line.trim() === '' && list.length > 0) {
+
+    if (
+      inList &&
+      line.trim() === '' &&
+      list.length > 0
+    ) {
       break;
     }
   }
 
-  return list.length > 0 ? list : [];
+  return list;
 }
 
 /**
- * Calculate AI score based on multiple factors
+ * Calculate AI score based on multiple factors.
+ *
+ * Requirement compliance is weighted most heavily.
  */
 function calculateAIScore(parsedResponse) {
-  const readability = parsedResponse.readability || 0;
-  const maintainability = parsedResponse.maintainability || 0;
-  const requirementCompliance = parsedResponse.requirementCompliance || 0;
-
-  // Weighted average: requirement compliance is most important
-  // Since tests already passed, we focus on code quality
-  const score = Math.round(
-    (requirementCompliance * 0.4) +
-    (readability * 0.3) +
-    (maintainability * 0.3)
+  const readability = clampScore(
+    parsedResponse.readability
   );
 
-  return Math.max(0, Math.min(100, score)); // Clamp between 0-100
+  const maintainability = clampScore(
+    parsedResponse.maintainability
+  );
+
+  const requirementCompliance = clampScore(
+    parsedResponse.requirementCompliance
+  );
+
+  const score = Math.round(
+    requirementCompliance * 0.4 +
+      readability * 0.3 +
+      maintainability * 0.3
+  );
+
+  return Math.max(0, Math.min(100, score));
 }
