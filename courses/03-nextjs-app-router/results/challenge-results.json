@@ -583,5 +583,234 @@
       "maintainability": 88,
       "overall": "The implementation satisfies all functional and technical requirements with clean, readable code. Minor stylistic and accessibility enhancements would raise the maintainability score further, but the current solution is solid and ready for production."
     }
+  },
+  {
+    "challengeId": "03-data-fetching-server",
+    "challengeName": "Data Fetching in Server Components",
+    "timestamp": "2026-08-27T11:54:32.903Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 66.7,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 50
+    },
+    "totalScore": 81.67,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 03: Data Fetching in Server Components"
+              ],
+              "fullName": " Challenge 03: Data Fetching in Server Components should have posts page (or equivalent data page)",
+              "status": "passed",
+              "title": "should have posts page (or equivalent data page)",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 03: Data Fetching in Server Components"
+              ],
+              "fullName": " Challenge 03: Data Fetching in Server Components should have async Server Component",
+              "status": "passed",
+              "title": "should have async Server Component",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 03: Data Fetching in Server Components"
+              ],
+              "fullName": " Challenge 03: Data Fetching in Server Components should fetch data in Server Component",
+              "status": "passed",
+              "title": "should fetch data in Server Component",
+              "duration": 0,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787831675851,
+          "endTime": 1787831675853,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-03.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 66.7,
+      "passed": false,
+      "patternsFound": [
+        "fetch",
+        "await"
+      ],
+      "patternsMissing": [
+        "asyncServerComponent"
+      ],
+      "details": [
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [
+            "fetch",
+            "await"
+          ],
+          "patternsMissing": [
+            "asyncServerComponent"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-03.spec.ts",
+          "file": "challenge-03.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 03: Data Fetching - E2E",
+              "file": "challenge-03.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load posts page with content",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 3222,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-27T11:54:44.281Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "abe74fb7538c55bf8146-4bec499cece7348545ba",
+                  "file": "challenge-03.spec.ts",
+                  "line": 8,
+                  "column": 7
+                },
+                {
+                  "title": "should have API route that returns JSON",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 313,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-27T11:54:47.628Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "abe74fb7538c55bf8146-b699cd20cbc61b3b8da4",
+                  "file": "challenge-03.spec.ts",
+                  "line": 15,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "03-data-fetching-server",
+      "timestamp": "2026-08-27T11:54:48.305Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear async server component that fetches data directly with `await fetch`.\",\n    \"Proper TypeScript typing of the fetched data (`Post` type).\",\n    \"Simple, readable conditional rendering for empty and error states.\"\n  ],\n  \"improvements\": [\n    \"Capture the error object in the catch block (`catch (error)`) to log or display a more informative message.\",\n    \"Extract the fetch logic into a separate helper function or "
+    },
+    "aiResults": {
+      "challengeId": "03-data-fetching-server",
+      "timestamp": "2026-08-27T11:54:48.305Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear async server component that fetches data directly with `await fetch`.\",\n    \"Proper TypeScript typing of the fetched data (`Post` type).\",\n    \"Simple, readable conditional rendering for empty and error states.\"\n  ],\n  \"improvements\": [\n    \"Capture the error object in the catch block (`catch (error)`) to log or display a more informative message.\",\n    \"Extract the fetch logic into a separate helper function or "
+    }
   }
 ]

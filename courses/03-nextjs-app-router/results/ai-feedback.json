@@ -44,5 +44,24 @@
       "maintainability": 88,
       "overall": "The implementation satisfies all functional and technical requirements with clean, readable code. Minor stylistic and accessibility enhancements would raise the maintainability score further, but the current solution is solid and ready for production."
     }
+  },
+  {
+    "challengeId": "03-data-fetching-server",
+    "challengeName": "Data Fetching in Server Components",
+    "aiReview": {
+      "challengeId": "03-data-fetching-server",
+      "timestamp": "2026-08-27T11:54:48.305Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear async server component that fetches data directly with `await fetch`.\",\n    \"Proper TypeScript typing of the fetched data (`Post` type).\",\n    \"Simple, readable conditional rendering for empty and error states.\"\n  ],\n  \"improvements\": [\n    \"Capture the error object in the catch block (`catch (error)`) to log or display a more informative message.\",\n    \"Extract the fetch logic into a separate helper function or "
+    }
   }
 ]
