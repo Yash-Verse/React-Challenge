@@ -9,7 +9,8 @@ type Post = {
 
 async function PostsContent() {
   try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts',
+  { cache: 'no-store' })
 
     if (!response.ok) {
       throw new Error('Failed to fetch posts')

@@ -1607,5 +1607,185 @@
       "maintainability": 82,
       "overall": "The implementation cleanly demonstrates static vs dynamic rendering in Next.js App Router. The code is readable and maintainable, with a few minor refactoring opportunities to enhance modularity and debugging."
     }
+  },
+  {
+    "challengeId": "08-ssr-dynamic-rendering",
+    "challengeName": "SSR (Server-Side Rendering)",
+    "timestamp": "2026-08-27T12:32:29.121Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 50,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 50
+    },
+    "totalScore": 80,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 08: SSR (Server-Side Rendering)"
+              ],
+              "fullName": " Challenge 08: SSR (Server-Side Rendering) should have page with force-dynamic or cache no-store",
+              "status": "passed",
+              "title": "should have page with force-dynamic or cache no-store",
+              "duration": 2,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787833950682,
+          "endTime": 1787833950684,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-08.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 50,
+      "passed": false,
+      "patternsFound": [
+        "forceDynamic"
+      ],
+      "patternsMissing": [
+        "cacheNoStore"
+      ],
+      "details": [
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [
+            "forceDynamic"
+          ],
+          "patternsMissing": [
+            "cacheNoStore"
+          ]
+        },
+        {
+          "file": "app/dashboard/page.tsx",
+          "error": "File does not exist",
+          "patternsFound": [],
+          "patternsMissing": [
+            "forceDynamic",
+            "cacheNoStore"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-08.spec.ts",
+          "file": "challenge-08.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 08: SSR - E2E",
+              "file": "challenge-08.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load posts or dashboard page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 848,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-27T12:32:37.315Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "cc4b1dfc0eb6cfe77aae-bc51cad160854582eafe",
+                  "file": "challenge-08.spec.ts",
+                  "line": 8,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "08-ssr-dynamic-rendering",
+      "timestamp": "2026-08-27T12:32:38.569Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Explicitly forces server-side rendering with `export const dynamic = 'force-dynamic'`.\",\n    \"Uses `fetch(..., { cache: 'no-store' })` to guarantee fresh data on every request.\",\n    \"Graceful error handling with a fallback UI when the API fails.\"\n  ],\n  \"improvements\": [\n    \"Add an error parameter to the catch block (`catch (error)`) and consider logging it for debugging.\",\n    \"Extract the post list rendering into a"
+    },
+    "aiResults": {
+      "challengeId": "08-ssr-dynamic-rendering",
+      "timestamp": "2026-08-27T12:32:38.569Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Explicitly forces server-side rendering with `export const dynamic = 'force-dynamic'`.\",\n    \"Uses `fetch(..., { cache: 'no-store' })` to guarantee fresh data on every request.\",\n    \"Graceful error handling with a fallback UI when the API fails.\"\n  ],\n  \"improvements\": [\n    \"Add an error parameter to the catch block (`catch (error)`) and consider logging it for debugging.\",\n    \"Extract the post list rendering into a"
+    }
   }
 ]

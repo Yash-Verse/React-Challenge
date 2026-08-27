@@ -151,5 +151,24 @@
       "maintainability": 82,
       "overall": "The implementation cleanly demonstrates static vs dynamic rendering in Next.js App Router. The code is readable and maintainable, with a few minor refactoring opportunities to enhance modularity and debugging."
     }
+  },
+  {
+    "challengeId": "08-ssr-dynamic-rendering",
+    "challengeName": "SSR (Server-Side Rendering)",
+    "aiReview": {
+      "challengeId": "08-ssr-dynamic-rendering",
+      "timestamp": "2026-08-27T12:32:38.569Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Explicitly forces server-side rendering with `export const dynamic = 'force-dynamic'`.\",\n    \"Uses `fetch(..., { cache: 'no-store' })` to guarantee fresh data on every request.\",\n    \"Graceful error handling with a fallback UI when the API fails.\"\n  ],\n  \"improvements\": [\n    \"Add an error parameter to the catch block (`catch (error)`) and consider logging it for debugging.\",\n    \"Extract the post list rendering into a"
+    }
   }
 ]
