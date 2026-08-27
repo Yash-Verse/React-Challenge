@@ -812,5 +812,197 @@
       "maintainability": 50,
       "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear async server component that fetches data directly with `await fetch`.\",\n    \"Proper TypeScript typing of the fetched data (`Post` type).\",\n    \"Simple, readable conditional rendering for empty and error states.\"\n  ],\n  \"improvements\": [\n    \"Capture the error object in the catch block (`catch (error)`) to log or display a more informative message.\",\n    \"Extract the fetch logic into a separate helper function or "
     }
+  },
+  {
+    "challengeId": "04-api-route-handlers",
+    "challengeName": "API Route Handlers",
+    "timestamp": "2026-08-27T12:02:18.748Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 33.3,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 88
+    },
+    "totalScore": 84.03,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 04: API Route Handlers"
+              ],
+              "fullName": " Challenge 04: API Route Handlers should have API route file",
+              "status": "passed",
+              "title": "should have API route file",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 04: API Route Handlers"
+              ],
+              "fullName": " Challenge 04: API Route Handlers should export GET that returns JSON",
+              "status": "passed",
+              "title": "should export GET that returns JSON",
+              "duration": 0,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787832141237,
+          "endTime": 1787832141239,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-04.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 33.3,
+      "passed": false,
+      "patternsFound": [
+        "GET"
+      ],
+      "patternsMissing": [
+        "routeHandler",
+        "ResponseJson"
+      ],
+      "details": [
+        {
+          "file": "app/api/posts/route.ts",
+          "patternsFound": [
+            "GET"
+          ],
+          "patternsMissing": [
+            "routeHandler",
+            "ResponseJson"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-04.spec.ts",
+          "file": "challenge-04.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 04: API Route Handlers - E2E",
+              "file": "challenge-04.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should have API route that returns JSON",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 442,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-27T12:02:28.877Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "0401c8ab289c6ab836d0-7ddfff09b261747e7f47",
+                  "file": "challenge-04.spec.ts",
+                  "line": 8,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "04-api-route-handlers",
+      "timestamp": "2026-08-27T12:02:29.567Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "Clear type definition for Post objects, improving type safety.",
+        "Simple, self‑contained GET handler that returns JSON as required.",
+        "No console statements or side effects, keeping the file clean."
+      ],
+      "improvements": [
+        "Add an explicit return type for the GET function (e.g., `Promise<Response>` or `Response`).",
+        "Export the `Post` type for reuse elsewhere in the application.",
+        "Consider adding a POST handler or error handling to make the API more robust."
+      ],
+      "readability": 90,
+      "maintainability": 85,
+      "overall": "The implementation meets the challenge requirements with clean, readable code. Adding explicit types and exporting the Post type would enhance maintainability and reusability."
+    },
+    "aiResults": {
+      "challengeId": "04-api-route-handlers",
+      "timestamp": "2026-08-27T12:02:29.567Z",
+      "score": 88,
+      "feedback": [],
+      "strengths": [
+        "Clear type definition for Post objects, improving type safety.",
+        "Simple, self‑contained GET handler that returns JSON as required.",
+        "No console statements or side effects, keeping the file clean."
+      ],
+      "improvements": [
+        "Add an explicit return type for the GET function (e.g., `Promise<Response>` or `Response`).",
+        "Export the `Post` type for reuse elsewhere in the application.",
+        "Consider adding a POST handler or error handling to make the API more robust."
+      ],
+      "readability": 90,
+      "maintainability": 85,
+      "overall": "The implementation meets the challenge requirements with clean, readable code. Adding explicit types and exporting the Post type would enhance maintainability and reusability."
+    }
   }
 ]
