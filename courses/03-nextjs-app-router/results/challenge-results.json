@@ -1386,5 +1386,226 @@
       "maintainability": 50,
       "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear use of dynamic route parameters (`params.id`) and TypeScript types.\",\n    \"Robust error handling with a graceful fallback UI.\",\n    \"Clean, concise component structure without unnecessary imports.\"\n  ],\n  \"improvements\": [\n    \"Add `generateStaticParams` to pre‑render known post IDs and improve SEO.\",\n    \"Specify fetch options (e.g., `{ next: { revalidate: 60 } }`) to control caching and revalidation.\",\n    \"Inc"
     }
+  },
+  {
+    "challengeId": "07-static-and-dynamic-rendering",
+    "challengeName": "Static and Dynamic Rendering",
+    "timestamp": "2026-08-27T12:28:25.514Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 0,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 85
+    },
+    "totalScore": 80.25,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 07: Static and Dynamic Rendering"
+              ],
+              "fullName": " Challenge 07: Static and Dynamic Rendering should have at least one page with dynamic export or dynamic APIs",
+              "status": "passed",
+              "title": "should have at least one page with dynamic export or dynamic APIs",
+              "duration": 1,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787833707160,
+          "endTime": 1787833707161,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-07.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 0,
+      "passed": false,
+      "patternsFound": [],
+      "patternsMissing": [
+        "dynamicExport",
+        "forceStaticOrDynamic",
+        "dynamicExport",
+        "forceStaticOrDynamic"
+      ],
+      "details": [
+        {
+          "file": "app/page.tsx",
+          "patternsFound": [],
+          "patternsMissing": [
+            "dynamicExport",
+            "forceStaticOrDynamic"
+          ]
+        },
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [],
+          "patternsMissing": [
+            "dynamicExport",
+            "forceStaticOrDynamic"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-07.spec.ts",
+          "file": "challenge-07.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 07: Static and Dynamic Rendering - E2E",
+              "file": "challenge-07.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load home page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 698,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-27T12:28:33.660Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "7e3ab03348c1d17f8ec0-01f887ccf627119bf7a7",
+                  "file": "challenge-07.spec.ts",
+                  "line": 8,
+                  "column": 7
+                },
+                {
+                  "title": "should load posts page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 793,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-27T12:28:34.482Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "7e3ab03348c1d17f8ec0-d7771a808ac7d608cbe5",
+                  "file": "challenge-07.spec.ts",
+                  "line": 13,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "07-static-and-dynamic-rendering",
+      "timestamp": "2026-08-27T12:28:35.599Z",
+      "score": 85,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of static and dynamic pages using explicit `dynamic` exports.",
+        "Good use of async/await with error handling and Suspense for data fetching.",
+        "TypeScript types are defined for fetched data, improving type safety."
+      ],
+      "improvements": [
+        "Move inline styles into CSS modules or styled components for cleaner JSX.",
+        "Extract the fetch logic into a reusable hook or service to reduce duplication and improve testability.",
+        "Add a named error parameter in the catch block to log or display the actual error message for better debugging."
+      ],
+      "readability": 88,
+      "maintainability": 82,
+      "overall": "The implementation cleanly demonstrates static vs dynamic rendering in Next.js App Router. The code is readable and maintainable, with a few minor refactoring opportunities to enhance modularity and debugging."
+    },
+    "aiResults": {
+      "challengeId": "07-static-and-dynamic-rendering",
+      "timestamp": "2026-08-27T12:28:35.599Z",
+      "score": 85,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of static and dynamic pages using explicit `dynamic` exports.",
+        "Good use of async/await with error handling and Suspense for data fetching.",
+        "TypeScript types are defined for fetched data, improving type safety."
+      ],
+      "improvements": [
+        "Move inline styles into CSS modules or styled components for cleaner JSX.",
+        "Extract the fetch logic into a reusable hook or service to reduce duplication and improve testability.",
+        "Add a named error parameter in the catch block to log or display the actual error message for better debugging."
+      ],
+      "readability": 88,
+      "maintainability": 82,
+      "overall": "The implementation cleanly demonstrates static vs dynamic rendering in Next.js App Router. The code is readable and maintainable, with a few minor refactoring opportunities to enhance modularity and debugging."
+    }
   }
 ]

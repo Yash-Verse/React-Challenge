@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+export const dynamic = 'force-dynamic'
 
 type Post = {
   id: number

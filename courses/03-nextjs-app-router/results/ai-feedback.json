@@ -128,5 +128,28 @@
       "maintainability": 50,
       "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear use of dynamic route parameters (`params.id`) and TypeScript types.\",\n    \"Robust error handling with a graceful fallback UI.\",\n    \"Clean, concise component structure without unnecessary imports.\"\n  ],\n  \"improvements\": [\n    \"Add `generateStaticParams` to pre‑render known post IDs and improve SEO.\",\n    \"Specify fetch options (e.g., `{ next: { revalidate: 60 } }`) to control caching and revalidation.\",\n    \"Inc"
     }
+  },
+  {
+    "challengeId": "07-static-and-dynamic-rendering",
+    "challengeName": "Static and Dynamic Rendering",
+    "aiReview": {
+      "challengeId": "07-static-and-dynamic-rendering",
+      "timestamp": "2026-08-27T12:28:35.599Z",
+      "score": 85,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of static and dynamic pages using explicit `dynamic` exports.",
+        "Good use of async/await with error handling and Suspense for data fetching.",
+        "TypeScript types are defined for fetched data, improving type safety."
+      ],
+      "improvements": [
+        "Move inline styles into CSS modules or styled components for cleaner JSX.",
+        "Extract the fetch logic into a reusable hook or service to reduce duplication and improve testability.",
+        "Add a named error parameter in the catch block to log or display the actual error message for better debugging."
+      ],
+      "readability": 88,
+      "maintainability": 82,
+      "overall": "The implementation cleanly demonstrates static vs dynamic rendering in Next.js App Router. The code is readable and maintainable, with a few minor refactoring opportunities to enhance modularity and debugging."
+    }
   }
 ]
