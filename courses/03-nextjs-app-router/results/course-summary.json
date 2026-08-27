@@ -1,11 +1,11 @@
 {
   "courseId": "03-nextjs-app-router",
   "courseName": "Next.js App Router",
-  "lastUpdated": "2026-08-27T12:10:02.135Z",
+  "lastUpdated": "2026-08-27T12:14:56.414Z",
   "totalChallenges": 17,
-  "completedChallenges": 5,
-  "averageScore": 82.4,
-  "completionPercentage": 29.4,
+  "completedChallenges": 6,
+  "averageScore": 82,
+  "completionPercentage": 35.3,
   "badgeLevel": "none",
   "challengeResults": [
     {
@@ -37,6 +37,12 @@
       "challengeName": "Loading and Streaming",
       "score": 82.45,
       "passed": true
+    },
+    {
+      "challengeId": "06-dynamic-routes",
+      "challengeName": "Dynamic Routes",
+      "score": 80,
+      "passed": true
     }
   ],
   "skillStrengths": [
@@ -44,7 +50,8 @@
     "Server and Client Components",
     "Data Fetching in Server Components",
     "API Route Handlers",
-    "Loading and Streaming"
+    "Loading and Streaming",
+    "Dynamic Routes"
   ],
   "improvementAreas": []
 }

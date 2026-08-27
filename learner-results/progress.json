@@ -1,13 +1,13 @@
 {
-  "lastUpdated": "2026-08-27T12:10:03.169Z",
+  "lastUpdated": "2026-08-27T12:14:57.328Z",
   "pathway": {
     "name": "Modern React Engineer",
     "version": "1.0.0",
-    "overallScore": 86.2,
-    "completionPercentage": 77.4,
+    "overallScore": 86.1,
+    "completionPercentage": 79.2,
     "badgeLevel": "silver",
     "totalChallenges": 53,
-    "completedChallenges": 41
+    "completedChallenges": 42
   },
   "courses": {
     "01-react-fundamentals": {
@@ -575,11 +575,11 @@
     "03-nextjs-app-router": {
       "courseId": "03-nextjs-app-router",
       "courseName": "Next.js App Router",
-      "averageScore": 82.4,
-      "completionPercentage": 29.4,
+      "averageScore": 82,
+      "completionPercentage": 35.3,
       "badgeLevel": "none",
       "totalChallenges": 17,
-      "completedChallenges": 5,
+      "completedChallenges": 6,
       "challenges": {
         "01-app-router-pages-layout": {
           "challengeId": "01-app-router-pages-layout",
@@ -654,6 +654,21 @@
             "bestPractices": 100,
             "e2eTests": 100,
             "aiReview": 83
+          }
+        },
+        "06-dynamic-routes": {
+          "challengeId": "06-dynamic-routes",
+          "challengeName": "Dynamic Routes",
+          "passed": true,
+          "score": 80,
+          "lastRun": "2026-08-27T12:14:44.891Z",
+          "scores": {
+            "functionalTests": 100,
+            "codeQuality": 50,
+            "architecture": 50,
+            "bestPractices": 100,
+            "e2eTests": 100,
+            "aiReview": 50
           }
         }
       }

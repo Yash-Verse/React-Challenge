@@ -109,5 +109,24 @@
       "maintainability": 80,
       "overall": "The implementation meets the core challenge requirements and demonstrates a solid grasp of Next.js App Router features. A few refactoring steps—such as centralizing data fetching and reusing the loading component—would enhance maintainability and reduce duplication."
     }
+  },
+  {
+    "challengeId": "06-dynamic-routes",
+    "challengeName": "Dynamic Routes",
+    "aiReview": {
+      "challengeId": "06-dynamic-routes",
+      "timestamp": "2026-08-27T12:14:54.780Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear use of dynamic route parameters (`params.id`) and TypeScript types.\",\n    \"Robust error handling with a graceful fallback UI.\",\n    \"Clean, concise component structure without unnecessary imports.\"\n  ],\n  \"improvements\": [\n    \"Add `generateStaticParams` to pre‑render known post IDs and improve SEO.\",\n    \"Specify fetch options (e.g., `{ next: { revalidate: 60 } }`) to control caching and revalidation.\",\n    \"Inc"
+    }
   }
 ]

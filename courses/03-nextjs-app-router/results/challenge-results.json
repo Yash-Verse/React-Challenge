@@ -1204,5 +1204,187 @@
       "maintainability": 80,
       "overall": "The implementation meets the core challenge requirements and demonstrates a solid grasp of Next.js App Router features. A few refactoring steps—such as centralizing data fetching and reusing the loading component—would enhance maintainability and reduce duplication."
     }
+  },
+  {
+    "challengeId": "06-dynamic-routes",
+    "challengeName": "Dynamic Routes",
+    "timestamp": "2026-08-27T12:14:44.891Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 50,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 50
+    },
+    "totalScore": 80,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 06: Dynamic Routes"
+              ],
+              "fullName": " Challenge 06: Dynamic Routes should have dynamic route segment [id] or [slug]",
+              "status": "passed",
+              "title": "should have dynamic route segment [id] or [slug]",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 06: Dynamic Routes"
+              ],
+              "fullName": " Challenge 06: Dynamic Routes should use params in page component",
+              "status": "passed",
+              "title": "should use params in page component",
+              "duration": 1,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787832886518,
+          "endTime": 1787832886520,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-06.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 50,
+      "passed": false,
+      "patternsFound": [
+        "params"
+      ],
+      "patternsMissing": [
+        "dynamicSegment"
+      ],
+      "details": [
+        {
+          "file": "app/posts/[id]/page.tsx",
+          "patternsFound": [
+            "params"
+          ],
+          "patternsMissing": [
+            "dynamicSegment"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-06.spec.ts",
+          "file": "challenge-06.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 06: Dynamic Routes - E2E",
+              "file": "challenge-06.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load dynamic post page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1228,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-27T12:14:53.131Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "fdfd0a4bbce1fa4a4eed-5080986329fc0070668f",
+                  "file": "challenge-06.spec.ts",
+                  "line": 8,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "06-dynamic-routes",
+      "timestamp": "2026-08-27T12:14:54.780Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear use of dynamic route parameters (`params.id`) and TypeScript types.\",\n    \"Robust error handling with a graceful fallback UI.\",\n    \"Clean, concise component structure without unnecessary imports.\"\n  ],\n  \"improvements\": [\n    \"Add `generateStaticParams` to pre‑render known post IDs and improve SEO.\",\n    \"Specify fetch options (e.g., `{ next: { revalidate: 60 } }`) to control caching and revalidation.\",\n    \"Inc"
+    },
+    "aiResults": {
+      "challengeId": "06-dynamic-routes",
+      "timestamp": "2026-08-27T12:14:54.780Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear use of dynamic route parameters (`params.id`) and TypeScript types.\",\n    \"Robust error handling with a graceful fallback UI.\",\n    \"Clean, concise component structure without unnecessary imports.\"\n  ],\n  \"improvements\": [\n    \"Add `generateStaticParams` to pre‑render known post IDs and improve SEO.\",\n    \"Specify fetch options (e.g., `{ next: { revalidate: 60 } }`) to control caching and revalidation.\",\n    \"Inc"
+    }
   }
 ]
