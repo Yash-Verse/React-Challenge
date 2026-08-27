@@ -1,5 +1,6 @@
 import ChallengeList from './components/ChallengeList'
 import Link from 'next/link'
+import Counter from './components/Counter'
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
           Run <code>npm run dev</code> to see your changes.
         </p>
       </header>
+      <Counter />
       <ChallengeList />
     </main>
   )
