@@ -1004,5 +1004,205 @@
       "maintainability": 85,
       "overall": "The implementation meets the challenge requirements with clean, readable code. Adding explicit types and exporting the Post type would enhance maintainability and reusability."
     }
+  },
+  {
+    "challengeId": "05-loading-and-streaming",
+    "challengeName": "Loading and Streaming",
+    "timestamp": "2026-08-27T12:09:51.396Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 25,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 83
+    },
+    "totalScore": 82.45,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 05: Loading and Streaming"
+              ],
+              "fullName": " Challenge 05: Loading and Streaming should have loading.tsx in a route segment",
+              "status": "passed",
+              "title": "should have loading.tsx in a route segment",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 05: Loading and Streaming"
+              ],
+              "fullName": " Challenge 05: Loading and Streaming should export default loading component",
+              "status": "passed",
+              "title": "should export default loading component",
+              "duration": 1,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787832592954,
+          "endTime": 1787832592956,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-05.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 25,
+      "passed": false,
+      "patternsFound": [
+        "Suspense"
+      ],
+      "patternsMissing": [
+        "loadingTsx",
+        "Suspense",
+        "loadingTsx"
+      ],
+      "details": [
+        {
+          "file": "app/posts/loading.tsx",
+          "patternsFound": [],
+          "patternsMissing": [
+            "loadingTsx",
+            "Suspense"
+          ]
+        },
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [
+            "Suspense"
+          ],
+          "patternsMissing": [
+            "loadingTsx"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-05.spec.ts",
+          "file": "challenge-05.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 05: Loading and Streaming - E2E",
+              "file": "challenge-05.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load posts page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 866,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-27T12:09:59.742Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "ec25b63e8ac6a5e53e87-f77f982bcebd43afdcb3",
+                  "file": "challenge-05.spec.ts",
+                  "line": 8,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "05-loading-and-streaming",
+      "timestamp": "2026-08-27T12:10:01.015Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Implemented a dedicated `loading.tsx` component that satisfies the test requirements.",
+        "Used TypeScript for type safety and clear data shape definitions.",
+        "Wrapped the async content in `<Suspense>` to provide a fallback UI during streaming."
+      ],
+      "improvements": [
+        "Extract the data‑fetching logic into a separate service or custom hook to keep the component focused on rendering.",
+        "Use the `Loading` component in the `Suspense` fallback instead of duplicating the loading markup.",
+        "Add an error parameter to the catch block (`catch (error)`) to provide more informative error messages and improve debugging."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation meets the core challenge requirements and demonstrates a solid grasp of Next.js App Router features. A few refactoring steps—such as centralizing data fetching and reusing the loading component—would enhance maintainability and reduce duplication."
+    },
+    "aiResults": {
+      "challengeId": "05-loading-and-streaming",
+      "timestamp": "2026-08-27T12:10:01.015Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Implemented a dedicated `loading.tsx` component that satisfies the test requirements.",
+        "Used TypeScript for type safety and clear data shape definitions.",
+        "Wrapped the async content in `<Suspense>` to provide a fallback UI during streaming."
+      ],
+      "improvements": [
+        "Extract the data‑fetching logic into a separate service or custom hook to keep the component focused on rendering.",
+        "Use the `Loading` component in the `Suspense` fallback instead of duplicating the loading markup.",
+        "Add an error parameter to the catch block (`catch (error)`) to provide more informative error messages and improve debugging."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation meets the core challenge requirements and demonstrates a solid grasp of Next.js App Router features. A few refactoring steps—such as centralizing data fetching and reusing the loading component—would enhance maintainability and reduce duplication."
+    }
   }
 ]

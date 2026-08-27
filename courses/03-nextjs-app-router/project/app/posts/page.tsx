@@ -1,10 +1,12 @@
+import { Suspense } from 'react'
+
 type Post = {
   id: number
   title: string
   body: string
 }
 
-export default async function PostsPage() {
+async function PostsContent() {
   try {
     const response = await fetch('https://jsonplaceholder.typicode.com/posts')
 
@@ -40,4 +42,12 @@ export default async function PostsPage() {
       </main>
     )
   }
+}
+
+export default function PostsPage() {
+  return (
+    <Suspense fallback={<p>Loading posts...</p>}>
+      <PostsContent />
+    </Suspense>
+  )
 }
