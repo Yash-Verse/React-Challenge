@@ -1,11 +1,11 @@
 {
   "courseId": "03-nextjs-app-router",
   "courseName": "Next.js App Router",
-  "lastUpdated": "2026-08-29T05:54:32.876Z",
+  "lastUpdated": "2026-08-29T05:58:49.498Z",
   "totalChallenges": 17,
-  "completedChallenges": 11,
+  "completedChallenges": 12,
   "averageScore": 81.5,
-  "completionPercentage": 64.7,
+  "completionPercentage": 70.6,
   "badgeLevel": "bronze",
   "challengeResults": [
     {
@@ -73,6 +73,12 @@
       "challengeName": "Error Handling",
       "score": 82.45,
       "passed": true
+    },
+    {
+      "challengeId": "12-metadata-and-seo",
+      "challengeName": "Metadata and SEO",
+      "score": 81.62,
+      "passed": true
     }
   ],
   "skillStrengths": [
@@ -86,7 +92,8 @@
     "SSR (Server-Side Rendering)",
     "Server Actions and Revalidation",
     "Caching and Revalidating",
-    "Error Handling"
+    "Error Handling",
+    "Metadata and SEO"
   ],
   "improvementAreas": []
 }

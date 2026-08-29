@@ -2435,5 +2435,204 @@
       "maintainability": 80,
       "overall": "The implementation correctly demonstrates error handling in the Next.js App Router. It follows best practices for TypeScript usage and component structure. Minor refinements in error handling logic and documentation would further improve robustness and maintainability."
     }
+  },
+  {
+    "challengeId": "12-metadata-and-seo",
+    "challengeName": "Metadata and SEO",
+    "timestamp": "2026-08-29T05:58:32.443Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 16.7,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 83
+    },
+    "totalScore": 81.62,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 12: Metadata and SEO"
+              ],
+              "fullName": " Challenge 12: Metadata and SEO should export metadata or generateMetadata with title/description",
+              "status": "passed",
+              "title": "should export metadata or generateMetadata with title/description",
+              "duration": 2,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787983116093,
+          "endTime": 1787983116095,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-12.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 16.7,
+      "passed": false,
+      "patternsFound": [
+        "metadata"
+      ],
+      "patternsMissing": [
+        "generateMetadata",
+        "metadata",
+        "generateMetadata",
+        "metadata",
+        "generateMetadata"
+      ],
+      "details": [
+        {
+          "file": "app/layout.tsx",
+          "patternsFound": [
+            "metadata"
+          ],
+          "patternsMissing": [
+            "generateMetadata"
+          ]
+        },
+        {
+          "file": "app/page.tsx",
+          "patternsFound": [],
+          "patternsMissing": [
+            "metadata",
+            "generateMetadata"
+          ]
+        },
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [],
+          "patternsMissing": [
+            "metadata",
+            "generateMetadata"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-12.spec.ts",
+          "file": "challenge-12.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 12: Metadata and SEO - E2E",
+              "file": "challenge-12.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should have page title",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1498,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-29T05:58:45.092Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "f77a26b762255a776dfc-a2def7c6e30580f05958",
+                  "file": "challenge-12.spec.ts",
+                  "line": 8,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "12-metadata-and-seo",
+      "timestamp": "2026-08-29T05:58:48.111Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Metadata is correctly exported in the root layout, satisfying the SEO requirement.",
+        "TypeScript is consistently used, and fetch error handling is implemented in the posts page.",
+        "Code is modular with clear separation of concerns (layout, page, posts)."
+      ],
+      "improvements": [
+        "Add explicit `import type { ReactNode } from 'react'` (or import React) for the `RootLayout` type to avoid potential TS errors.",
+        "Export `metadata` or `generateMetadata` from `app/page.tsx` or `app/posts/page.tsx` to reinforce the requirement and provide page‑specific SEO data.",
+        "Consider adding an `openGraph` object to the metadata for richer social sharing and include comments to explain the purpose of each section."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation meets the core challenge requirements with clean, type‑safe code. Enhancing the metadata coverage and tightening type imports will make the solution even more robust and future‑proof."
+    },
+    "aiResults": {
+      "challengeId": "12-metadata-and-seo",
+      "timestamp": "2026-08-29T05:58:48.111Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Metadata is correctly exported in the root layout, satisfying the SEO requirement.",
+        "TypeScript is consistently used, and fetch error handling is implemented in the posts page.",
+        "Code is modular with clear separation of concerns (layout, page, posts)."
+      ],
+      "improvements": [
+        "Add explicit `import type { ReactNode } from 'react'` (or import React) for the `RootLayout` type to avoid potential TS errors.",
+        "Export `metadata` or `generateMetadata` from `app/page.tsx` or `app/posts/page.tsx` to reinforce the requirement and provide page‑specific SEO data.",
+        "Consider adding an `openGraph` object to the metadata for richer social sharing and include comments to explain the purpose of each section."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation meets the core challenge requirements with clean, type‑safe code. Enhancing the metadata coverage and tightening type imports will make the solution even more robust and future‑proof."
+    }
   }
 ]
