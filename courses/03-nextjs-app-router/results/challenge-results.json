@@ -2192,5 +2192,248 @@
       "maintainability": 72,
       "overall": "The implementation demonstrates a solid grasp of server actions and on‑demand revalidation, but it currently lacks the required cached fetch configuration. Addressing the fetch caching and refining a few minor details will bring the code fully in line with the challenge specifications."
     }
+  },
+  {
+    "challengeId": "11-error-handling",
+    "challengeName": "Error Handling",
+    "timestamp": "2026-08-29T05:54:15.120Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 25,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 83
+    },
+    "totalScore": 82.45,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 11: Error Handling"
+              ],
+              "fullName": " Challenge 11: Error Handling should have error.tsx in app or route segment",
+              "status": "passed",
+              "title": "should have error.tsx in app or route segment",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 11: Error Handling"
+              ],
+              "fullName": " Challenge 11: Error Handling should use notFound in dynamic post page",
+              "status": "passed",
+              "title": "should use notFound in dynamic post page",
+              "duration": 1,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787982858674,
+          "endTime": 1787982858676,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-11.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 25,
+      "passed": false,
+      "patternsFound": [
+        "notFound"
+      ],
+      "patternsMissing": [
+        "errorTsx",
+        "notFound",
+        "errorTsx"
+      ],
+      "details": [
+        {
+          "file": "app/error.tsx",
+          "patternsFound": [],
+          "patternsMissing": [
+            "errorTsx",
+            "notFound"
+          ]
+        },
+        {
+          "file": "app/posts/[id]/page.tsx",
+          "patternsFound": [
+            "notFound"
+          ],
+          "patternsMissing": [
+            "errorTsx"
+          ]
+        },
+        {
+          "file": "app/not-found.tsx",
+          "error": "File does not exist",
+          "patternsFound": [],
+          "patternsMissing": [
+            "errorTsx",
+            "notFound"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-11.spec.ts",
+          "file": "challenge-11.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 11: Error Handling - E2E",
+              "file": "challenge-11.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load home page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 954,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-29T05:54:27.576Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1017095ef2170c8a8deb-38da860916fc18c9e724",
+                  "file": "challenge-11.spec.ts",
+                  "line": 8,
+                  "column": 7
+                },
+                {
+                  "title": "should handle invalid post id (404 or error)",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 1768,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-29T05:54:29.549Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "1017095ef2170c8a8deb-aa714dc2f9a5dfb8e954",
+                  "file": "challenge-11.spec.ts",
+                  "line": 13,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "11-error-handling",
+      "timestamp": "2026-08-29T05:54:31.589Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: error handling is isolated in `app/error.tsx` and route‑specific logic in `app/posts/[id]/page.tsx`.",
+        "Proper use of Next.js App Router features (`notFound()` and client‑side error component).",
+        "TypeScript types are defined for the post data and page props, improving type safety."
+      ],
+      "improvements": [
+        "Add a more explicit error handling path for the fetch call: check `response.ok` before parsing JSON and throw a custom error instead of silently calling `notFound()`.",
+        "Consider validating the fetched post object more robustly (e.g., check for required fields like `id`, `title`, `body`) before rendering.",
+        "Add a small comment block or JSDoc to explain the purpose of the `reset` callback in the error component, which aids future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation correctly demonstrates error handling in the Next.js App Router. It follows best practices for TypeScript usage and component structure. Minor refinements in error handling logic and documentation would further improve robustness and maintainability."
+    },
+    "aiResults": {
+      "challengeId": "11-error-handling",
+      "timestamp": "2026-08-29T05:54:31.589Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: error handling is isolated in `app/error.tsx` and route‑specific logic in `app/posts/[id]/page.tsx`.",
+        "Proper use of Next.js App Router features (`notFound()` and client‑side error component).",
+        "TypeScript types are defined for the post data and page props, improving type safety."
+      ],
+      "improvements": [
+        "Add a more explicit error handling path for the fetch call: check `response.ok` before parsing JSON and throw a custom error instead of silently calling `notFound()`.",
+        "Consider validating the fetched post object more robustly (e.g., check for required fields like `id`, `title`, `body`) before rendering.",
+        "Add a small comment block or JSDoc to explain the purpose of the `reset` callback in the error component, which aids future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation correctly demonstrates error handling in the Next.js App Router. It follows best practices for TypeScript usage and component structure. Minor refinements in error handling logic and documentation would further improve robustness and maintainability."
+    }
   }
 ]

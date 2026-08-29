@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation'
+
 type Post = {
   id: number
   title: string
@@ -17,10 +19,14 @@ export default async function PostPage({ params }: PageProps) {
     )
 
     if (!response.ok) {
-      throw new Error('Post not found')
+      notFound()
     }
 
     const post: Post = await response.json()
+
+    if (!post) {
+      notFound()
+    }
 
     return (
       <main>
@@ -29,11 +35,6 @@ export default async function PostPage({ params }: PageProps) {
       </main>
     )
   } catch {
-    return (
-      <main>
-        <h1>Post Not Found</h1>
-        <p>Unable to load post {params.id}.</p>
-      </main>
-    )
+    notFound()
   }
 }

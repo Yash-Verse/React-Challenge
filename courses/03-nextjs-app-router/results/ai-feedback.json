@@ -216,5 +216,28 @@
       "maintainability": 72,
       "overall": "The implementation demonstrates a solid grasp of server actions and on‑demand revalidation, but it currently lacks the required cached fetch configuration. Addressing the fetch caching and refining a few minor details will bring the code fully in line with the challenge specifications."
     }
+  },
+  {
+    "challengeId": "11-error-handling",
+    "challengeName": "Error Handling",
+    "aiReview": {
+      "challengeId": "11-error-handling",
+      "timestamp": "2026-08-29T05:54:31.589Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: error handling is isolated in `app/error.tsx` and route‑specific logic in `app/posts/[id]/page.tsx`.",
+        "Proper use of Next.js App Router features (`notFound()` and client‑side error component).",
+        "TypeScript types are defined for the post data and page props, improving type safety."
+      ],
+      "improvements": [
+        "Add a more explicit error handling path for the fetch call: check `response.ok` before parsing JSON and throw a custom error instead of silently calling `notFound()`.",
+        "Consider validating the fetched post object more robustly (e.g., check for required fields like `id`, `title`, `body`) before rendering.",
+        "Add a small comment block or JSDoc to explain the purpose of the `reset` callback in the error component, which aids future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation correctly demonstrates error handling in the Next.js App Router. It follows best practices for TypeScript usage and component structure. Minor refinements in error handling logic and documentation would further improve robustness and maintainability."
+    }
   }
 ]
