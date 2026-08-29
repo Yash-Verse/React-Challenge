@@ -3010,5 +3010,240 @@
       "maintainability": 80,
       "overall": "The implementation meets the challenge requirements with clean, type‑safe code and a good user experience. Minor refactoring and enhanced error handling would further improve maintainability and testability."
     }
+  },
+  {
+    "challengeId": "15-redux-toolkit-with-nextjs",
+    "challengeName": "Redux Toolkit with Next.js",
+    "timestamp": "2026-08-29T07:33:43.828Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 25,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 83
+    },
+    "totalScore": 82.45,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 15: Redux Toolkit with Next.js"
+              ],
+              "fullName": " Challenge 15: Redux Toolkit with Next.js should have store with configureStore",
+              "status": "passed",
+              "title": "should have store with configureStore",
+              "duration": 2,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 15: Redux Toolkit with Next.js"
+              ],
+              "fullName": " Challenge 15: Redux Toolkit with Next.js should have Client Provider wrapping with Provider and store",
+              "status": "passed",
+              "title": "should have Client Provider wrapping with Provider and store",
+              "duration": 0,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 15: Redux Toolkit with Next.js"
+              ],
+              "fullName": " Challenge 15: Redux Toolkit with Next.js should use useSelector or useDispatch in a Client Component",
+              "status": "passed",
+              "title": "should use useSelector or useDispatch in a Client Component",
+              "duration": 2,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787988828495,
+          "endTime": 1787988828499,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-15.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 25,
+      "passed": false,
+      "patternsFound": [
+        "configureStore",
+        "Provider",
+        "Provider"
+      ],
+      "patternsMissing": [
+        "Provider",
+        "useSelector",
+        "useDispatch",
+        "configureStore",
+        "useSelector",
+        "useDispatch",
+        "configureStore",
+        "useSelector",
+        "useDispatch"
+      ],
+      "details": [
+        {
+          "file": "app/store/store.ts",
+          "patternsFound": [
+            "configureStore"
+          ],
+          "patternsMissing": [
+            "Provider",
+            "useSelector",
+            "useDispatch"
+          ]
+        },
+        {
+          "file": "app/providers/StoreProvider.tsx",
+          "patternsFound": [
+            "Provider"
+          ],
+          "patternsMissing": [
+            "configureStore",
+            "useSelector",
+            "useDispatch"
+          ]
+        },
+        {
+          "file": "app/layout.tsx",
+          "patternsFound": [
+            "Provider"
+          ],
+          "patternsMissing": [
+            "configureStore",
+            "useSelector",
+            "useDispatch"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-15.spec.ts",
+          "file": "challenge-15.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 15: Redux Toolkit with Next.js - E2E",
+              "file": "challenge-15.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load app with Redux provider",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 2066,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-29T07:34:22.258Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "a220d5623351847681d1-bbccd60014f5d5c7bf52",
+                  "file": "challenge-15.spec.ts",
+                  "line": 8,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "15-redux-toolkit-with-nextjs",
+      "timestamp": "2026-08-29T07:34:25.978Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: the store logic is isolated in `store.ts` and the provider is a dedicated component.",
+        "Proper use of Redux Toolkit’s `createSlice` and `configureStore` with TypeScript types for `RootState` and `AppDispatch`.",
+        "Consistent use of `'use client'` directive where required, ensuring correct client‑side rendering."
+      ],
+      "improvements": [
+        "Introduce a dedicated slice file (e.g., `counterSlice.ts`) and import it into `store.ts` for better scalability and easier unit testing.",
+        "Add a selector (e.g., `selectCounterValue`) and a small client component that demonstrates `useSelector` and `useDispatch` usage; this satisfies the challenge requirement and improves code visibility.",
+        "Include brief JSDoc comments or inline comments to explain the purpose of the store, slice, and provider, which aids future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation meets the core requirements and follows best practices for a small Redux Toolkit integration in a Next.js App Router project. With a few organizational tweaks and an example consumer component, it will be even more robust and maintainable."
+    },
+    "aiResults": {
+      "challengeId": "15-redux-toolkit-with-nextjs",
+      "timestamp": "2026-08-29T07:34:25.978Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: the store logic is isolated in `store.ts` and the provider is a dedicated component.",
+        "Proper use of Redux Toolkit’s `createSlice` and `configureStore` with TypeScript types for `RootState` and `AppDispatch`.",
+        "Consistent use of `'use client'` directive where required, ensuring correct client‑side rendering."
+      ],
+      "improvements": [
+        "Introduce a dedicated slice file (e.g., `counterSlice.ts`) and import it into `store.ts` for better scalability and easier unit testing.",
+        "Add a selector (e.g., `selectCounterValue`) and a small client component that demonstrates `useSelector` and `useDispatch` usage; this satisfies the challenge requirement and improves code visibility.",
+        "Include brief JSDoc comments or inline comments to explain the purpose of the store, slice, and provider, which aids future maintainers."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation meets the core requirements and follows best practices for a small Redux Toolkit integration in a Next.js App Router project. With a few organizational tweaks and an example consumer component, it will be even more robust and maintainable."
+    }
   }
 ]
