@@ -170,5 +170,28 @@
       "maintainability": 50,
       "overall": "```json\n{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Explicitly forces server-side rendering with `export const dynamic = 'force-dynamic'`.\",\n    \"Uses `fetch(..., { cache: 'no-store' })` to guarantee fresh data on every request.\",\n    \"Graceful error handling with a fallback UI when the API fails.\"\n  ],\n  \"improvements\": [\n    \"Add an error parameter to the catch block (`catch (error)`) and consider logging it for debugging.\",\n    \"Extract the post list rendering into a"
     }
+  },
+  {
+    "challengeId": "09-server-actions-and-revalidation",
+    "challengeName": "Server Actions and Revalidation",
+    "aiReview": {
+      "challengeId": "09-server-actions-and-revalidation",
+      "timestamp": "2026-08-29T05:31:56.299Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: server actions are isolated in `app/actions.ts` and the UI logic is in client components.",
+        "Proper use of TypeScript types for both the action result and the post data, improving type safety.",
+        "Effective use of `revalidatePath` to keep the UI in sync after a mutation."
+      ],
+      "improvements": [
+        "The form currently uses a client‑side wrapper (`handleSubmit`) that calls the server action. In Next.js App Router you can set `action={addPost}` directly on the `<form>` element, simplifying the component and reducing unnecessary state.",
+        "Error handling in the server action is very generic. Consider returning more detailed error information (e.g., HTTP status code or error message from the API) and logging it for debugging purposes.",
+        "Hard‑coding the API endpoint (`https://jsonplaceholder.typicode.com/posts`) makes the code less flexible. Move this URL to an environment variable or a constants file so it can be changed without touching the logic."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation demonstrates a solid grasp of Next.js Server Actions and cache revalidation. The code is clean, well‑typed, and follows best practices for separating server and client logic. Minor tweaks—such as simplifying the form action, enhancing error handling, and externalizing the API URL—would further improve maintainability and robustness."
+    }
   }
 ]
