@@ -2003,5 +2003,194 @@
       "maintainability": 80,
       "overall": "The implementation demonstrates a solid grasp of Next.js Server Actions and cache revalidation. The code is clean, well‑typed, and follows best practices for separating server and client logic. Minor tweaks—such as simplifying the form action, enhancing error handling, and externalizing the API URL—would further improve maintainability and robustness."
     }
+  },
+  {
+    "challengeId": "10-caching-and-revalidating",
+    "challengeName": "Caching and Revalidating",
+    "timestamp": "2026-08-29T05:35:39.446Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 25,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 75
+    },
+    "totalScore": 81.25,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 10: Caching and Revalidating"
+              ],
+              "fullName": " Challenge 10: Caching and Revalidating should have fetch with cache options or revalidate",
+              "status": "passed",
+              "title": "should have fetch with cache options or revalidate",
+              "duration": 2,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787981742627,
+          "endTime": 1787981742629,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-10.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 25,
+      "passed": false,
+      "patternsFound": [
+        "revalidate"
+      ],
+      "patternsMissing": [
+        "fetchCache",
+        "revalidate",
+        "fetchCache"
+      ],
+      "details": [
+        {
+          "file": "app/posts/page.tsx",
+          "patternsFound": [],
+          "patternsMissing": [
+            "fetchCache",
+            "revalidate"
+          ]
+        },
+        {
+          "file": "app/actions.ts",
+          "patternsFound": [
+            "revalidate"
+          ],
+          "patternsMissing": [
+            "fetchCache"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-10.spec.ts",
+          "file": "challenge-10.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 10: Caching and Revalidating - E2E",
+              "file": "challenge-10.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load posts page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 2863,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-29T05:35:51.187Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "2b6a150d93e258235d20-c14a17c89c6252f46f58",
+                  "file": "challenge-10.spec.ts",
+                  "line": 8,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "10-caching-and-revalidating",
+      "timestamp": "2026-08-29T05:35:55.856Z",
+      "score": 75,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns with a dedicated server action for adding posts.",
+        "Proper use of `revalidatePath` to trigger on‑demand revalidation after a POST.",
+        "Graceful error handling that returns user‑friendly messages."
+      ],
+      "improvements": [
+        "Implement fetch caching in `PostsContent` by using `next: { revalidate: 60 }` or `cache: 'force-cache'` instead of `cache: 'no-store'` to satisfy the challenge requirement.",
+        "Remove the `dynamic = 'force-dynamic'` export if the page is intended to be statically rendered; otherwise clarify its purpose.",
+        "Add a typed error parameter to the `catch` block (e.g., `catch (error)`) to aid debugging and satisfy TypeScript strictness."
+      ],
+      "readability": 78,
+      "maintainability": 72,
+      "overall": "The implementation demonstrates a solid grasp of server actions and on‑demand revalidation, but it currently lacks the required cached fetch configuration. Addressing the fetch caching and refining a few minor details will bring the code fully in line with the challenge specifications."
+    },
+    "aiResults": {
+      "challengeId": "10-caching-and-revalidating",
+      "timestamp": "2026-08-29T05:35:55.856Z",
+      "score": 75,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns with a dedicated server action for adding posts.",
+        "Proper use of `revalidatePath` to trigger on‑demand revalidation after a POST.",
+        "Graceful error handling that returns user‑friendly messages."
+      ],
+      "improvements": [
+        "Implement fetch caching in `PostsContent` by using `next: { revalidate: 60 }` or `cache: 'force-cache'` instead of `cache: 'no-store'` to satisfy the challenge requirement.",
+        "Remove the `dynamic = 'force-dynamic'` export if the page is intended to be statically rendered; otherwise clarify its purpose.",
+        "Add a typed error parameter to the `catch` block (e.g., `catch (error)`) to aid debugging and satisfy TypeScript strictness."
+      ],
+      "readability": 78,
+      "maintainability": 72,
+      "overall": "The implementation demonstrates a solid grasp of server actions and on‑demand revalidation, but it currently lacks the required cached fetch configuration. Addressing the fetch caching and refining a few minor details will bring the code fully in line with the challenge specifications."
+    }
   }
 ]

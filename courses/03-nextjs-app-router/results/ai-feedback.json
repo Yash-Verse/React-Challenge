@@ -193,5 +193,28 @@
       "maintainability": 80,
       "overall": "The implementation demonstrates a solid grasp of Next.js Server Actions and cache revalidation. The code is clean, well‑typed, and follows best practices for separating server and client logic. Minor tweaks—such as simplifying the form action, enhancing error handling, and externalizing the API URL—would further improve maintainability and robustness."
     }
+  },
+  {
+    "challengeId": "10-caching-and-revalidating",
+    "challengeName": "Caching and Revalidating",
+    "aiReview": {
+      "challengeId": "10-caching-and-revalidating",
+      "timestamp": "2026-08-29T05:35:55.856Z",
+      "score": 75,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns with a dedicated server action for adding posts.",
+        "Proper use of `revalidatePath` to trigger on‑demand revalidation after a POST.",
+        "Graceful error handling that returns user‑friendly messages."
+      ],
+      "improvements": [
+        "Implement fetch caching in `PostsContent` by using `next: { revalidate: 60 }` or `cache: 'force-cache'` instead of `cache: 'no-store'` to satisfy the challenge requirement.",
+        "Remove the `dynamic = 'force-dynamic'` export if the page is intended to be statically rendered; otherwise clarify its purpose.",
+        "Add a typed error parameter to the `catch` block (e.g., `catch (error)`) to aid debugging and satisfy TypeScript strictness."
+      ],
+      "readability": 78,
+      "maintainability": 72,
+      "overall": "The implementation demonstrates a solid grasp of server actions and on‑demand revalidation, but it currently lacks the required cached fetch configuration. Addressing the fetch caching and refining a few minor details will bring the code fully in line with the challenge specifications."
+    }
   }
 ]
