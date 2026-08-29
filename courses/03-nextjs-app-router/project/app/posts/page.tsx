@@ -1,6 +1,7 @@
 
 import { Suspense } from 'react'
 import Link from 'next/link'
+import PostsList from './PostsList'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,9 +18,7 @@ type PostsPageProps = {
   }
 }
 
-async function PostsContent({
-  searchParams,
-}: PostsPageProps) {
+async function PostsContent({ searchParams }: PostsPageProps) {
   try {
     const response = await fetch(
       'https://jsonplaceholder.typicode.com/posts',
@@ -32,8 +31,9 @@ async function PostsContent({
 
     const posts: Post[] = await response.json()
 
-    // Read searchParams for search and pagination
+    // Read search parameters
     const searchQuery = searchParams.q?.toLowerCase().trim() || ''
+
     const currentPage = Math.max(
       1,
       Number(searchParams.page) || 1
@@ -48,11 +48,13 @@ async function PostsContent({
 
     // Pagination
     const postsPerPage = 10
+
     const totalPages = Math.ceil(
       filteredPosts.length / postsPerPage
     )
 
     const startIndex = (currentPage - 1) * postsPerPage
+
     const paginatedPosts = filteredPosts.slice(
       startIndex,
       startIndex + postsPerPage
@@ -62,6 +64,7 @@ async function PostsContent({
       <main>
         <h1>Posts</h1>
 
+        {/* Search */}
         <form method="GET">
           <input
             type="text"
@@ -69,15 +72,21 @@ async function PostsContent({
             placeholder="Search posts..."
             defaultValue={searchParams.q || ''}
           />
-          <button type="submit">Search</button>
+
+          <button type="submit">
+            Search
+          </button>
         </form>
 
+        {/* Search information */}
         {searchQuery && (
           <p>
-            Search results for: <strong>{searchQuery}</strong>
+            Search results for:{' '}
+            <strong>{searchQuery}</strong>
           </p>
         )}
 
+        {/* Filtered and paginated posts */}
         {paginatedPosts.length === 0 ? (
           <p>No posts found.</p>
         ) : (
@@ -91,6 +100,7 @@ async function PostsContent({
           </ul>
         )}
 
+        {/* Pagination */}
         {totalPages > 1 && (
           <nav>
             {currentPage > 1 && (
@@ -119,6 +129,9 @@ async function PostsContent({
             )}
           </nav>
         )}
+
+        {/* RTK Query */}
+        <PostsList />
       </main>
     )
   } catch {
@@ -126,6 +139,8 @@ async function PostsContent({
       <main>
         <h1>Posts</h1>
         <p>Unable to load posts.</p>
+
+        <PostsList />
       </main>
     )
   }

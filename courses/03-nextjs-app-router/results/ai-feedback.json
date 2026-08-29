@@ -330,5 +330,28 @@
       "maintainability": 80,
       "overall": "The implementation meets the core requirements and follows best practices for a small Redux Toolkit integration in a Next.js App Router project. With a few organizational tweaks and an example consumer component, it will be even more robust and maintainable."
     }
+  },
+  {
+    "challengeId": "16-rtk-query-with-nextjs",
+    "challengeName": "RTK Query with Next.js",
+    "aiReview": {
+      "challengeId": "16-rtk-query-with-nextjs",
+      "timestamp": "2026-08-29T07:49:51.618Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Clear separation of concerns: API slice, store configuration, and client component are neatly organized.",
+        "Strong typing throughout the codebase, especially for the Post type and RTK Query hooks.",
+        "Proper integration of RTK Query middleware and reducer into the existing Redux store."
+      ],
+      "improvements": [
+        "Export the `Post` type from `apiSlice.ts` so it can be reused elsewhere (e.g., in component props or other slices).",
+        "Add a more descriptive error message or error object handling in `PostsList` (e.g., `error?.data?.message`).",
+        "Move the hard‑coded `baseUrl` to an environment variable or a constants file to make the API endpoint configurable."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation demonstrates a solid grasp of RTK Query within a Next.js App Router context. The code is clean, well‑typed, and follows best practices for store configuration and client‑side data fetching. Minor tweaks—such as exporting shared types, enhancing error handling, and externalizing configuration—would further improve maintainability and flexibility."
+    }
   }
 ]
