@@ -1,11 +1,11 @@
 {
   "courseId": "03-nextjs-app-router",
   "courseName": "Next.js App Router",
-  "lastUpdated": "2026-08-29T07:49:52.827Z",
+  "lastUpdated": "2026-08-29T08:01:53.818Z",
   "totalChallenges": 17,
-  "completedChallenges": 16,
-  "averageScore": 82.3,
-  "completionPercentage": 94.1,
+  "completedChallenges": 17,
+  "averageScore": 82.2,
+  "completionPercentage": 100,
   "badgeLevel": "silver",
   "challengeResults": [
     {
@@ -103,6 +103,12 @@
       "challengeName": "RTK Query with Next.js",
       "score": 81.62,
       "passed": true
+    },
+    {
+      "challengeId": "17-fullstack-capstone",
+      "challengeName": "Fullstack Capstone",
+      "score": 80,
+      "passed": true
     }
   ],
   "skillStrengths": [
@@ -121,7 +127,8 @@
     "Images and Fonts",
     "Search and Pagination",
     "Redux Toolkit with Next.js",
-    "RTK Query with Next.js"
+    "RTK Query with Next.js",
+    "Fullstack Capstone"
   ],
   "improvementAreas": []
 }

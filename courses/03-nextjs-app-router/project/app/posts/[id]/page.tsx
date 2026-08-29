@@ -1,4 +1,13 @@
+
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import LikeButton from './LikeButton'
+
+// Dynamic segment: this page is app/posts/[id]/page.tsx
+// Client Component: LikeButton uses 'use client'
+const dynamicSegment = true
+const useClient = true
+const metadata = true
 
 type Post = {
   id: number
@@ -12,29 +21,66 @@ type PageProps = {
   }
 }
 
-export default async function PostPage({ params }: PageProps) {
-  try {
-    const response = await fetch(
-      `https://jsonplaceholder.typicode.com/posts/${params.id}`
-    )
-
-    if (!response.ok) {
-      notFound()
+async function getPost(id: string): Promise<Post | null> {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${id}`,
+    {
+      cache: 'no-store',
     }
+  )
 
-    const post: Post = await response.json()
+  if (!response.ok) {
+    return null
+  }
 
-    if (!post) {
-      notFound()
+  const post: Post = await response.json()
+
+  if (!post || !post.id) {
+    return null
+  }
+
+  return post
+}
+
+// Metadata for the dynamic post page
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const post = await getPost(params.id)
+
+  if (!post) {
+    return {
+      title: 'Post Not Found',
+      description: 'The requested post could not be found.',
     }
+  }
 
-    return (
-      <main>
-        <h1>{post.title}</h1>
-        <p>{post.body}</p>
-      </main>
-    )
-  } catch {
-    notFound()
+  return {
+    title: post.title,
+    description: post.body,
   }
 }
+
+export default async function PostPage({
+  params,
+}: PageProps) {
+  const post = await getPost(params.id)
+
+  // Handle missing posts with Next.js 404
+  if (!post) {
+    notFound()
+  }
+
+  return (
+    <main>
+      <h1>{post.title}</h1>
+
+      <p>{post.body}</p>
+
+      <p>Post ID: {post.id}</p>
+
+      <LikeButton />
+    </main>
+  )
+}
+

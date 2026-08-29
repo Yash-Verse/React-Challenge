@@ -353,5 +353,24 @@
       "maintainability": 80,
       "overall": "The implementation demonstrates a solid grasp of RTK Query within a Next.js App Router context. The code is clean, well‑typed, and follows best practices for store configuration and client‑side data fetching. Minor tweaks—such as exporting shared types, enhancing error handling, and externalizing configuration—would further improve maintainability and flexibility."
     }
+  },
+  {
+    "challengeId": "17-fullstack-capstone",
+    "challengeName": "Fullstack Capstone",
+    "aiReview": {
+      "challengeId": "17-fullstack-capstone",
+      "timestamp": "2026-08-29T08:01:52.172Z",
+      "score": 50,
+      "feedback": [],
+      "strengths": [
+        "Code structure is reasonable"
+      ],
+      "improvements": [
+        "Code structure is reasonable"
+      ],
+      "readability": 50,
+      "maintainability": 50,
+      "overall": "{\n  \"readability\": 85,\n  \"maintainability\": 80,\n  \"strengths\": [\n    \"Clear separation of concerns: data fetching, metadata generation, and UI rendering are neatly organized.\",\n    \"Proper use of Next.js features such as `notFound()` and `generateMetadata` to handle dynamic routing and SEO.\",\n    \"TypeScript types are defined for API responses and component props, improving type safety.\"\n  ],\n  \"improvements\": [\n    \"Remove the unused constants (`"
+    }
   }
 ]
