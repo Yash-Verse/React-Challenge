@@ -262,5 +262,27 @@
       "maintainability": 80,
       "overall": "The implementation meets the core challenge requirements with clean, type‑safe code. Enhancing the metadata coverage and tightening type imports will make the solution even more robust and future‑proof."
     }
+  },
+  {
+    "challengeId": "13-images-and-fonts",
+    "challengeName": "Images and Fonts",
+    "aiReview": {
+      "challengeId": "13-images-and-fonts",
+      "timestamp": "2026-08-29T07:09:03.292Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Correct and idiomatic use of `next/image` and `next/font` with TypeScript.",
+        "Clear component structure and straightforward JSX, making the code easy to follow."
+      ],
+      "improvements": [
+        "Remove the unnecessary `export const dynamic = 'force-static'` – the page will be statically rendered by default.",
+        "Replace inline style objects with CSS classes (or Tailwind/utility classes) to keep styling separate from markup.",
+        "Add a more descriptive `alt` attribute and consider using the `priority` prop on the logo image for better performance."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation meets the challenge requirements and demonstrates a solid grasp of Next.js App Router features. Minor refactoring and styling improvements would enhance maintainability and accessibility."
+    }
   }
 ]

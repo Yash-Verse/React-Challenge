@@ -2634,5 +2634,204 @@
       "maintainability": 80,
       "overall": "The implementation meets the core challenge requirements with clean, type‑safe code. Enhancing the metadata coverage and tightening type imports will make the solution even more robust and future‑proof."
     }
+  },
+  {
+    "challengeId": "13-images-and-fonts",
+    "challengeName": "Images and Fonts",
+    "timestamp": "2026-08-29T07:08:48.171Z",
+    "scores": {
+      "functionalTests": 100,
+      "codeQuality": 50,
+      "architecture": 50,
+      "bestPractices": 100,
+      "e2eTests": 100,
+      "aiReview": 83
+    },
+    "totalScore": 84.95,
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "testResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "details": [
+        {
+          "assertionResults": [
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 13: Images and Fonts"
+              ],
+              "fullName": " Challenge 13: Images and Fonts should use next/image",
+              "status": "passed",
+              "title": "should use next/image",
+              "duration": 1,
+              "failureMessages": []
+            },
+            {
+              "ancestorTitles": [
+                "",
+                "Challenge 13: Images and Fonts"
+              ],
+              "fullName": " Challenge 13: Images and Fonts should use next/font",
+              "status": "passed",
+              "title": "should use next/font",
+              "duration": 1,
+              "failureMessages": []
+            }
+          ],
+          "startTime": 1787987331788,
+          "endTime": 1787987331790,
+          "status": "passed",
+          "message": "",
+          "name": "C:/Users/yashn/OneDrive/Documents/React Challenge/challenge-engine-react/courses/03-nextjs-app-router/project/tests/challenge-13.test.tsx"
+        }
+      ]
+    },
+    "lintResults": {
+      "score": 50,
+      "passed": false,
+      "error": "Could not parse linting results",
+      "details": []
+    },
+    "architectureResults": {
+      "score": 50,
+      "passed": false,
+      "patternsFound": [
+        "nextImage",
+        "nextFont"
+      ],
+      "patternsMissing": [
+        "nextFont",
+        "nextImage"
+      ],
+      "details": [
+        {
+          "file": "app/page.tsx",
+          "patternsFound": [
+            "nextImage"
+          ],
+          "patternsMissing": [
+            "nextFont"
+          ]
+        },
+        {
+          "file": "app/layout.tsx",
+          "patternsFound": [
+            "nextFont"
+          ],
+          "patternsMissing": [
+            "nextImage"
+          ]
+        }
+      ]
+    },
+    "bestPracticesResults": {
+      "score": 100,
+      "passed": true,
+      "issues": [],
+      "details": [],
+      "note": "No best practices requirements specified in challenge"
+    },
+    "e2eResults": {
+      "score": 100,
+      "passed": true,
+      "totalTests": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "details": [
+        {
+          "title": "challenge-13.spec.ts",
+          "file": "challenge-13.spec.ts",
+          "column": 0,
+          "line": 0,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Challenge 13: Images and Fonts - E2E",
+              "file": "challenge-13.spec.ts",
+              "line": 7,
+              "column": 6,
+              "specs": [
+                {
+                  "title": "should load home page with content",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 966,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-08-29T07:09:00.877Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "b108b4dbebb7686e0d0c-c5fe66dbe10f14d68146",
+                  "file": "challenge-13.spec.ts",
+                  "line": 8,
+                  "column": 7
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshots": []
+    },
+    "aiReviewResults": {
+      "challengeId": "13-images-and-fonts",
+      "timestamp": "2026-08-29T07:09:03.292Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Correct and idiomatic use of `next/image` and `next/font` with TypeScript.",
+        "Clear component structure and straightforward JSX, making the code easy to follow."
+      ],
+      "improvements": [
+        "Remove the unnecessary `export const dynamic = 'force-static'` – the page will be statically rendered by default.",
+        "Replace inline style objects with CSS classes (or Tailwind/utility classes) to keep styling separate from markup.",
+        "Add a more descriptive `alt` attribute and consider using the `priority` prop on the logo image for better performance."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation meets the challenge requirements and demonstrates a solid grasp of Next.js App Router features. Minor refactoring and styling improvements would enhance maintainability and accessibility."
+    },
+    "aiResults": {
+      "challengeId": "13-images-and-fonts",
+      "timestamp": "2026-08-29T07:09:03.292Z",
+      "score": 83,
+      "feedback": [],
+      "strengths": [
+        "Correct and idiomatic use of `next/image` and `next/font` with TypeScript.",
+        "Clear component structure and straightforward JSX, making the code easy to follow."
+      ],
+      "improvements": [
+        "Remove the unnecessary `export const dynamic = 'force-static'` – the page will be statically rendered by default.",
+        "Replace inline style objects with CSS classes (or Tailwind/utility classes) to keep styling separate from markup.",
+        "Add a more descriptive `alt` attribute and consider using the `priority` prop on the logo image for better performance."
+      ],
+      "readability": 85,
+      "maintainability": 80,
+      "overall": "The implementation meets the challenge requirements and demonstrates a solid grasp of Next.js App Router features. Minor refactoring and styling improvements would enhance maintainability and accessibility."
+    }
   }
 ]
